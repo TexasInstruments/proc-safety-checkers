@@ -1,0 +1,43 @@
+#
+# This file is the makefile for building rm_pm safety checker library.
+#
+ifeq ($(RULES_MAKE), )
+include $(PDK_INSTALL_PATH)/ti/build/Rules.make
+else
+include $(RULES_MAKE)
+endif
+
+MODULE_NAME = safety_checkers_rm_pm
+
+SRCDIR = src
+INCDIR = src src/soc/ src/soc/$(SOC)/
+
+INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC)/src/
+
+INCLUDE_INTERNAL_INTERFACES = pdk csl
+
+SRCS_COMMON += safety_checkers_pm.c
+
+ifeq ($(SOC),$(filter $(SOC), j7200 j721e j721s2 j784s4))
+PACKAGE_SRCS_COMMON += src/makefile soc/safety_checkers_pm_soc.h soc/$(SOC)
+PACKAGE_SRCS_COMMON += safety_checkers_pm.c safety_checkers_pm.h safety_checkers_rm_pm_common.h
+PACKAGE_SRCS_COMMON += ../makefile ../../safety_checkers_component.mk
+endif
+
+# Core/SoC/platform specific source files and CFLAGS
+# Example:
+#   SRCS_<core/SoC/platform-nameutils> =
+#   CFLAGS_LOCAL_<core/SoC/platform-name> =
+
+# Include common make files
+ifeq ($(MAKERULEDIR), )
+#Makerule path not defined, define this and assume relative path from ROOTDIR
+  MAKERULEDIR := $(ROOTDIR)/ti/build/makerules
+  export MAKERULEDIR
+endif
+include $(MAKERULEDIR)/common.mk
+
+# OBJs and libraries are built by using rule defined in rules_<target>.mk
+#     and need not be explicitly specified here
+
+# Nothing beyond this point
