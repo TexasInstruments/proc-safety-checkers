@@ -78,7 +78,79 @@ export safety_checkers_SOCLIST
 export safety_checkers_$(SOC)_CORELIST
 safety_checkers_LIB_LIST += safety_checkers
 
+# PM safety checkers app
+define PM_CHECKERS_APP_RULE
+export pm_checkers_app_$(1)_COMP_LIST = pm_checkers_app_$(1)
+pm_checkers_app_$(1)_RELPATH = ti/safety_checkers/examples/pm_checkers_app
+pm_checkers_app_$(1)_PATH = $(SAFETY_CHECKERS_COMP_PATH)/examples/pm_checkers_app
+export pm_checkers_app_$(1)_BOARD_DEPENDENCY = yes
+export pm_checkers_app_$(1)_CORE_DEPENDENCY = yes
+export pm_checkers_app_$(1)_MAKEFILE = -fmakefile BUILD_OS_TYPE=$(1)
+pm_checkers_app_$(1)_PKG_LIST = pm_checkers_app_$(1)
+pm_checkers_app_$(1)_INCLUDE = $(pm_checkers_app_$(1)_PATH)
+export pm_checkers_app_$(1)_BOARDLIST = $(filter $(DEFAULT_BOARDLIST_$(1)), $(safety_checkers_BOARDLIST) )
+export pm_checkers_app_$(1)_$(SOC)_CORELIST = $(filter $(DEFAULT_$(SOC)_CORELIST_$(1)), $(safety_checkers_$(SOC)_CORELIST))
+export pm_checkers_app_$(1)_SBL_APPIMAGEGEN = yes
+ifneq ($(1),$(filter $(1), safertos))
+safety_checkers_EXAMPLE_LIST += pm_checkers_app_$(1)
+else
+ifneq ($(wildcard $(SAFERTOS_KERNEL_INSTALL_PATH)),)
+safety_checkers_EXAMPLE_LIST += pm_checkers_app_$(1)
+endif
+endif
+endef
+PM_CHECKERS_APP_MACRO_LIST := $(foreach curos, $(safety_checkers_RTOS_LIST), $(call PM_CHECKERS_APP_RULE,$(curos)))
+$(eval ${PM_CHECKERS_APP_MACRO_LIST})
+
+# PM safety checkers baremetal app
+pm_checkers_app_baremetal_COMP_LIST = pm_checkers_app_baremetal
+pm_checkers_app_baremetal_RELPATH = ti/safety_checkers/examples/pm_checkers_app
+pm_checkers_app_baremetal_PATH = $(SAFETY_CHECKERS_COMP_PATH)/examples/pm_checkers_app
+pm_checkers_app_baremetal_MAKEFILE = -fmakefile BUILD_OS_TYPE=baremetal
+export pm_checkers_app_baremetal_MAKEFILE
+pm_checkers_app_baremetal_BOARD_DEPENDENCY = yes
+pm_checkers_app_baremetal_CORE_DEPENDENCY = yes
+export pm_checkers_app_baremetal_COMP_LIST
+export pm_checkers_app_baremetal_BOARD_DEPENDENCY
+export pm_checkers_app_baremetal_CORE_DEPENDENCY
+pm_checkers_app_baremetal_PKG_LIST = pm_checkers_app_baremetal
+pm_checkers_app_baremetal_INCLUDE = $(pm_checkers_app_baremetal_PATH)
+pm_checkers_app_baremetal_BOARDLIST = $(safety_checkers_BOARDLIST)
+export pm_checkers_app_baremetal_BOARDLIST
+pm_checkers_app_baremetal_$(SOC)_CORELIST = $(safety_checkers_$(SOC)_CORELIST)
+export pm_checkers_app_baremetal_$(SOC)_CORELIST
+safety_checkers_EXAMPLE_LIST += pm_checkers_app_baremetal
+ifeq ($(SOC),$(filter $(SOC), j721e j7200 j721s2 j784s4))
+pm_checkers_app_baremetal_SBL_APPIMAGEGEN = yes
+export pm_checkers_app_baremetal_SBL_APPIMAGEGEN
+endif
+
+# PM safety checkers warm reset app
+define PM_CHECKERS_WARM_RESET_APP_RULE
+export pm_checkers_warm_reset_app_$(1)_COMP_LIST = pm_checkers_warm_reset_app_$(1)
+pm_checkers_warm_reset_app_$(1)_RELPATH = ti/safety_checkers/examples/pm_checkers_warm_reset
+pm_checkers_warm_reset_app_$(1)_PATH = $(SAFETY_CHECKERS_COMP_PATH)/examples/pm_checkers_warm_reset
+export pm_checkers_warm_reset_app_$(1)_BOARD_DEPENDENCY = yes
+export pm_checkers_warm_reset_app_$(1)_CORE_DEPENDENCY = yes
+export pm_checkers_warm_reset_app_$(1)_MAKEFILE = -fmakefile BUILD_OS_TYPE=$(1)
+pm_checkers_warm_reset_app_$(1)_PKG_LIST = pm_checkers_warm_reset_app_$(1)
+pm_checkers_warm_reset_app_$(1)_INCLUDE = $(pm_checkers_warm_reset_app_$(1)_PATH)
+export pm_checkers_warm_reset_app_$(1)_BOARDLIST = $(filter $(DEFAULT_BOARDLIST_$(1)), $(safety_checkers_BOARDLIST) )
+export pm_checkers_warm_reset_app_$(1)_$(SOC)_CORELIST = $(filter $(DEFAULT_$(SOC)_CORELIST_$(1)), $(safety_checkers_$(SOC)_CORELIST))
+export pm_checkers_warm_reset_app_$(1)_SBL_APPIMAGEGEN = yes
+ifneq ($(1),$(filter $(1), safertos))
+safety_checkers_EXAMPLE_LIST += pm_checkers_warm_reset_app_$(1)
+else
+ifneq ($(wildcard $(SAFERTOS_KERNEL_INSTALL_PATH)),)
+safety_checkers_EXAMPLE_LIST += pm_checkers_warm_reset_app_$(1)
+endif
+endif
+endef
+PM_CHECKERS_WARM_RESET_APP_MACRO_LIST := $(foreach curos, $(safety_checkers_RTOS_LIST), $(call PM_CHECKERS_WARM_RESET_APP_RULE,$(curos)))
+$(eval ${PM_CHECKERS_WARM_RESET_APP_MACRO_LIST})
+
 export safety_checkers_LIB_LIST
+export safety_checkers_EXAMPLE_LIST
 
 safety_checkers_component_make_include := 1
 endif
