@@ -1,9 +1,8 @@
 let path = require('path');
 
-let device = "am62px";
+let device = "am62ax";
 
-
-const files_r5f={
+const files = {
     common: [
         "safety_checkers_pm.c",
     ],
@@ -11,21 +10,27 @@ const files_r5f={
 
 const filedirs = {
     common: [
-		"${MCU_PLUS_SDK_PATH}/safety_checkers/rm_pm/src",
+		"${MCU_PLUS_SDK_PATH}/source/safety_checkers/src",
     ],
 };
 
 const includedirs = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/safety_checkers/rm_pm/src/",
-        "${MCU_PLUS_SDK_PATH}/safety_checkers/rm_pm/src/soc/",
-        "${MCU_PLUS_SDK_PATH}/safety_checkers/rm_pm/src/soc/am62px/",
+        "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/",
+        "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/",
+        "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/am62ax/",
         "${MCU_PLUS_SDK_PATH}/source/drivers/hw_include/",
     ],
 };
 
+const cflags_r5f = {
+    common: [
+        "-Wno-extra",
+    ],
+};
+
 const buildOptionCombos = [
-    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+	{ device: device, cpu: "r5f", cgt: "ti-arm-clang"},
 ];
 
 function getComponentProperty() {
@@ -44,10 +49,10 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.filedirs = filedirs;
-    build_property.includes = includedirs;
-    if(buildOption.cpu.match(/r5f*/))
-    {
-        build_property.files = files_r5f;
+    if(buildOption.cpu.match(/r5f*/)) {
+		build_property.files = files;
+		build_property.includes = includedirs;
+        build_property.cflags = cflags_r5f;
     }
 
     return build_property;

@@ -59,11 +59,11 @@ safety_checkers_EXAMPLE_LIST =
 
 # RM PM safety checker library
 safety_checkers_rm_pm_COMP_LIST = safety_checkers_rm_pm
-safety_checkers_rm_pm_RELPATH = ti/safety_checkers/rm_pm
-safety_checkers_rm_pm_PATH = $(SAFETY_CHECKERS_COMP_PATH)/rm_pm
+safety_checkers_rm_pm_RELPATH = ti/safety_checkers/src
+safety_checkers_rm_pm_PATH = $(SAFETY_CHECKERS_COMP_PATH)/src
 safety_checkers_rm_pm_LIBNAME = safety_checkers_rm_pm
-safety_checkers_rm_pm_LIBPATH = $(SAFETY_CHECKERS_COMP_PATH)/rm_pm/lib
-safety_checkers_rm_pm_MAKEFILE = -fsrc/makefile
+safety_checkers_rm_pm_LIBPATH = $(SAFETY_CHECKERS_COMP_PATH)/lib
+safety_checkers_rm_pm_MAKEFILE = -fmakefile
 export safety_checkers_rm_pm_MAKEFILE
 export safety_checkers_rm_pm_LIBNAME
 export safety_checkers_rm_pm_LIBPATH

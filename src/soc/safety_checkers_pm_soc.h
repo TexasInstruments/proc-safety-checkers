@@ -68,9 +68,6 @@ extern "C" {
 #define SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(i)                   (SAFETY_CHECKERS_PM_PLL_CFG_BASE_ADDRESS + (0x1000)*i)
 #define SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(i)               (SAFETY_CHECKERS_PM_MCU_PLL_CFG_BASE_ADDRESS + (0x1000)*i)
 
-/** \brief WakeUp UART base address */
-#define  SAFETY_CHECKERS_PM_WKUP_UART_BASE_ADDRESS 		         (CSL_WKUP_UART0_BASE)
-
 /** \brief KICK lock values */
 #define SAFETY_CHECKERS_PM_KICK_LOCK                             (0x00000000U)
 #define SAFETY_CHECKERS_PM_LOCK_KEY0_OFFSET                      (0x10U)

@@ -135,34 +135,6 @@ int32_t SafetyCheckers_pmGetPllRegCfg(uintptr_t *pllRegCfg, uint32_t size);
 int32_t SafetyCheckers_pmVerifyPllRegCfg(uintptr_t *pllRegCfg, uint32_t size);
 
 /**
- *  \brief    API to get register configuration for WKUP UART module.
- *            E.g. When the WKUP UART register config is requested, SafetyCheckers_pmGetWkupUARTRegCfg
- *            API collects the WKUP UART configuration for devices present on the given platform.
- *            The collected configuration will be stored in wkupUartRegCfg array.
- *
- *  \param    wkupUartRegCfg    [IN/OUT]       Pointer to store the WKUP UART Register configuration
- *            size              [IN]           Size of register configuration memory
- *
- *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
- *
- */
-int32_t SafetyCheckers_pmGetWkupUARTRegCfg(uintptr_t *wkupUartRegCfg, uint32_t size);
-
-/**
- *  \brief    API to read back and compares the current register configuration for WKUP UART module.
- *            E.g. When the WKUP UART register verify is requested, SafetyCheckers_pmVerifyWkupUARTRegCfg
- *            API collects the WKUP UART configuration for devices present on the given platform 
- *            and compares with the received register configuration.
- *
- *  \param    wkupUartRegCfg    [IN/OUT]       Pointer to store the WKUP UART golden register configuration
- *            size              [IN]           Size of golden configuration memory
- *
- *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
- *
- */
-int32_t SafetyCheckers_pmVerifyWkupUARTRegCfg(uintptr_t *wkupUartRegCfg, uint32_t size);
-
-/**
  *  \brief    API to lock the PLL control module registers.
  *            E.g. When the PLL register lock is requested, SafetyCheckers_pmRegisterLock API 
  *            performs write operations to KICK registers which prevents the stray writes

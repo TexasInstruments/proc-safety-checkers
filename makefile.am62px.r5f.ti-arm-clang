@@ -13,24 +13,24 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=safety_checkers_rm_pm.am62x.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=safety_checkers_rm_pm.am62px.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     safety_checkers_pm.c \
 
 FILES_PATH_common = \
-    ${MCU_PLUS_SDK_PATH}/safety_checkers/rm_pm/src \
+    ${MCU_PLUS_SDK_PATH}/source/safety_checkers/src \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
-    -I${MCU_PLUS_SDK_PATH}/safety_checkers/rm_pm/src/ \
-    -I${MCU_PLUS_SDK_PATH}/safety_checkers/rm_pm/src/soc/ \
-    -I${MCU_PLUS_SDK_PATH}/safety_checkers/rm_pm/src/soc/am62x/ \
+    -I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/ \
+    -I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/ \
+    -I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/am62px/ \
     -I${MCU_PLUS_SDK_PATH}/source/drivers/hw_include/ \
 
 DEFINES_common := \
-    -DSOC_AM62X \
+    -DSOC_AM62PX \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
@@ -77,7 +77,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am62x/ti-arm-clang/$(PROFILE)/r5f/safety_checkers_rm_pm/
+OBJDIR := obj/am62px/ti-arm-clang/$(PROFILE)/r5f/safety_checkers_rm_pm/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

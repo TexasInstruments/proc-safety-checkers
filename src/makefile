@@ -1,5 +1,5 @@
 #
-# This file is the makefile for building rm_pm safety checker library.
+# This file is the makefile for building safety checkers library.
 #
 ifeq ($(RULES_MAKE), )
 include $(PDK_INSTALL_PATH)/ti/build/Rules.make
@@ -9,8 +9,8 @@ endif
 
 MODULE_NAME = safety_checkers_rm_pm
 
-SRCDIR = src
-INCDIR = src src/soc/ src/soc/$(SOC)/
+SRCDIR = .
+INCDIR = . soc/ soc/$(SOC)/
 
 INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC)/src/
 
@@ -19,9 +19,9 @@ INCLUDE_INTERNAL_INTERFACES = pdk csl
 SRCS_COMMON += safety_checkers_pm.c
 
 ifeq ($(SOC),$(filter $(SOC), j7200 j721e j721s2 j784s4))
-PACKAGE_SRCS_COMMON += src/makefile soc/safety_checkers_pm_soc.h soc/$(SOC)
+PACKAGE_SRCS_COMMON += makefile soc/safety_checkers_pm_soc.h soc/$(SOC)
 PACKAGE_SRCS_COMMON += safety_checkers_pm.c safety_checkers_pm.h safety_checkers_rm_pm_common.h
-PACKAGE_SRCS_COMMON += ../makefile ../../safety_checkers_component.mk
+PACKAGE_SRCS_COMMON += ../safety_checkers_component.mk
 endif
 
 # Core/SoC/platform specific source files and CFLAGS
