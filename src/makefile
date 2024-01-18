@@ -16,7 +16,7 @@ INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC)/src/
 
 INCLUDE_INTERNAL_INTERFACES = pdk csl
 
-SRCS_COMMON += safety_checkers_pm.c
+SRCS_COMMON += safety_checkers_pm.c safety_checkers_rm.c
 
 ifeq ($(SOC),$(filter $(SOC), j7200 j721e j721s2 j784s4))
 PACKAGE_SRCS_COMMON += makefile soc/safety_checkers_pm_soc.h soc/$(SOC)

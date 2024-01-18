@@ -32,21 +32,20 @@
  */
 
 /**
- *  \file     safety_checkers_pm_soc.h
+ *  \file    safety_checkers_rm.h
  *
- *  \brief    This file contains data structures for PM safety checker module
+ *  \brief   This file contains RM safety checkers library interfaces and related data structures.
  *
  */
 
-#ifndef SAFETY_CHECKERS_PM_SOC_H_
-#define SAFETY_CHECKERS_PM_SOC_H_
+#ifndef SAFETY_CHECKERS_RM_H_
+#define SAFETY_CHECKERS_RM_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include "cslr_soc.h"
-#include "safety_checkers_pm.h"
+/* None */
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,63 +55,41 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/** \brief WKUP PSC base address */
-#define SAFETY_CHECKERS_PM_WKUP_PSC_BASE_ADDRESS 		         (CSL_WKUP_PSC0_BASE)
-
-/** \brief PSC Power Domain(PD) STAT register offset */
-#define SAFETY_CHECKERS_PM_PSC_PD_STAT_OFFSET                    (0x200U)
-/** \brief PSC Module Domain(MD) STAT register offset */
-#define SAFETY_CHECKERS_PM_PSC_MD_STAT_OFFSET                    (0x800U)
-
-/** \brief Each PLL base addresses */
-#define SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(i)                   (SAFETY_CHECKERS_PM_PLL_CFG_BASE_ADDRESS + (0x1000)*i)
-#define SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(i)               (SAFETY_CHECKERS_PM_MCU_PLL_CFG_BASE_ADDRESS + (0x1000)*i)
-
-/** \brief KICK lock values */
-#define SAFETY_CHECKERS_PM_KICK_LOCK                             (0x00000000U)
-#define SAFETY_CHECKERS_PM_LOCK_KEY0_OFFSET                      (0x10U)
-#define SAFETY_CHECKERS_PM_LOCK_KEY1_OFFSET                      (0x14U)
+/** \brief Maximum number of registers in a register group */
+#define SAFETY_CHECKERS_RM_MAX_REG_PER_GROUP							(20U)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/**
- *
- * \brief     This defines the array holding register offset values for the each PLL's
- *
- */
-static uint32_t gSafetyCheckers_PmPllRegOffset0 [] =
-{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
- 0x40U, 0x44U, 0x80U, 0x84U, 0x88U, 0x8cU, 0x90U,
- 0x94U, 0x98U, 0x9cU, 0xA0U, 0xA4U};
-
-static uint32_t gSafetyCheckers_PmPllRegOffset1 [] =
-{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
- 0x40U, 0x44U, 0x60U, 0x80U, 0x84U};
-
-static uint32_t gSafetyCheckers_PmPllRegOffset2 [] =
-{0x00U, 0x08U, 0x20U, 0x24U, 0x38U, 0x50U, 0x60U,
- 0x64U, 0x80U, 0x84U};
-
-static uint32_t gSafetyCheckers_PmPllRegOffset3 [] =
-{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
- 0x40U, 0x44U, 0x60U, 0x64U, 0x80U, 0x84U, 0x88U,
- 0x8CU, 0x90U, 0x94U, 0x98U, 0x9CU, 0xA0U, 0xA4U,
- 0xA8U};
-
-static uint32_t gSafetyCheckers_PmPllRegOffset4 [] =
-{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
- 0x40U, 0x44U, 0x80U, 0x84U, 0x88U, 0x8cU, 0x90U,
- 0x94U, 0x9cU, 0xA0U};
-
-static uint32_t gSafetyCheckers_PmPllRegOffset5 [] =
-{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
- 0x40U, 0x44U, 0x80U, 0x84U, 0x88U, 0x8cU, 0x90U,
- 0x98U, 0x9cU};
+/* None */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
+/* ========================================================================== */
+
+/** 
+ *
+ * \brief   Structure to hold the base address and the register 
+ *          details of RM control module registers
+ *	 
+ */
+typedef struct 
+{
+    /* Base address of register region */
+    uint32_t baseAddr;
+    /* Number of different registers in a memory region */
+    uint32_t regNum;
+    /* Total number of registers in a register group */
+    uint32_t regArrayLen;
+    /* Start  address of register group */
+    uint32_t regStartOffset;
+    /* Block Offset Value for register group */
+    uint32_t regOffsetArr [SAFETY_CHECKERS_RM_MAX_REG_PER_GROUP];
+}  SafetyCheckers_RmRegData;
+
+/* ========================================================================== */
+/*                  Internal/Private Function Declarations                    */
 /* ========================================================================== */
 
 /* None */
@@ -121,7 +98,39 @@ static uint32_t gSafetyCheckers_PmPllRegOffset5 [] =
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-/* None */
+/**
+ * \brief    API to get the register value for all the RM control modules
+ *           E.g. When the RM register configuration is requested, SafetyCheckers_rmGetRegCfg
+ *           collects the register configuration values for all the RM control module by
+ *           getting the base address and the length from the structure. The collected
+ *           dump shall be considered as a golden sample and shall be returned to
+ *           the application.
+ *           Register values from the RM control modules 
+ *			 IR, IA, RA and DMA are used for taking the register dump.
+ *
+ * \param    rmRegCfg          [IN/OUT]       Pointer to store the Register configuration
+ *           size              [IN]           Size of reg cfg array
+ *
+ * \return   SAFETY_CHECKERS_SOK in case of success,else failure.
+ *
+ */
+int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size);
+
+/**
+ * \brief    API to read back and compare the RM control module registers data            
+ *           E.g. When the RM verify register dump is requested,
+ *           SafetyCheckers_rmVerifyRegCfg API collects the value for RM registers
+ *           and compares with the received register values.
+ *			 Register values from the RM control modules 
+ *			 IR, IA, RA and DMA are used for verifying the register dump.
+ *            
+ * \param    rmRegCfg                  [IN]       Pointer of the golden sample
+ *           size                      [IN]       Size of reg dump pointer
+ *
+ * \return   SAFETY_CHECKERS_SOK in case of success else failure
+ *
+ */
+int32_t SafetyCheckers_rmVerifyRegCfg(uintptr_t *rmRegCfg, uint32_t size);
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
@@ -133,4 +142,4 @@ static uint32_t gSafetyCheckers_PmPllRegOffset5 [] =
 }
 #endif
 
-#endif  /* #ifndef SAFETY_CHECKERS_PM_SOC_H_ */
+#endif /* #ifndef SAFETY_CHECKERS_RM_H_ */

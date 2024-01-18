@@ -6,6 +6,7 @@ let device = "am62px";
 const files_r5f={
     common: [
         "safety_checkers_pm.c",
+		"safety_checkers_rm.c",
     ],
 };
 

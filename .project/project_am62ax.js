@@ -5,6 +5,7 @@ let device = "am62ax";
 const files = {
     common: [
         "safety_checkers_pm.c",
+		"safety_checkers_rm.c",
     ],
 };
 
