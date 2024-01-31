@@ -60,15 +60,7 @@ extern "C" {
 #define SAFETY_CHECKERS_PM_PLL_CFG_BASE_ADDRESS                  (0x680000UL)
 #define SAFETY_CHECKERS_PM_MCU_PLL_CFG_BASE_ADDRESS              (0x4040000UL)
 
-/**
- *
- * \brief     This defines SOC specific details regarding the
- *            number of PD STAT and MD STAT registers for PSC and
- *            number of PLLs used and thier length
- *
- */
-
-/** \brief PSC register details */
+/** \brief PD STAT and MD STAT registers details for PSC */
 #define SAFETY_CHECKERS_PM_TOTAL_NUM_OF_WKUP_PD_STAT              (0x02U)
 #define SAFETY_CHECKERS_PM_TOTAL_NUM_OF_WKUP_MD_STAT              (0x0BU)
 #define SAFETY_CHECKERS_PM_TOTAL_NUM_OF_PD_STAT                   (0x0EU)
@@ -85,6 +77,25 @@ extern "C" {
 #define SAFETY_CHECKERS_PM_PLL15_LENGTH                           (0x8CU)
 #define SAFETY_CHECKERS_PM_PLL17_LENGTH                           (0x84U)
 #define SAFETY_CHECKERS_PM_MCU_PLL0_LENGTH                        (0x9CU)
+
+/**
+ * \brief  Total register dump size for PSC.
+ *         This has been calculated by the addition of PD STAT and MD STAT registers.
+ */
+#define SAFETY_CHECKERS_PM_PSC_REGDUMP_SIZE                       (SAFETY_CHECKERS_PM_TOTAL_NUM_OF_WKUP_PD_STAT + \
+                                                                   SAFETY_CHECKERS_PM_TOTAL_NUM_OF_WKUP_MD_STAT + \
+                                                                   SAFETY_CHECKERS_PM_TOTAL_NUM_OF_PD_STAT + \
+                                                                   SAFETY_CHECKERS_PM_TOTAL_NUM_OF_MD_STAT)
+
+/**
+ * \brief  Total register dump size for PLL.
+ *         This has been calculated by iterating through each element in SafetyCheckers_PmPllData
+ *         array. Within the loop, another loop calculates the total size by incrementing
+ *         totalLength until the length indicator matches the corresponding SafetyCheckers_PLL_regOffset
+ *         in the array. The final result is the total size of register offsets of each PLLs
+ *         stored in the totalLength variable.
+ */
+#define SAFETY_CHECKERS_PM_PLL_REGDUMP_SIZE                       (154U)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
