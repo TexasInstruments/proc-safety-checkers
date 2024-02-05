@@ -57,28 +57,26 @@ safety_checkers_LIB_LIST =
 ############################
 safety_checkers_EXAMPLE_LIST =
 
-# RM PM safety checker library
-safety_checkers_rm_pm_COMP_LIST = safety_checkers_rm_pm
-safety_checkers_rm_pm_RELPATH = ti/safety_checkers/src
-safety_checkers_rm_pm_PATH = $(SAFETY_CHECKERS_COMP_PATH)/src
-safety_checkers_rm_pm_LIBNAME = safety_checkers_rm_pm
-safety_checkers_rm_pm_LIBPATH = $(SAFETY_CHECKERS_COMP_PATH)/lib
-safety_checkers_rm_pm_MAKEFILE = -fmakefile
-export safety_checkers_rm_pm_MAKEFILE
-export safety_checkers_rm_pm_LIBNAME
-export safety_checkers_rm_pm_LIBPATH
-safety_checkers_rm_pm_BOARD_DEPENDENCY = no
-safety_checkers_rm_pm_CORE_DEPENDENCY = yes
-export safety_checkers_rm_pm_COMP_LIST
-export safety_checkers_rm_pm_BOARD_DEPENDENCY
-export safety_checkers_rm_pm_CORE_DEPENDENCY
-safety_checkers_rm_pm_PKG_LIST = safety_checkers_rm_pm
-safety_checkers_rm_pm_INCLUDE = $(safety_checkers_rm_pm_PATH)
-safety_checkers_rm_pm_SOCLIST = $(safety_checkers_SOCLIST)
-export safety_checkers_rm_pm_SOCLIST
-safety_checkers_rm_pm_$(SOC)_CORELIST = $(safety_checkers_$(SOC)_CORELIST)
-export safety_checkers_rm_pm_$(SOC)_CORELIST
-safety_checkers_LIB_LIST += safety_checkers_rm_pm
+# safety checker library
+safety_checkers_COMP_LIST = safety_checkers
+safety_checkers_RELPATH = ti/safety_checkers/src
+safety_checkers_PATH = $(SAFETY_CHECKERS_COMP_PATH)/src
+safety_checkers_LIBNAME = safety_checkers
+safety_checkers_LIBPATH = $(SAFETY_CHECKERS_COMP_PATH)/lib
+safety_checkers_MAKEFILE = -fmakefile
+export safety_checkers_MAKEFILE
+export safety_checkers_LIBNAME
+export safety_checkers_LIBPATH
+safety_checkers_BOARD_DEPENDENCY = no
+safety_checkers_CORE_DEPENDENCY = yes
+export safety_checkers_COMP_LIST
+export safety_checkers_BOARD_DEPENDENCY
+export safety_checkers_CORE_DEPENDENCY
+safety_checkers_PKG_LIST = safety_checkers
+safety_checkers_INCLUDE = $(safety_checkers_PATH)
+export safety_checkers_SOCLIST
+export safety_checkers_$(SOC)_CORELIST
+safety_checkers_LIB_LIST += safety_checkers
 
 export safety_checkers_LIB_LIST
 

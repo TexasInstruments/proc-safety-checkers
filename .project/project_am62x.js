@@ -32,7 +32,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "library";
-    property.name = "safety_checkers_rm_pm";
+    property.name = "safety_checkers";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 

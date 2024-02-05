@@ -34,7 +34,7 @@
 /**
  *  \file     safety_checkers_soc.h
  *
- *  \brief    This file contains J7200 specific data structures for PM safety checker module
+ *  \brief    This file contains J7200 specific data structures for safety checkers
  *
  */
 
@@ -103,21 +103,21 @@ extern "C" {
  * \brief       Structure defines PLL register base address and the total length of registers
  *
  */
-static SafetyCheckers_PLLData safetyCheckers_pllData[] =
+static SafetyCheckers_PmPllData gSafetyCheckers_PmPllData[] =
 {
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(0), SafetyCheckers_PLL_regOffset0,  SAFETY_CHECKERS_PM_PLL0_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(1), SafetyCheckers_PLL_regOffset4,  SAFETY_CHECKERS_PM_PLL1_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(2), SafetyCheckers_PLL_regOffset5,  SAFETY_CHECKERS_PM_PLL2_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(3), SafetyCheckers_PLL_regOffset0,  SAFETY_CHECKERS_PM_PLL3_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(4), SafetyCheckers_PLL_regOffset0,  SAFETY_CHECKERS_PM_PLL4_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(7), SafetyCheckers_PLL_regOffset0,  SAFETY_CHECKERS_PM_PLL7_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(8), SafetyCheckers_PLL_regOffset0,  SAFETY_CHECKERS_PM_PLL8_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(12), SafetyCheckers_PLL_regOffset1, SAFETY_CHECKERS_PM_PLL12_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(14), SafetyCheckers_PLL_regOffset0, SAFETY_CHECKERS_PM_PLL14_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(0), gSafetyCheckers_PmPllRegOffset0,  SAFETY_CHECKERS_PM_PLL0_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(1), gSafetyCheckers_PmPllRegOffset4,  SAFETY_CHECKERS_PM_PLL1_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(2), gSafetyCheckers_PmPllRegOffset5,  SAFETY_CHECKERS_PM_PLL2_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(3), gSafetyCheckers_PmPllRegOffset0,  SAFETY_CHECKERS_PM_PLL3_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(4), gSafetyCheckers_PmPllRegOffset0,  SAFETY_CHECKERS_PM_PLL4_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(7), gSafetyCheckers_PmPllRegOffset0,  SAFETY_CHECKERS_PM_PLL7_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(8), gSafetyCheckers_PmPllRegOffset0,  SAFETY_CHECKERS_PM_PLL8_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(12), gSafetyCheckers_PmPllRegOffset1, SAFETY_CHECKERS_PM_PLL12_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(14), gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL14_LENGTH},
 
-    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(0), SafetyCheckers_PLL_regOffset0,  SAFETY_CHECKERS_PM_MCU_PLL0_LENGTH},
-    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(1), SafetyCheckers_PLL_regOffset0,  SAFETY_CHECKERS_PM_MCU_PLL1_LENGTH},
-    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(2), SafetyCheckers_PLL_regOffset0,  SAFETY_CHECKERS_PM_MCU_PLL2_LENGTH},
+    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(0), gSafetyCheckers_PmPllRegOffset0,  SAFETY_CHECKERS_PM_MCU_PLL0_LENGTH},
+    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(1), gSafetyCheckers_PmPllRegOffset0,  SAFETY_CHECKERS_PM_MCU_PLL1_LENGTH},
+    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(2), gSafetyCheckers_PmPllRegOffset0,  SAFETY_CHECKERS_PM_MCU_PLL2_LENGTH},
 };
 
 /** 
@@ -125,7 +125,7 @@ static SafetyCheckers_PLLData safetyCheckers_pllData[] =
  * \brief    Structure defines PSC register base address and the total length of registers
  *
  */
-static SafetyCheckers_PSCData safetyCheckers_pscData[] =
+static SafetyCheckers_PmPscData gSafetyCheckers_PmPscData[] =
 {
        {SAFETY_CHECKERS_PM_WKUP_PSC_BASE_ADDRESS,   SAFETY_CHECKERS_PM_TOTAL_NUM_OF_WKUP_PD_STAT, SAFETY_CHECKERS_PM_TOTAL_NUM_OF_WKUP_MD_STAT},
        {SAFETY_CHECKERS_PM_PSC_BASE_ADDRESS,        SAFETY_CHECKERS_PM_TOTAL_NUM_OF_PD_STAT,      SAFETY_CHECKERS_PM_TOTAL_NUM_OF_MD_STAT},

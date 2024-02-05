@@ -45,10 +45,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include <stdint.h>
-#include <hw_types.h>
-#include <safety_checkers_rm_pm_common.h>
-#include <safety_checkers_soc.h>
+/* None */
 
 #ifdef __cplusplus
 extern "C" {
@@ -64,7 +61,36 @@ extern "C" {
 /*                         Structure Declarations                             */
 /* ========================================================================== */
 
-/* None */
+/**
+ *
+ * \brief   Structure to hold the base address and the length of PLLs
+ *
+ */
+typedef struct
+{
+    /* Base address of PLL control module registers */
+    uint32_t baseAddr;
+	/* Pointer to the register offset array for each PLL */
+	uint32_t *regOffsetArr;
+    /* Total length of each PLL registers */
+    uint32_t length;
+} SafetyCheckers_PmPllData;
+
+/**
+ *
+ * \brief   Structure to hold the base address and the number of
+ *          Module Domain(MD) stat and Power Domain(PD) stat registers of PSC
+ *
+ */
+typedef struct
+{
+    /* Domain base address of PSC module registers */
+    uint32_t baseAddr;
+    /* Total number of PD stat registers */
+    uint32_t pdStat;
+    /* Total number of MD stat registers */
+    uint32_t mdStat;
+} SafetyCheckers_PmPscData;
 
 /* ========================================================================== */
 /*                  Internal/Private Function Declarations                    */

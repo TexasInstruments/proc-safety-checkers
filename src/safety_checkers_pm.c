@@ -42,7 +42,11 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
+#include <stdint.h>
+#include <cslr.h>
 #include <safety_checkers_pm.h>
+#include <safety_checkers_common.h>
+#include <safety_checkers_soc.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -89,9 +93,9 @@ int32_t SafetyCheckers_pmGetPscRegCfg(uintptr_t *pscRegCfg, uint32_t size)
 
     if(status == SAFETY_CHECKERS_SOK)
     {
-        for (totalPSC = 0; totalPSC < (sizeof(safetyCheckers_pscData) / sizeof(SafetyCheckers_PSCData)); totalPSC++)
+        for (totalPSC = 0; totalPSC < (sizeof(gSafetyCheckers_PmPscData) / sizeof(SafetyCheckers_PmPscData)); totalPSC++)
         {
-            totalLength += safetyCheckers_pscData[totalPSC].pdStat + safetyCheckers_pscData[totalPSC].mdStat;
+            totalLength += gSafetyCheckers_PmPscData[totalPSC].pdStat + gSafetyCheckers_PmPscData[totalPSC].mdStat;
         }
 
         if (totalLength > size)
@@ -103,17 +107,17 @@ int32_t SafetyCheckers_pmGetPscRegCfg(uintptr_t *pscRegCfg, uint32_t size)
 
     if(status == SAFETY_CHECKERS_SOK)
     {
-        for (totalPSC = 0; totalPSC < (sizeof(safetyCheckers_pscData) / sizeof(SafetyCheckers_PSCData)); totalPSC++)
+        for (totalPSC = 0; totalPSC < (sizeof(gSafetyCheckers_PmPscData) / sizeof(SafetyCheckers_PmPscData)); totalPSC++)
         {
-            for(pd = 0; pd < (safetyCheckers_pscData[totalPSC].pdStat); pd++)
+            for(pd = 0; pd < (gSafetyCheckers_PmPscData[totalPSC].pdStat); pd++)
             {
-                pscRegCfg[offset] = CSL_REG32_RD((safetyCheckers_pscData[totalPSC].baseAddr + SAFETY_CHECKERS_PM_PSC_PD_STAT_OFFSET) + (0x4U * pd));
+                pscRegCfg[offset] = CSL_REG32_RD((gSafetyCheckers_PmPscData[totalPSC].baseAddr + SAFETY_CHECKERS_PM_PSC_PD_STAT_OFFSET) + (0x4U * pd));
                 offset++;
             }
 
-            for(md = 0; md < (safetyCheckers_pscData[totalPSC].mdStat); md++)
+            for(md = 0; md < (gSafetyCheckers_PmPscData[totalPSC].mdStat); md++)
             {
-                pscRegCfg[offset] = CSL_REG32_RD((safetyCheckers_pscData[totalPSC].baseAddr + SAFETY_CHECKERS_PM_PSC_MD_STAT_OFFSET) + (0x4U * md));
+                pscRegCfg[offset] = CSL_REG32_RD((gSafetyCheckers_PmPscData[totalPSC].baseAddr + SAFETY_CHECKERS_PM_PSC_MD_STAT_OFFSET) + (0x4U * md));
                 offset++;
             }
         }
@@ -141,9 +145,9 @@ int32_t SafetyCheckers_pmVerifyPscRegCfg(uintptr_t *pscRegCfg, uint32_t size)
 
     if(status == SAFETY_CHECKERS_SOK)
     {
-        for (totalPSC = 0; totalPSC < (sizeof(safetyCheckers_pscData) / sizeof(SafetyCheckers_PSCData)); totalPSC++)
+        for (totalPSC = 0; totalPSC < (sizeof(gSafetyCheckers_PmPscData) / sizeof(SafetyCheckers_PmPscData)); totalPSC++)
         {
-            totalLength += safetyCheckers_pscData[totalPSC].pdStat + safetyCheckers_pscData[totalPSC].mdStat;
+            totalLength += gSafetyCheckers_PmPscData[totalPSC].pdStat + gSafetyCheckers_PmPscData[totalPSC].mdStat;
         }
 
         if (totalLength > size)
@@ -155,20 +159,20 @@ int32_t SafetyCheckers_pmVerifyPscRegCfg(uintptr_t *pscRegCfg, uint32_t size)
 
     if(status == SAFETY_CHECKERS_SOK)
     {
-        for (totalPSC = 0; totalPSC < (sizeof(safetyCheckers_pscData) / sizeof(SafetyCheckers_PSCData)); totalPSC++)
+        for (totalPSC = 0; totalPSC < (sizeof(gSafetyCheckers_PmPscData) / sizeof(SafetyCheckers_PmPscData)); totalPSC++)
         {
-            for(pd = 0; pd < (safetyCheckers_pscData[totalPSC].pdStat); pd++)
+            for(pd = 0; pd < (gSafetyCheckers_PmPscData[totalPSC].pdStat); pd++)
             {
-                readData = CSL_REG32_RD((safetyCheckers_pscData[totalPSC].baseAddr + SAFETY_CHECKERS_PM_PSC_PD_STAT_OFFSET) + (0x4U * pd));
+                readData = CSL_REG32_RD((gSafetyCheckers_PmPscData[totalPSC].baseAddr + SAFETY_CHECKERS_PM_PSC_PD_STAT_OFFSET) + (0x4U * pd));
 
                 mismatchCnt |= pscRegCfg[offset] ^ readData;
 
                 offset++;
             }
 
-            for(md = 0; md < (safetyCheckers_pscData[totalPSC].mdStat); md++)
+            for(md = 0; md < (gSafetyCheckers_PmPscData[totalPSC].mdStat); md++)
             {
-                readData = CSL_REG32_RD((safetyCheckers_pscData[totalPSC].baseAddr + SAFETY_CHECKERS_PM_PSC_MD_STAT_OFFSET) + (0x4U * md));
+                readData = CSL_REG32_RD((gSafetyCheckers_PmPscData[totalPSC].baseAddr + SAFETY_CHECKERS_PM_PSC_MD_STAT_OFFSET) + (0x4U * md));
 
                 mismatchCnt |= pscRegCfg[offset] ^ readData;
 
@@ -200,10 +204,10 @@ int32_t SafetyCheckers_pmGetPllRegCfg(uintptr_t *pllRegCfg, uint32_t size)
 
     if(status == SAFETY_CHECKERS_SOK)
     {
-        for (length = 0; length < (sizeof(safetyCheckers_pllData) / sizeof(SafetyCheckers_PLLData)); length++)
+        for (length = 0; length < (sizeof(gSafetyCheckers_PmPllData) / sizeof(SafetyCheckers_PmPllData)); length++)
         {
             pllLength = 0;
-            while((safetyCheckers_pllData[length].length) != safetyCheckers_pllData[length].regOffsetArr[pllLength])
+            while((gSafetyCheckers_PmPllData[length].length) != gSafetyCheckers_PmPllData[length].regOffsetArr[pllLength])
 		    {
                 pllLength++;
                 totalLength++;
@@ -219,12 +223,12 @@ int32_t SafetyCheckers_pmGetPllRegCfg(uintptr_t *pllRegCfg, uint32_t size)
 
     if(status == SAFETY_CHECKERS_SOK)
     {
-        for (length = 0; length < (sizeof(safetyCheckers_pllData) / sizeof(SafetyCheckers_PLLData)); length++)
+        for (length = 0; length < (sizeof(gSafetyCheckers_PmPllData) / sizeof(SafetyCheckers_PmPllData)); length++)
         {
 		    pllLength = 0;
-            while((safetyCheckers_pllData[length].length) != safetyCheckers_pllData[length].regOffsetArr[pllLength])
+            while((gSafetyCheckers_PmPllData[length].length) != gSafetyCheckers_PmPllData[length].regOffsetArr[pllLength])
 		    {
-			    pllRegCfg[offset] = CSL_REG32_RD((safetyCheckers_pllData[length].baseAddr) + safetyCheckers_pllData[length].regOffsetArr[pllLength]);
+			    pllRegCfg[offset] = CSL_REG32_RD((gSafetyCheckers_PmPllData[length].baseAddr) + gSafetyCheckers_PmPllData[length].regOffsetArr[pllLength]);
 
                 offset++;
 			    pllLength++;
@@ -253,10 +257,10 @@ int32_t SafetyCheckers_pmVerifyPllRegCfg(uintptr_t *pllRegCfg, uint32_t size)
 
     if(status == SAFETY_CHECKERS_SOK)
     {
-        for (length = 0; length < (sizeof(safetyCheckers_pllData) / sizeof(SafetyCheckers_PLLData)); length++)
+        for (length = 0; length < (sizeof(gSafetyCheckers_PmPllData) / sizeof(SafetyCheckers_PmPllData)); length++)
         {
             pllLength = 0;
-            while((safetyCheckers_pllData[length].length) != safetyCheckers_pllData[length].regOffsetArr[pllLength])
+            while((gSafetyCheckers_PmPllData[length].length) != gSafetyCheckers_PmPllData[length].regOffsetArr[pllLength])
 		    {
                 pllLength++;
                 totalLength++;
@@ -272,12 +276,12 @@ int32_t SafetyCheckers_pmVerifyPllRegCfg(uintptr_t *pllRegCfg, uint32_t size)
 
     if(status == SAFETY_CHECKERS_SOK)
     {
-        for (length = 0; length < (sizeof(safetyCheckers_pllData) / sizeof(SafetyCheckers_PLLData)); length++)
+        for (length = 0; length < (sizeof(gSafetyCheckers_PmPllData) / sizeof(SafetyCheckers_PmPllData)); length++)
         {
 		    pllLength = 0;
-		    while ((safetyCheckers_pllData[length].length) != safetyCheckers_pllData[length].regOffsetArr[pllLength])
+		    while ((gSafetyCheckers_PmPllData[length].length) != gSafetyCheckers_PmPllData[length].regOffsetArr[pllLength])
             {
-                readData = CSL_REG32_RD((safetyCheckers_pllData[length].baseAddr) + safetyCheckers_pllData[length].regOffsetArr[pllLength]);
+                readData = CSL_REG32_RD((gSafetyCheckers_PmPllData[length].baseAddr) + gSafetyCheckers_PmPllData[length].regOffsetArr[pllLength]);
 
                 mismatchCnt |= pllRegCfg[offset] ^ readData;
 
@@ -302,14 +306,14 @@ int32_t SafetyCheckers_pmRegisterLock(void)
     uint32_t pllLockCnt = 0;
     int32_t  status = SAFETY_CHECKERS_FAIL;
 
-    for (index = 0; index < (sizeof(safetyCheckers_pllData) / sizeof(SafetyCheckers_PLLData)); index++)
+    for (index = 0; index < (sizeof(gSafetyCheckers_PmPllData) / sizeof(SafetyCheckers_PmPllData)); index++)
     {
         /* Lock the PLL register access */
-        CSL_REG32_WR((safetyCheckers_pllData[index].baseAddr + SAFETY_CHECKERS_PM_LOCK_KEY0_OFFSET), SAFETY_CHECKERS_PM_KICK_LOCK);
-        CSL_REG32_WR((safetyCheckers_pllData[index].baseAddr + SAFETY_CHECKERS_PM_LOCK_KEY1_OFFSET), SAFETY_CHECKERS_PM_KICK_LOCK);
+        CSL_REG32_WR((gSafetyCheckers_PmPllData[index].baseAddr + SAFETY_CHECKERS_PM_LOCK_KEY0_OFFSET), SAFETY_CHECKERS_PM_KICK_LOCK);
+        CSL_REG32_WR((gSafetyCheckers_PmPllData[index].baseAddr + SAFETY_CHECKERS_PM_LOCK_KEY1_OFFSET), SAFETY_CHECKERS_PM_KICK_LOCK);
 
         /* Confirm the PLL registers are locked */
-        lockStat = CSL_REG32_RD(safetyCheckers_pllData[index].baseAddr + SAFETY_CHECKERS_PM_LOCK_KEY0_OFFSET);
+        lockStat = CSL_REG32_RD(gSafetyCheckers_PmPllData[index].baseAddr + SAFETY_CHECKERS_PM_LOCK_KEY0_OFFSET);
 
         /* check for PLL lock confirmation*/
         if((lockStat & 0x1U) == 0x0U)
@@ -318,7 +322,7 @@ int32_t SafetyCheckers_pmRegisterLock(void)
         }
     }
 
-    if(pllLockCnt == (sizeof(safetyCheckers_pllData) / sizeof(SafetyCheckers_PLLData)))
+    if(pllLockCnt == (sizeof(gSafetyCheckers_PmPllData) / sizeof(SafetyCheckers_PmPllData)))
     {
         status = SAFETY_CHECKERS_SOK;
     }

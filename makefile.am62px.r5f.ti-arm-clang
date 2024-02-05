@@ -13,7 +13,7 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=safety_checkers_rm_pm.am62px.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=safety_checkers.am62px.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     safety_checkers_pm.c \
@@ -77,7 +77,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am62px/ti-arm-clang/$(PROFILE)/r5f/safety_checkers_rm_pm/
+OBJDIR := obj/am62px/ti-arm-clang/$(PROFILE)/r5f/safety_checkers/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

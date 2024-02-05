@@ -32,14 +32,14 @@
  */
 
 /**
- *  \file     safety_checkers_rm_pm_common.h
+ *  \file     safety_checkers_common.h
  *
- *  \brief    This file contains RM and PM safety checkers common data structures.
+ *  \brief    This file contains safety checkers common data structures.
  *
  */
 
-#ifndef SAFETY_CHECKERS_RM_PM_COMMON_H_
-#define SAFETY_CHECKERS_RM_PM_COMMON_H_
+#ifndef SAFETY_CHECKERS_COMMON_H_
+#define SAFETY_CHECKERS_COMMON_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -172,4 +172,4 @@ extern "C" {
 }
 #endif
 
-#endif  /* #ifndef SAFETY_CHECKERS_RM_PM_COMMON_H_ */
+#endif  /* #ifndef SAFETY_CHECKERS_COMMON_H_ */

@@ -7,7 +7,7 @@ else
 include $(RULES_MAKE)
 endif
 
-MODULE_NAME = safety_checkers_rm_pm
+MODULE_NAME = safety_checkers
 
 SRCDIR = .
 INCDIR = . soc/ soc/$(SOC)/
@@ -20,7 +20,7 @@ SRCS_COMMON += safety_checkers_pm.c
 
 ifeq ($(SOC),$(filter $(SOC), j7200 j721e j721s2 j784s4))
 PACKAGE_SRCS_COMMON += makefile soc/safety_checkers_pm_soc.h soc/$(SOC)
-PACKAGE_SRCS_COMMON += safety_checkers_pm.c safety_checkers_pm.h safety_checkers_rm_pm_common.h
+PACKAGE_SRCS_COMMON += safety_checkers_pm.c safety_checkers_pm.h safety_checkers_common.h
 PACKAGE_SRCS_COMMON += ../safety_checkers_component.mk
 endif
 

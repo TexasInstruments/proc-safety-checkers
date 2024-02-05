@@ -45,7 +45,6 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include "safety_checkers_pm_soc.h"
 #include "cslr_soc.h"
 
 #ifdef __cplusplus
@@ -82,31 +81,31 @@ extern "C" {
  * \brief     This defines the array holding register offset values for the each PLL's
  *
  */
-static uint32_t SafetyCheckers_PLL_regOffset0 [] =
+static uint32_t gSafetyCheckers_PmPllRegOffset0 [] =
 {0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
  0x40U, 0x44U, 0x80U, 0x84U, 0x88U, 0x8cU, 0x90U,
  0x94U, 0x98U, 0x9cU, 0xA0U, 0xA4U};
 
-static uint32_t SafetyCheckers_PLL_regOffset1 [] =
+static uint32_t gSafetyCheckers_PmPllRegOffset1 [] =
 {0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
  0x40U, 0x44U, 0x60U, 0x80U, 0x84U};
 
-static uint32_t SafetyCheckers_PLL_regOffset2 [] =
+static uint32_t gSafetyCheckers_PmPllRegOffset2 [] =
 {0x00U, 0x08U, 0x20U, 0x24U, 0x38U, 0x50U, 0x60U,
  0x64U, 0x80U, 0x84U};
 
-static uint32_t SafetyCheckers_PLL_regOffset3 [] =
+static uint32_t gSafetyCheckers_PmPllRegOffset3 [] =
 {0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
  0x40U, 0x44U, 0x60U, 0x64U, 0x80U, 0x84U, 0x88U,
  0x8CU, 0x90U, 0x94U, 0x98U, 0x9CU, 0xA0U, 0xA4U,
  0xA8U};
 
-static uint32_t SafetyCheckers_PLL_regOffset4 [] =
+static uint32_t gSafetyCheckers_PmPllRegOffset4 [] =
 {0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
  0x40U, 0x44U, 0x80U, 0x84U, 0x88U, 0x8cU, 0x90U,
  0x94U, 0x9cU, 0xA0U};
 
-static uint32_t SafetyCheckers_PLL_regOffset5 [] =
+static uint32_t gSafetyCheckers_PmPllRegOffset5 [] =
 {0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
  0x40U, 0x44U, 0x80U, 0x84U, 0x88U, 0x8cU, 0x90U,
  0x98U, 0x9cU};
@@ -115,37 +114,7 @@ static uint32_t SafetyCheckers_PLL_regOffset5 [] =
 /*                         Structure Declarations                             */
 /* ========================================================================== */
 
-/**
- *
- * \brief   Structure to hold the base address and the length of PLLs
- *	 
- */
-typedef struct
-{
-    /* Base address of PLL control module registers */
-    uint32_t baseAddr;
-	/* Pointer to the register offset array for each PLL */
-	uint32_t *regOffsetArr;
-    /* Total length of each PLL registers */
-    uint32_t length;
-} SafetyCheckers_PLLData;
-
-/** 
- *
- * \brief   Structure to hold the base address and the number of
- *          Module Domain(MD) stat and Power Domain(PD) stat registers of PSC
- *
- */
-typedef struct
-{
-    /* Domain base address of PSC module registers */
-    uint32_t baseAddr;
-    /* Total number of PD stat registers */
-    uint32_t pdStat;
-    /* Total number of MD stat registers */
-    uint32_t mdStat;
-} SafetyCheckers_PSCData;
-
+/* None */
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
