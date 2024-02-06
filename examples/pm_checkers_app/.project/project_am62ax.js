@@ -17,7 +17,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
-		"../../../../../../source/drivers/device_manager/sciclient_direct", /* Sciclient_direct base */
+		"../../../../../../drivers/device_manager/sciclient_direct", /* Sciclient_direct base */
     ],
 };
 

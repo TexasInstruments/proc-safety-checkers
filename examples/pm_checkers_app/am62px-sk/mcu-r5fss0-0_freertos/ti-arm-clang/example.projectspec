@@ -104,7 +104,7 @@
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../../../../../../source/drivers/device_manager/sciclient_direct/sciclient_pm.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../../../../drivers/device_manager/sciclient_direct/sciclient_pm.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
