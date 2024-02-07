@@ -46,6 +46,7 @@
 /* ========================================================================== */
 
 #if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#include <kernel/dpl/SystemP.h>
 #include <kernel/dpl/DebugP.h>
 #define SAFETY_CHECKERS_log                                         DebugP_log
 #elif defined (SOC_J7200) || defined (SOC_J721E) || defined (SOC_J721S2) || defined (SOC_J784S4)
@@ -63,7 +64,7 @@ extern "C" {
 /* ========================================================================== */
 
 /** \brief Safety checkers status OK */
-#define SAFETY_CHECKERS_SOK                                          (0U)
+#define SAFETY_CHECKERS_SOK                                          (0)
 /** \brief Safety checkers status FAIL */
 #define SAFETY_CHECKERS_FAIL                                         (-1)
 /** \brief Safety checkers status register data mismatch */

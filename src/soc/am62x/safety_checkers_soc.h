@@ -90,6 +90,8 @@ extern "C" {
 #define SAFETY_CHECKERS_PM_PLL17_LENGTH                           (0x84U)
 #define SAFETY_CHECKERS_PM_MCU_PLL0_LENGTH                        (0x94U)
 
+/** \brief Maximum number of firewalls that can be accessed */
+#define TIFS_CHECKER_FWL_MAX_NUM                                  (0x10U)
 /**
  * \brief  Total register dump size for PSC.
  *         This has been calculated by the addition of PD STAT and MD STAT registers.

@@ -240,6 +240,9 @@ extern "C" {
 #define SAFETY_CHECKERS_RM_UDMA_GCFG_SUB_MODULE0                  (13U)
 #define SAFETY_CHECKERS_RM_UDMA_GCFG_SUB_MODULE1                  (19U)
 
+/** \brief Maximum number of firewalls that can be accessed */
+#define TIFS_CHECKER_FWL_MAX_NUM                                  (0x1B4U)
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */

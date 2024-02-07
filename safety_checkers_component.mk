@@ -196,6 +196,30 @@ rm_checkers_app_baremetal_SBL_APPIMAGEGEN = yes
 export rm_checkers_app_baremetal_SBL_APPIMAGEGEN
 endif
 
+# TIFS safety checkers app
+define TIFS_CHECKERS_APP_RULE
+export tifs_checkers_app_$(1)_COMP_LIST = tifs_checkers_app_$(1)
+tifs_checkers_app_$(1)_RELPATH = ti/safety_checkers/examples/tifs_checkers_app
+tifs_checkers_app_$(1)_PATH = $(SAFETY_CHECKERS_COMP_PATH)/examples/tifs_checkers_app
+export tifs_checkers_app_$(1)_BOARD_DEPENDENCY = yes
+export tifs_checkers_app_$(1)_CORE_DEPENDENCY = yes
+export tifs_checkers_app_$(1)_MAKEFILE = -fmakefile BUILD_OS_TYPE=$(1)
+tifs_checkers_app_$(1)_PKG_LIST = tifs_checkers_app_$(1)
+tifs_checkers_app_$(1)_INCLUDE = $(tifs_checkers_app_$(1)_PATH)
+export tifs_checkers_app_$(1)_BOARDLIST = $(filter $(DEFAULT_BOARDLIST_$(1)), $(safety_checkers_BOARDLIST) )
+export tifs_checkers_app_$(1)_$(SOC)_CORELIST = $(filter $(DEFAULT_$(SOC)_CORELIST_$(1)), $(safety_checkers_$(SOC)_CORELIST))
+export tifs_checkers_app_$(1)_SBL_APPIMAGEGEN = yes
+ifneq ($(1),$(filter $(1), safertos))
+safety_checkers_EXAMPLE_LIST += tifs_checkers_app_$(1)
+else
+ifneq ($(wildcard $(SAFERTOS_KERNEL_INSTALL_PATH)),)
+safety_checkers_EXAMPLE_LIST += tifs_checkers_app_$(1)
+endif
+endif
+endef
+TIFS_CHECKERS_APP_MACRO_LIST := $(foreach curos, $(safety_checkers_RTOS_LIST), $(call TIFS_CHECKERS_APP_RULE,$(curos)))
+$(eval ${TIFS_CHECKERS_APP_MACRO_LIST})
+
 export safety_checkers_LIB_LIST
 export safety_checkers_EXAMPLE_LIST
 
