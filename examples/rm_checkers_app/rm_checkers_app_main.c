@@ -72,7 +72,7 @@ void SafetyCheckersApp_rmRun(void *arg0);
 /*                         Internal Function Declarations                     */
 /* ========================================================================== */
 
-void SafetyCheckersApp_rmCheckersTask(void* a0, void* a1);
+static void SafetyCheckersApp_rmCheckersTask(void* a0, void* a1);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
