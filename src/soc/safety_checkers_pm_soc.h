@@ -33,7 +33,7 @@
 
  /**
  *  \defgroup SAFETY_CHECKERS_PM PM Safety Checkers Library
- *  \ingroup PM SAFETY CHECKERS
+ *  \ingroup  PM SAFETY CHECKERS
  */
 
 /**
@@ -60,7 +60,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup  SAFETY_CHECKERS_PM_MACROS  SAFETY_CHECKERS_PM PM safety checkers macro definition
+ * @defgroup SAFETY_CHECKERS_PM_MACROS  SAFETY_CHECKERS_PM PM safety checkers macro definition
  *  @{
  */
 
@@ -90,7 +90,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup  SAFETY_CHECKERS_PM_GLOBAL_VAR  SAFETY_CHECKERS_PM PM safety checkers global variables declarations
+ * @defgroup SAFETY_CHECKERS_PM_GLOBAL_VAR  SAFETY_CHECKERS_PM PM safety checkers global variables declarations
  *  @{
  */
 

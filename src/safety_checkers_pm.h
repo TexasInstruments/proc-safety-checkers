@@ -33,7 +33,7 @@
 
  /**
  *  \defgroup SAFETY_CHECKERS_PM PM Safety Checkers Library
- *  \ingroup PM SAFETY CHECKERS
+ *  \ingroup  PM SAFETY CHECKERS
  */
 
 /**
@@ -65,7 +65,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup  SAFETY_CHECKERS_PM_DATA_STRUCTURES  SAFETY_CHECKERS_PM structure definition
+ * @defgroup SAFETY_CHECKERS_PM_DATA_STRUCTURES  SAFETY_CHECKERS_PM structure definition
  *  @{
  */
 
@@ -115,7 +115,7 @@ typedef struct
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup  SAFETY_CHECKERS_PM_MODULE_API  SAFETY_CHECKERS PM checkers APIs
+ * @defgroup SAFETY_CHECKERS_PM_MODULE_API  SAFETY_CHECKERS PM checkers APIs
  *  @{
  */
 
@@ -131,7 +131,6 @@ typedef struct
  *            The collected configuration will be stored in pscRegCfg array.
  *
  *  \param    pscRegCfg         [IN/OUT]       Pointer to store the PSC Register configuration
- *
  *  \param    size              [IN]           Size of register configuration memory
  *
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
@@ -146,7 +145,6 @@ int32_t SafetyCheckers_pmGetPscRegCfg(uintptr_t *pscRegCfg, uint32_t size);
  *            and compares with the received register configuration.
  *
  *  \param    pscRegCfg         [IN/OUT]       Pointer to store the PSC golden register configuration
- *
  *  \param    size              [IN]           Size of golden configuration memory
  *
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
@@ -162,7 +160,6 @@ int32_t SafetyCheckers_pmVerifyPscRegCfg(uintptr_t *pscRegCfg, uint32_t size);
  *            will be stored in pllRegCfg array.
  *
  *  \param    pllRegCfg         [IN/OUT]       Pointer to store the PLL Register configuration
- *
  *  \param    size              [IN]           Size of register configuration memory
  *
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
@@ -177,7 +174,6 @@ int32_t SafetyCheckers_pmGetPllRegCfg(uintptr_t *pllRegCfg, uint32_t size);
  *            and compares with the received register configuration.
  *
  *  \param    pllRegCfg         [IN/OUT]       Pointer to store the PLL golden register configuration
- *
  *  \param    size              [IN]           Size of golden configuration memory
  *
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
