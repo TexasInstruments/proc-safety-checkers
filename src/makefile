@@ -11,9 +11,10 @@ MODULE_NAME = safety_checkers
 
 SRCDIR = .
 INCDIR = . soc/ soc/$(SOC)/
-
 INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC)/src/
+INCDIR += $(PDK_INSTALL_PATH)/ti/drv/sciclient
 
+INCLUDE_EXTERNAL_INTERFACES = pdk
 INCLUDE_INTERNAL_INTERFACES = pdk csl
 
 SRCS_COMMON += safety_checkers_pm.c safety_checkers_rm.c safety_checkers_tifs.c
