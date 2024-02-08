@@ -31,6 +31,11 @@
  *
  */
 
+ /**
+ *  \defgroup SAFETY_CHECKERS_RM RM Safety Checkers Library
+ *  \ingroup  RM SAFETY CHECKERS
+ */
+
 /**
  *  \file    safety_checkers_rm.h
  *
@@ -51,6 +56,13 @@
 extern "C" {
 #endif
 
+/**
+ * @ingroup SAFETY_CHECKERS_RM
+ *
+ * @defgroup SAFETY_CHECKERS_RM_MACROS  SAFETY_CHECKERS_RM macro definition
+ *  @{
+ */
+
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -58,11 +70,20 @@ extern "C" {
 /** \brief Maximum number of registers in a register group */
 #define SAFETY_CHECKERS_RM_MAX_REG_PER_GROUP							(20U)
 
+/** @} */
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
 /* None */
+
+/**
+ * @ingroup SAFETY_CHECKERS_RM
+ *
+ * @defgroup SAFETY_CHECKERS_RM_STRUCTURE  SAFETY_CHECKERS_RM structure definition
+ *  @{
+ */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -88,11 +109,20 @@ typedef struct
     uint32_t regOffsetArr [SAFETY_CHECKERS_RM_MAX_REG_PER_GROUP];
 }  SafetyCheckers_RmRegData;
 
+/** @} */
+
 /* ========================================================================== */
 /*                  Internal/Private Function Declarations                    */
 /* ========================================================================== */
 
 /* None */
+
+/**
+ * @ingroup SAFETY_CHECKERS_RM
+ *
+ * @defgroup SAFETY_CHECKERS_RM_MODULE_API  SAFETY_CHECKERS RM checkers APIs
+ *  @{
+ */
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -109,7 +139,7 @@ typedef struct
  *			 IR, IA, RA and DMA are used for taking the register dump.
  *
  * \param    rmRegCfg          [IN/OUT]       Pointer to store the Register configuration
- *           size              [IN]           Size of reg cfg array
+ * \param    size              [IN]           Size of reg cfg array
  *
  * \return   SAFETY_CHECKERS_SOK in case of success,else failure.
  *
@@ -125,12 +155,14 @@ int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size);
  *			 IR, IA, RA and DMA are used for verifying the register dump.
  *            
  * \param    rmRegCfg                  [IN]       Pointer of the golden sample
- *           size                      [IN]       Size of reg dump pointer
+ * \param    size                      [IN]       Size of reg dump pointer
  *
  * \return   SAFETY_CHECKERS_SOK in case of success else failure
  *
  */
 int32_t SafetyCheckers_rmVerifyRegCfg(uintptr_t *rmRegCfg, uint32_t size);
+
+/** @} */
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */

@@ -31,6 +31,11 @@
  *
  */
 
+ /**
+ *  \defgroup SAFETY_CHECKERS_RM RM Safety Checkers Library
+ *  \ingroup  RM SAFETY CHECKERS
+ */
+
 /**
  *  \file     safety_checkers_rm_soc.h
  *
@@ -50,6 +55,13 @@
 extern "C" {
 #endif
 
+/**
+ * @ingroup SAFETY_CHECKERS_RM
+ *
+ * @defgroup SAFETY_CHECKERS_RM_SOC_MACROS  SAFETY_CHECKERS_RM RM safety checkers macro definition
+ *  @{
+ */
+
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -61,6 +73,8 @@ extern "C" {
 #define SAFETY_CHECKERS_RM_REG_OFFSET_HEX40			(0X40U)
 #define SAFETY_CHECKERS_RM_REG_OFFSET_HEX100		(0X100U)
 #define SAFETY_CHECKERS_RM_REG_OFFSET_HEX1000		(0X1000U)
+
+/** @} */
 
 /* ========================================================================== */
 /*                            Global Variables                                */
