@@ -63,7 +63,7 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-void SafetyCheckersApp_pmCheckersMain(void *arg0);
+void SafetyCheckersApp_pmRun(void *arg0);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -90,7 +90,7 @@ static int32_t SafetyCheckersApp_pmErrCheck(void);
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void SafetyCheckersApp_pmCheckersMain(void *arg0)
+void SafetyCheckersApp_pmRun(void *arg0)
 {
 	uint32_t    status = SAFETY_CHECKERS_SOK;
 

@@ -69,7 +69,7 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-extern void SafetyCheckersApp_pmCheckersMain(void *arg0);
+extern void SafetyCheckersApp_pmRun(void *arg0);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -95,7 +95,7 @@ void SafetyCheckersApp_pmCheckersTask(void *args)
 
     sciServer_init();
 
-    SafetyCheckersApp_pmCheckersMain(NULL);
+    SafetyCheckersApp_pmRun(NULL);
 
     /* Close board and flash drivers */
     Board_driversClose();

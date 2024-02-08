@@ -73,7 +73,7 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t SafetyCheckersApp_pmWarmResetMain(void *arg0)
+int32_t SafetyCheckersApp_pmWarmResetRun(void *arg0)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
 

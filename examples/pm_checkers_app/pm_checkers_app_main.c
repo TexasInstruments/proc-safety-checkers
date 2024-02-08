@@ -66,7 +66,7 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-extern void SafetyCheckersApp_pmCheckersMain(void *arg0);
+extern void SafetyCheckersApp_pmRun(void *arg0);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -98,7 +98,7 @@ static void SafetyCheckersApp_pmCheckersTask(void* a0, void* a1)
     status = Board_init(boardCfg);
     if(status == SAFETY_CHECKERS_SOK)
     {
-        SafetyCheckersApp_pmCheckersMain(NULL);
+        SafetyCheckersApp_pmRun(NULL);
     }
 }
 

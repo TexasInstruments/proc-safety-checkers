@@ -64,7 +64,7 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-extern int32_t SafetyCheckersApp_pmWarmResetMain(void *arg0);
+extern int32_t SafetyCheckersApp_pmWarmResetRun(void *arg0);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -96,7 +96,7 @@ static void SafetyCheckersApp_pmWarmResetTask(void* a0, void* a1)
     status = Board_init(boardCfg);
     if(status == SAFETY_CHECKERS_SOK)
     {
-        SafetyCheckersApp_pmWarmResetMain(NULL);
+        SafetyCheckersApp_pmWarmResetRun(NULL);
     }
 }
 

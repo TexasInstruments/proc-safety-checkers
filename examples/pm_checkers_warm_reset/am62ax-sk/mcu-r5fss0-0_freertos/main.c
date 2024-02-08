@@ -67,7 +67,7 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-extern void SafetyCheckersApp_pmWarmResetMain(void *args);
+extern void SafetyCheckersApp_pmWarmResetRun(void *args);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -91,7 +91,7 @@ void SafetyCheckersApp_pmWarmResetTask(void *args)
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
 
-    SafetyCheckersApp_pmWarmResetMain(NULL);
+    SafetyCheckersApp_pmWarmResetRun(NULL);
 
     /* Close board and flash drivers */
     Board_driversClose();
