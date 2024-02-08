@@ -31,6 +31,11 @@
  *
  */
 
+ /**
+ *  \defgroup SAFETY_CHECKERS_PM PM Safety Checkers Library
+ *  \ingroup PM SAFETY CHECKERS
+ */
+
 /**
  *  \file     safety_checkers_pm_soc.h
  *
@@ -52,6 +57,13 @@
 extern "C" {
 #endif
 
+/**
+ * @ingroup SAFETY_CHECKERS_PM
+ *
+ * @defgroup  SAFETY_CHECKERS_PM_MACROS  SAFETY_CHECKERS_PM PM safety checkers macro definition
+ *  @{
+ */
+
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -72,6 +84,15 @@ extern "C" {
 #define SAFETY_CHECKERS_PM_KICK_LOCK                             (0x00000000U)
 #define SAFETY_CHECKERS_PM_LOCK_KEY0_OFFSET                      (0x10U)
 #define SAFETY_CHECKERS_PM_LOCK_KEY1_OFFSET                      (0x14U)
+
+/** @} */
+
+/**
+ * @ingroup SAFETY_CHECKERS_PM
+ *
+ * @defgroup  SAFETY_CHECKERS_PM_GLOBAL_VAR  SAFETY_CHECKERS_PM PM safety checkers global variables declarations
+ *  @{
+ */
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -110,6 +131,8 @@ static uint32_t gSafetyCheckers_PmPllRegOffset5 [] =
 {0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
  0x40U, 0x44U, 0x80U, 0x84U, 0x88U, 0x8cU, 0x90U,
  0x98U, 0x9cU};
+
+/** @} */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */

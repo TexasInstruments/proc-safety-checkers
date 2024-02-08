@@ -31,6 +31,11 @@
  *
  */
 
+ /**
+ *  \defgroup SAFETY_CHECKERS_PM PM Safety Checkers Library
+ *  \ingroup PM SAFETY CHECKERS
+ */
+
 /**
  *  \file     safety_checkers_pm.h
  *
@@ -56,6 +61,13 @@ extern "C" {
 /* ========================================================================== */
 
 /* None */
+
+/**
+ * @ingroup SAFETY_CHECKERS_PM
+ *
+ * @defgroup  SAFETY_CHECKERS_PM_DATA_STRUCTURES  SAFETY_CHECKERS_PM structure definition
+ *  @{
+ */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -92,11 +104,20 @@ typedef struct
     uint32_t mdStat;
 } SafetyCheckers_PmPscData;
 
+/** @} */
+
 /* ========================================================================== */
 /*                  Internal/Private Function Declarations                    */
 /* ========================================================================== */
 
 /* None */
+
+/**
+ * @ingroup SAFETY_CHECKERS_PM
+ *
+ * @defgroup  SAFETY_CHECKERS_PM_MODULE_API  SAFETY_CHECKERS PM checkers APIs
+ *  @{
+ */
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -110,7 +131,8 @@ typedef struct
  *            The collected configuration will be stored in pscRegCfg array.
  *
  *  \param    pscRegCfg         [IN/OUT]       Pointer to store the PSC Register configuration
- *            size              [IN]           Size of register configuration memory
+ *
+ *  \param    size              [IN]           Size of register configuration memory
  *
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
  *
@@ -124,7 +146,8 @@ int32_t SafetyCheckers_pmGetPscRegCfg(uintptr_t *pscRegCfg, uint32_t size);
  *            and compares with the received register configuration.
  *
  *  \param    pscRegCfg         [IN/OUT]       Pointer to store the PSC golden register configuration
- *            size              [IN]           Size of golden configuration memory
+ *
+ *  \param    size              [IN]           Size of golden configuration memory
  *
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
  *
@@ -139,7 +162,8 @@ int32_t SafetyCheckers_pmVerifyPscRegCfg(uintptr_t *pscRegCfg, uint32_t size);
  *            will be stored in pllRegCfg array.
  *
  *  \param    pllRegCfg         [IN/OUT]       Pointer to store the PLL Register configuration
- *            size              [IN]           Size of register configuration memory
+ *
+ *  \param    size              [IN]           Size of register configuration memory
  *
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
  *
@@ -153,7 +177,8 @@ int32_t SafetyCheckers_pmGetPllRegCfg(uintptr_t *pllRegCfg, uint32_t size);
  *            and compares with the received register configuration.
  *
  *  \param    pllRegCfg         [IN/OUT]       Pointer to store the PLL golden register configuration
- *            size              [IN]           Size of golden configuration memory
+ *
+ *  \param    size              [IN]           Size of golden configuration memory
  *
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
  *
@@ -182,3 +207,5 @@ int32_t SafetyCheckers_pmRegisterLock(void);
 #endif
 
 #endif /* #ifndef SAFETY_CHECKERS_PM_H_ */
+
+/** @} */

@@ -31,6 +31,11 @@
  *
  */
 
+ /**
+ *  \defgroup SAFETY_CHECKERS_PM PM Safety Checkers Library
+ *  \ingroup PM SAFETY CHECKERS
+ */
+
 /**
  *  \file     safety_checkers_soc.h
  *
@@ -51,6 +56,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * @ingroup SAFETY_CHECKERS_PM
+ *
+ * @defgroup  SAFETY_CHECKERS_PM_SOC_MACROS  SAFETY_CHECKERS_PM PM safety checkers SOC specific macro definition
+ *  @{
+ */
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -178,11 +190,20 @@ extern "C" {
 #define SAFETY_CHECKERS_RM_UDMA_GCFG_SUB_MODULE0                 (13U)
 #define SAFETY_CHECKERS_RM_UDMA_GCFG_SUB_MODULE1                 (14U)
 
+/** @} */
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
 /* None */
+
+/**
+ * @ingroup SAFETY_CHECKERS_PM
+ *
+ * @defgroup  SAFETY_CHECKERS_PM_STRUCTURE  SAFETY_CHECKERS_PM PM safety checkers SOC specific structure declaration
+ *  @{
+ */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -248,6 +269,7 @@ static SafetyCheckers_RmRegData gSafetyCheckers_RmRegData[] =
 	{SAFETY_CHECKERS_RM_UDMA_GCFG_BASE_ADDR1, SAFETY_CHECKERS_RM_UDMA_GCFG_SUB_MODULE1, SAFETY_CHECKERS_RM_UDMA_GCFG_TOTAL_REG1, SAFETY_CHECKERS_RM_REG_OFFSET_HEX0, {0x0U, 0x04U, 0X08U, 0x10U, 0x20U, 0x24U, 0x28U, 0x2CU, 0x30U, 0x60U, 0x64U, 0x78U, 0x7CU, 0x88U}},
 };
 
+/** @} */
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
