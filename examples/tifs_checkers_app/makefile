@@ -39,7 +39,7 @@ COMP_LIST_COMMON += safety_checkers
 # Common source files and CFLAGS across all platforms and cores
 SRCS_COMMON += safety_checkers_tifs_app.c safety_checkers_tifs_app_main.c
 
-PACKAGE_SRCS_COMMON = makefile safety_checkers_tifs_app.c safety_checkers_tifs_app_main.c tifs_checkers_fwl_config.h
+PACKAGE_SRCS_COMMON = makefile safety_checkers_tifs_app.c safety_checkers_tifs_app_main.c soc/$(SOC)/tifs_checkers_fwl_config.h
 
 CFLAGS_LOCAL_COMMON += $(PDK_CFLAGS) $(CFLAGS_OS_DEFINES)
 
