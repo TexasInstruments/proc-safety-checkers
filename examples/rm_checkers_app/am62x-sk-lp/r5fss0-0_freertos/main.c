@@ -76,7 +76,7 @@ extern void SafetyCheckersApp_rmRun(void *arg0);
 /* ========================================================================== */
 StackType_t gSafetyCheckersAppTskStackMain[SAFETY_CHECKERS_APP_TSK_STACK_MAIN] __attribute__((aligned(32)));
 StaticTask_t gSafetyCheckersAppTskObjMain;
-TaskHandle_t gSafetyCheckersAppTskMain
+TaskHandle_t gSafetyCheckersAppTskMain;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
