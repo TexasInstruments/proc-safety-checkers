@@ -72,7 +72,7 @@
 /* ========================================================================== */
 
 SafetyCheckers_TifsFwlConfig *pFwlConfig = gSafetyCheckers_TifsFwlConfig;
-uint32_t gSafetyCheckers_TifsCfgSize = 16, gSafetyCheckers_TifsFlag = 0;
+uint32_t gSafetyCheckers_TifsCfgSize = TIFS_CHECKER_FWL_MAX_NUM, gSafetyCheckers_TifsFlag = 0;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */

@@ -114,11 +114,11 @@ void SafetyCheckersApp_tifsUnitTest(void *args)
 
     if (status == SAFETY_CHECKERS_SOK)
     {
-        SAFETY_CHECKERS_log("\n Firewall open Successful");
+        SAFETY_CHECKERS_log("Firewall open Successful \n");
     }
     else
     {
-        SAFETY_CHECKERS_log("\n Firewall open Unsuccessful");
+        SAFETY_CHECKERS_log("Firewall open Unsuccessful \n");
     }
 
     status = SafetyCheckers_tifsGetFwlCfg(pFwlConfig, gSafetyCheckers_TifsCfgSize);
