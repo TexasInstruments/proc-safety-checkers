@@ -2,10 +2,11 @@ let path = require('path');
 
 let device = "j722s";
 
-const files={
+const files = {
     common: [
         "safety_checkers_pm.c",
 		"safety_checkers_rm.c",
+        "safety_checkers_tifs.c"
     ],
 };
 

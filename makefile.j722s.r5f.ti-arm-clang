@@ -18,6 +18,7 @@ LIBNAME:=safety_checkers.j722s.r5f.ti-arm-clang.$(PROFILE).lib
 FILES_common := \
     safety_checkers_pm.c \
     safety_checkers_rm.c \
+    safety_checkers_tifs.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/safety_checkers/src \

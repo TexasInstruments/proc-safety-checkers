@@ -113,12 +113,12 @@ if __name__ == "__main__":
         if args[0] == 'am62x':
             input_filename = "source/drivers/hw_include/am62x/csl_soc_firewalls.h"
             output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/am62x/tifs_checkers_fwl_config.h"
-        elif args[0] == 'am62a':
+        elif args[0] == 'am62ax':
             input_filename = "source/drivers/hw_include/am62ax/csl_soc_firewalls.h"
-            output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/am62a/tifs_checkers_fwl_config.h"
-        elif args[0] == 'am62p':
+            output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/am62ax/tifs_checkers_fwl_config.h"
+        elif args[0] == 'am62px':
             input_filename = "source/drivers/hw_include/am62px/csl_soc_firewalls.h"
-            output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/am62p/tifs_checkers_fwl_config.h"
+            output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/am62px/tifs_checkers_fwl_config.h"
         elif args[0] == 'j722s':
             input_filename = "source/drivers/hw_include/j722s/csl_soc_firewalls.h"
             output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/j722s/tifs_checkers_fwl_config.h"

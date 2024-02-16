@@ -121,6 +121,8 @@ void SafetyCheckersApp_tifsTest(void *args)
         SAFETY_CHECKERS_log("\n No firewall register mismatch with Golden Reference \n");
     }
 
+    SafetyCheckersApp_tifsSafetyLoop();
+
     status = SafetyCheckers_tifsReqFwlClose();
     if (status == SAFETY_CHECKERS_SOK)
     {
