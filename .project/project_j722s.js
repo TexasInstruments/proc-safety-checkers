@@ -27,7 +27,7 @@ const includedirs = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: device, cpu: "c75x", cgt: "ti-c7000"},
+    { device: device, cpu: "wkup-r5f", cgt: "ti-arm-clang"},
 ];
 
 function getComponentProperty() {

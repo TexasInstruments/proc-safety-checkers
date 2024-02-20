@@ -5,15 +5,15 @@
 export MCU_PLUS_SDK_PATH?=$(abspath ../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 
-CG_TOOL_ROOT=$(CGT_TI_C7000_PATH)
+CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
 
-CC=$(CGT_TI_C7000_PATH)/bin/cl7x
-AR=$(CGT_TI_C7000_PATH)/bin/ar7x
+CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
+AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=safety_checkers.j722s.c75x.ti-c7000.$(PROFILE).lib
+LIBNAME:=safety_checkers.j722s.wkup-r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     safety_checkers_pm.c \
@@ -23,7 +23,7 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/safety_checkers/src \
 
 INCLUDES_common := \
-    -I${CG_TOOL_ROOT}/include \
+    -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
     -I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/ \
     -I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/ \
@@ -35,38 +35,37 @@ DEFINES_common := \
     -DSOC_J722S \
 
 CFLAGS_common := \
-    -mv7524 \
-    --abi=eabi \
-    -q \
-    -mo \
-    -pden \
-    -pds=238 \
-    -pds=880 \
-    -pds1110 \
-    --endian=little \
-    --disable_inlining \
-    -ea.se71 \
-    --emit_warnings_as_errors \
-    --diag_suppress=770 \
-    --diag_suppress=69 \
-    --diag_suppress=70 \
-    --advice:performance=none \
+    -DBUILD_WKUP_R5 \
+    -mcpu=cortex-r5 \
+    -mfloat-abi=hard \
+    -mfpu=vfpv3-d16 \
+    -mthumb \
+    -Wall \
+    -Werror \
+    -g \
+    -Wno-gnu-variable-sized-type-not-at-end \
+    -Wno-unused-function \
+
+CFLAGS_cpp_common := \
+    -Wno-c99-designator \
+    -Wno-extern-c-compat \
+    -Wno-c++11-narrowing \
+    -Wno-reorder-init-list \
+    -Wno-deprecated-register \
+    -Wno-writable-strings \
+    -Wno-enum-compare \
+    -Wno-reserved-user-defined-literal \
+    -Wno-unused-const-variable \
+    -x c++ \
 
 CFLAGS_debug := \
-    -Dxdc_target_name__=C71 \
     -D_DEBUG_=1 \
-    --opt_level=0 \
-    --symdebug:dwarf \
-    -DBUILD_C75X \
 
 CFLAGS_release := \
-    -Dxdc_target_name__=C71 \
-    --opt_level=3 \
-    --symdebug:none \
-    -DBUILD_C75X \
+    -Os \
 
 ARFLAGS_common := \
-    rq \
+    rc \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
@@ -81,7 +80,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/j722s/ti-c7000/$(PROFILE)/c75x/safety_checkers/
+OBJDIR := obj/j722s/ti-arm-clang/$(PROFILE)/wkup-r5f/safety_checkers/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)
@@ -92,11 +91,11 @@ vpath %.S $(FILES_PATH)
 
 $(OBJDIR)/%.obj %.obj: %.c
 	@echo  Compiling: $(LIBNAME): $<
-	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -ppd=$(OBJDIR)/$(basename $@).d -ppa -fr=$(OBJDIR)/ -fc=$<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: $(LIBNAME): $<
-	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -ppd=$(OBJDIR)/$(basename $@).d -ppa -fr=$(OBJDIR)/ -fa=$<
+	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
 
 all: $(LIBDIR)/$(LIBNAME)
 
