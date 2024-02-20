@@ -205,10 +205,11 @@ static int32_t SafetyCheckersApp_pmClockIdCheck(uint32_t offset)
     uint32_t     clockNumParent = 0U;
     uint64_t     reqFreqHz = 0U;
     uint64_t     freqHz = 0U;
+    int32_t      clockIdRange;
 
     /* Valid Clock ID Range is 0 - 500 */
     int32_t clockId[] = {SAFETY_CHECKERS_PM_VALID_CLOCK_ID, -1, 500};
-    for (int clockIdRange = offset; clockIdRange < (sizeof(clockId) / sizeof(clockId[0])); clockIdRange++)
+    for (clockIdRange = offset; clockIdRange < (sizeof(clockId) / sizeof(clockId[0])); clockIdRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {
@@ -302,11 +303,12 @@ static int32_t SafetyCheckersApp_pmClockIdCheck(uint32_t offset)
 static int32_t SafetyCheckersApp_pmClockStateCheck(uint32_t offset)
 {
     int32_t      status = SAFETY_CHECKERS_FAIL;
+    int32_t      clockStateRange;
 
     /* Valid Clock State Range is 0 - 2 */
     int32_t clockStates[] = {SAFETY_CHECKERS_PM_DEFAULT_CLOCK_STATE, -1, 3};
 
-    for (int clockStateRange = offset; clockStateRange < (sizeof(clockStates) / sizeof(clockStates[0])); clockStateRange++)
+    for (clockStateRange = offset; clockStateRange < (sizeof(clockStates) / sizeof(clockStates[0])); clockStateRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {
@@ -336,11 +338,12 @@ static int32_t SafetyCheckersApp_pmClockStateCheck(uint32_t offset)
 static int32_t SafetyCheckersApp_pmDevGrpCheck(void)
 {
     int32_t      status = SAFETY_CHECKERS_FAIL;
+    int32_t      domainGrpRange;
 
     /* Valid Device Group Range is [0 - ((0x01U) << 7U)] */
     int32_t domainGrp[] = {-1, 0x81};
 
-    for (int domainGrpRange = 0; domainGrpRange < (sizeof(domainGrp) / sizeof(domainGrp[0])); domainGrpRange++)
+    for (domainGrpRange = 0; domainGrpRange < (sizeof(domainGrp) / sizeof(domainGrp[0])); domainGrpRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {
@@ -369,11 +372,12 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
     uint32_t     clockNumParent = 0U;
     uint64_t     reqFreqHz = 0U;
     uint64_t     freqHz = 0U;
+    int32_t      deviceIdRange;
 
     /* Valid Device ID Range is 0 - 433 */
     int32_t deviceId[] = {SAFETY_CHECKERS_PM_VALID_DEVICE_ID, -1, 434};
 
-    for (int deviceIdRange = offset; deviceIdRange < (sizeof(deviceId) / sizeof(deviceId[0])); deviceIdRange++)
+    for (deviceIdRange = offset; deviceIdRange < (sizeof(deviceId) / sizeof(deviceId[0])); deviceIdRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {
@@ -494,11 +498,12 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
 static int32_t SafetyCheckersApp_pmDevResetCheck(uint32_t offset)
 {
     int32_t      status = SAFETY_CHECKERS_FAIL;
+    int32_t      deviceRstRange;
 
     /* Valid Device resets Range is 0 - 3 */
     int32_t deviceResets[] = {SAFETY_CHECKERS_PM_DEFAULT_DEVICE_RESET_BIT, -1, 4};
 
-    for (int deviceRstRange = offset; deviceRstRange < (sizeof(deviceResets) / sizeof(deviceResets[0])); deviceRstRange++)
+    for (deviceRstRange = offset; deviceRstRange < (sizeof(deviceResets) / sizeof(deviceResets[0])); deviceRstRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {
@@ -526,11 +531,12 @@ static int32_t SafetyCheckersApp_pmDevResetCheck(uint32_t offset)
 static int32_t SafetyCheckersApp_pmDevStateCheck(uint32_t offset)
 {
     int32_t      status = SAFETY_CHECKERS_FAIL;
+    int32_t      deviceStateRange;
 
     /* Valid  Device State Range is 0 - 2 */
     int32_t deviceState[] = {SAFETY_CHECKERS_PM_DEFAULT_CLOCK_STATE, -1, 3};
 
-    for (int deviceStateRange = offset; deviceStateRange < (sizeof(deviceState) / sizeof(deviceState[0])); deviceStateRange++)
+    for (deviceStateRange = offset; deviceStateRange < (sizeof(deviceState) / sizeof(deviceState[0])); deviceStateRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {
@@ -559,11 +565,12 @@ static int32_t SafetyCheckersApp_pmDevStateCheck(uint32_t offset)
 static int32_t SafetyCheckersApp_pmParentClkCheck(uint32_t offset)
 {
     int32_t      status = SAFETY_CHECKERS_FAIL;
+    int32_t      parentClkRange;
 
     /* Valid Parent Clock Range is 0 - 500 */
     int32_t parentClk[] = {SAFETY_CHECKERS_PM_VALID_PARENT_CLOCK_ID, -1, 500};
 
-    for (int parentClkRange = offset; parentClkRange < (sizeof(parentClk) / sizeof(parentClk[0])); parentClkRange++)
+    for (parentClkRange = offset; parentClkRange < (sizeof(parentClk) / sizeof(parentClk[0])); parentClkRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {

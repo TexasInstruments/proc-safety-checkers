@@ -45,7 +45,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_J722S)
 #include <kernel/dpl/SystemP.h>
 #include <kernel/dpl/DebugP.h>
 #define SAFETY_CHECKERS_log                                         DebugP_log
@@ -101,7 +101,7 @@ extern "C" {
 /** \brief Safety checkers invalid parameter offset range */
 #define SAFETY_CHECKERS_PM_INVALID_PARAM_OFFSET_RANGE                (0x1U)
 
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_J722S)
 /** \brief Safety checkers valid device ID */
 #define SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID                   (TISCI_DEV_MCU_MCAN1)
 /** \brief Safety checkers valid Clock ID */
