@@ -290,7 +290,7 @@ int32_t SafetyCheckers_pmVerifyPllRegCfg(uintptr_t *pllRegCfg, uint32_t size)
             }
         }
 
-        if(mismatchCnt != 0)
+        if(mismatchCnt != 0U)
 	    {
 		    status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
 	    }
@@ -318,7 +318,7 @@ int32_t SafetyCheckers_pmRegisterLock(void)
         /* check for PLL lock confirmation*/
         if((lockStat & 0x1U) == 0x0U)
         {
-            pllLockCnt = pllLockCnt + 1;
+            pllLockCnt = pllLockCnt + 1U;
         }
     }
 
