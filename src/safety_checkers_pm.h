@@ -150,7 +150,7 @@ int32_t SafetyCheckers_pmGetPscRegCfg(uintptr_t *pscRegCfg, uint32_t size);
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
  *
  */
-int32_t SafetyCheckers_pmVerifyPscRegCfg(uintptr_t *pscRegCfg, uint32_t size);
+int32_t SafetyCheckers_pmVerifyPscRegCfg(const uintptr_t *pscRegCfg, uint32_t size);
 
 /**
  *  \brief    API to get register configuration for PLL module.
@@ -179,7 +179,7 @@ int32_t SafetyCheckers_pmGetPllRegCfg(uintptr_t *pllRegCfg, uint32_t size);
  *  \return   SAFETY_CHECKERS_SOK in case of success, else failure.
  *
  */
-int32_t SafetyCheckers_pmVerifyPllRegCfg(uintptr_t *pllRegCfg, uint32_t size);
+int32_t SafetyCheckers_pmVerifyPllRegCfg(const uintptr_t *pllRegCfg, uint32_t size);
 
 /**
  *  \brief    API to lock the PLL control module registers.

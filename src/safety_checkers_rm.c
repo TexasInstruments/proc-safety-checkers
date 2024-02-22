@@ -123,7 +123,7 @@ int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size)
     return status;
 }
 
-int32_t SafetyCheckers_rmVerifyRegCfg (uintptr_t *rmRegCfg, uint32_t size)
+int32_t SafetyCheckers_rmVerifyRegCfg (const uintptr_t *rmRegCfg, uint32_t size)
 {
     uint32_t offset = 0;
     uint32_t totalModule = 0;

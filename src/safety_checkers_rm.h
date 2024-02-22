@@ -160,7 +160,7 @@ int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size);
  * \return   SAFETY_CHECKERS_SOK in case of success else failure
  *
  */
-int32_t SafetyCheckers_rmVerifyRegCfg(uintptr_t *rmRegCfg, uint32_t size);
+int32_t SafetyCheckers_rmVerifyRegCfg(const uintptr_t *rmRegCfg, uint32_t size);
 
 /** @} */
 

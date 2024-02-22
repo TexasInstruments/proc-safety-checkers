@@ -126,7 +126,7 @@ int32_t SafetyCheckers_pmGetPscRegCfg(uintptr_t *pscRegCfg, uint32_t size)
     return (status);
 }
 
-int32_t SafetyCheckers_pmVerifyPscRegCfg(uintptr_t *pscRegCfg, uint32_t size)
+int32_t SafetyCheckers_pmVerifyPscRegCfg(const uintptr_t *pscRegCfg, uint32_t size)
 {
     uint32_t md = 0;
     uint32_t pd = 0;
@@ -239,7 +239,7 @@ int32_t SafetyCheckers_pmGetPllRegCfg(uintptr_t *pllRegCfg, uint32_t size)
     return (status);
 }
 
-int32_t SafetyCheckers_pmVerifyPllRegCfg(uintptr_t *pllRegCfg, uint32_t size)
+int32_t SafetyCheckers_pmVerifyPllRegCfg(const uintptr_t *pllRegCfg, uint32_t size)
 {
     uint32_t pllLength = 0;
     uint32_t offset = 0;
