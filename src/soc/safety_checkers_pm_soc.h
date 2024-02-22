@@ -77,8 +77,8 @@ extern "C" {
 #define SAFETY_CHECKERS_PM_PSC_MD_STAT_OFFSET                    (0x800U)
 
 /** \brief Each PLL base addresses */
-#define SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(i)                   (SAFETY_CHECKERS_PM_PLL_CFG_BASE_ADDRESS + (0x1000)*i)
-#define SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(i)               (SAFETY_CHECKERS_PM_MCU_PLL_CFG_BASE_ADDRESS + (0x1000)*i)
+#define SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(i)                   (SAFETY_CHECKERS_PM_PLL_CFG_BASE_ADDRESS + (0x1000U * i))
+#define SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(i)               (SAFETY_CHECKERS_PM_MCU_PLL_CFG_BASE_ADDRESS + (0x1000U * i))
 
 /** \brief KICK lock values */
 #define SAFETY_CHECKERS_PM_KICK_LOCK                             (0x00000000U)
