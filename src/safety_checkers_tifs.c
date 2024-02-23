@@ -89,21 +89,18 @@ int32_t SafetyCheckers_tifsReqFwlOpen(void)
     struct tisci_fwl_req request = {0};
     struct tisci_fwl_resp response = {0};
 
-    const Sciclient_ReqPrm_t      reqParam =
-    {
-        SAFETY_CHECKERS_TIFS_TISCI_MSG_ALLOW_FWL_CTRL_READ,
-        TISCI_MSG_FLAG_AOP,
-        (uint8_t *) &request,
-        sizeof (request),
-        SAFETY_CHECKERS_DEFAULT_TIMEOUT
-    };
+    Sciclient_ReqPrm_t  reqParam = {0};
+    Sciclient_RespPrm_t respParam = {0};
+ 
+    reqParam.messageType    = (uint16_t) SAFETY_CHECKERS_TIFS_TISCI_MSG_ALLOW_FWL_CTRL_READ;
+    reqParam.flags          = (uint32_t) TISCI_MSG_FLAG_AOP;
+    reqParam.pReqPayload    = (const uint8_t *) &request;
+    reqParam.reqPayloadSize = (uint32_t) sizeof (request);
+    reqParam.timeout        = (uint32_t) SAFETY_CHECKERS_DEFAULT_TIMEOUT;
 
-    Sciclient_RespPrm_t           respParam =
-    {
-        0,
-        (uint8_t *) &response,
-        (uint32_t) sizeof (response)
-    };
+    respParam.flags           = (uint32_t) 0;   /* Populated by the API */
+    respParam.pRespPayload    = (uint8_t *) &response;
+    respParam.respPayloadSize = (uint32_t)  sizeof (response);
 
     status = Sciclient_service(&reqParam, &respParam);
     if ((status == SAFETY_CHECKERS_SOK)  && (respParam.flags == TISCI_MSG_FLAG_ACK))
@@ -217,22 +214,20 @@ int32_t SafetyCheckers_tifsReqFwlClose(void)
     int32_t status = SAFETY_CHECKERS_SOK;
 
     struct tisci_fwl_req request;
-    const Sciclient_ReqPrm_t      reqParam =
-    {
-        SAFETY_CHECKERS_TIFS_TISCI_MSG_FORBID_FWL_CTRL_READ,
-        TISCI_MSG_FLAG_AOP,
-        (uint8_t *) &request,
-        sizeof(request),
-        SAFETY_CHECKERS_DEFAULT_TIMEOUT
-    };
-
     struct tisci_fwl_resp response;
-    Sciclient_RespPrm_t           respParam =
-    {
-        0,
-        (uint8_t *) &response,
-        sizeof (response)
-    };
+
+    Sciclient_ReqPrm_t  reqParam = {0};
+    Sciclient_RespPrm_t respParam = {0};
+
+    reqParam.messageType    = (uint16_t) SAFETY_CHECKERS_TIFS_TISCI_MSG_FORBID_FWL_CTRL_READ;
+    reqParam.flags          = (uint32_t) TISCI_MSG_FLAG_AOP;
+    reqParam.pReqPayload    = (const uint8_t *) &request;
+    reqParam.reqPayloadSize = (uint32_t) sizeof (request);
+    reqParam.timeout        = (uint32_t) SAFETY_CHECKERS_DEFAULT_TIMEOUT;
+
+    respParam.flags           = (uint32_t) 0;   /* Populated by the API */
+    respParam.pRespPayload    = (uint8_t *) &response;
+    respParam.respPayloadSize = (uint32_t)  sizeof (response);
 
    status = Sciclient_service(&reqParam, &respParam);
    if((status == SAFETY_CHECKERS_SOK) && (respParam.flags == TISCI_MSG_FLAG_ACK))

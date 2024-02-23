@@ -33,7 +33,8 @@ def extract_fwl_data(input_filename, fwl_dict):
 
 def print_fwl_data(output_filename, fwl_dict):
     with open(output_filename, "w") as output_file:
-        output_file.write("/** Auto-generated cfg using the command 'python create_fwl_config.py " + args[0] + "' on " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " **/\n\n")
+        writeBanner(output_file)
+        output_file.write("\n/* \n * Auto-generated cfg using the command 'python create_fwl_config.py " + args[0] + "' on " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " \n */\n\n")
         output_file.write("#ifndef TIFS_CHECKERS_FWL_CONFIG_H_\n")
         output_file.write("#define TIFS_CHECKERS_FWL_CONFIG_H_\n\n")
         output_file.write("#include <safety_checkers_soc.h>\n\n")
@@ -47,13 +48,13 @@ def print_fwl_data(output_filename, fwl_dict):
             output_file.write("{\n")
             for key,value in fwl_dict[keys].items():
                 if key == "fwl_id":
-                    output_file.write("\t" + value + "," + "\t/* fwl id */" + "\n")
+                    output_file.write("\t" + value + "," + "\t/* fwlId */" + "\n")
                 elif key == "num_regions":
-                    output_file.write("\t" + value + "," + "\t/* num of regions */" + "\n")
+                    output_file.write("\t" + value + "," + "\t/* numRegions */" + "\n")
                 elif key == "max_num_regions":
-                    output_file.write("\t" + value + "," + "\t/* max num of regions */" + "\n")
+                    output_file.write("\t" + value + "," + "\t/* maxNumRegions */" + "\n")
                 elif type(value) is list:
-                    output_file.write("\t{ /* fwl registers for each region : {control_reg, priv_id0, priv_id1, priv_id2, \n\t\t\t\t\t\t\t\t\t\t  start_addr_low, start_addr_high, end_addr_low, end_addr_high} */\n")
+                    output_file.write("\t{ \t/* Firewall registers for a given region : {controlReg, privId0, privId1, privId2, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */\n")
                     n = int(fwl_dict[keys]["num_regions"][:-1])
                     for i in range(n):
                         output_file.write("\t\t{")
@@ -73,15 +74,66 @@ def print_fwl_data(output_filename, fwl_dict):
         output_file.write("#endif\n\n")
         output_file.write("#endif  /* #ifndef TIFS_CHECKERS_FWL_CONFIG_H_ */")
 
+def writeBanner(file):
+        file.write('/*\n')
+        file.write(' * Copyright (C) 2024 Texas Instruments Incorporated\n')
+        file.write(' *  \n')
+        file.write(' *  Redistribution and use in source and binary forms, with or without \n')
+        file.write(' *  modification, are permitted provided that the following conditions\n')
+        file.write(' *  are met:\n')
+        file.write(' *\n')
+        file.write(' *    Redistributions of source code must retain the above copyright\n')
+        file.write(' *    notice, this list of conditions and the following disclaimer.\n')
+        file.write(' *\n')
+        file.write(' *    Redistributions in binary form must reproduce the above copyright\n')
+        file.write(' *    notice, this list of conditions and the following disclaimer in the\n')
+        file.write(' *    documentation and/or other materials provided with the\n')
+        file.write(' *    distribution.\n')
+        file.write(' *\n')
+        file.write(' *    Neither the name of Texas Instruments Incorporated nor the names of\n')
+        file.write(' *    its contributors may be used to endorse or promote products derived\n')
+        file.write(' *    from this software without specific prior written permission.\n')
+        file.write(' *\n')
+        file.write(' *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \n')
+        file.write(' *  \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT \n')
+        file.write(' *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR \n')
+        file.write(' *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT \n')
+        file.write(' *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, \n')
+        file.write(' *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT \n')
+        file.write(' *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n')
+        file.write(' *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\n')
+        file.write(' *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n')
+        file.write(' *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n')
+        file.write(' *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n')
+        file.write(' */\n')
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     if len(args) == 1:
         if args[0] == 'am62x':
             input_filename = "source/drivers/hw_include/am62x/csl_soc_firewalls.h"
             output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/am62x/tifs_checkers_fwl_config.h"
+        elif args[0] == 'am62a':
+            input_filename = "source/drivers/hw_include/am62ax/csl_soc_firewalls.h"
+            output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/am62a/tifs_checkers_fwl_config.h"
+        elif args[0] == 'am62p':
+            input_filename = "source/drivers/hw_include/am62px/csl_soc_firewalls.h"
+            output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/am62p/tifs_checkers_fwl_config.h"
+        elif args[0] == 'j722s':
+            input_filename = "source/drivers/hw_include/j722s/csl_soc_firewalls.h"
+            output_filename = "source/safety_checkers/examples/tifs_checkers_app/soc/j722s/tifs_checkers_fwl_config.h"
         elif args[0] == 'j784s4':
             input_filename = "packages/ti/csl/soc/j784s4/src/csl_soc_firewalls.h"
             output_filename = "packages/ti/safety_checkers/examples/tifs_checkers_app/soc/j784s4/tifs_checkers_fwl_config.h"
+        elif args[0] == 'j721e':
+            input_filename = "packages/ti/csl/soc/j721e/src/csl_soc_firewalls.h"
+            output_filename = "packages/ti/safety_checkers/examples/tifs_checkers_app/soc/j721e/tifs_checkers_fwl_config.h"
+        elif args[0] == 'j7200':
+            input_filename = "packages/ti/csl/soc/j7200/src/csl_soc_firewalls.h"
+            output_filename = "packages/ti/safety_checkers/examples/tifs_checkers_app/soc/j7200/tifs_checkers_fwl_config.h"
+        elif args[0] == 'j721s2':
+            input_filename = "packages/ti/csl/soc/j721s2/src/csl_soc_firewalls.h"
+            output_filename = "packages/ti/safety_checkers/examples/tifs_checkers_app/soc/j721s2/tifs_checkers_fwl_config.h"
 
     fwl_dict = {}
     fwl_dict["dummy"] = '0'

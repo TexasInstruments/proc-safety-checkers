@@ -38,7 +38,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	tifs_checkers_app.c \
+	safety_checkers_tifs_app.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

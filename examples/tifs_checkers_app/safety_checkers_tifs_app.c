@@ -37,7 +37,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "ti/osal/osal.h"
 #include <safety_checkers_common.h>
 #include <safety_checkers_tifs.h>
 #include <tifs_checkers_fwl_config.h>
@@ -46,10 +45,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* Safety checkers timer ID */
-#define SAFETY_CHECKERS_APP_TIMER_ID                    (2U)
-/* Safety checkers verification time period */
-#define SAFETY_CHECKERS_APP_TIMER_PERIOD                (60000U)
+/* None */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -68,88 +64,70 @@
 /* ========================================================================== */
 
 SafetyCheckers_TifsFwlConfig *pFwlConfig = gSafetyCheckers_TifsFwlConfig;
-uint32_t gSafetyCheckers_TifsCfgSize = 436, gSafetyCheckers_TifsFlag = 0;
-TimerP_Params timerParams;
-TimerP_Handle handle;
+uint32_t gSafetyCheckersTifsCfgSize = TIFS_CHECKER_FWL_MAX_NUM;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void SafetyCheckersApp_timerIsr(void *arg)
+void SafetyCheckersApp_softwareDelay(void)
 {
-    gSafetyCheckers_TifsFlag = 1;
+    volatile uint32_t i = 0U;
+    for (i=0; i<0xFFFFF; i++);
 }
 
-void SafetyCheckersApp_tifsSafetyLoop(void)
+void SafetyCheckersApp_tifsTest(void *args)
 {
-    uint32_t  status = SAFETY_CHECKERS_SOK, i=2;
-    TimerP_start(handle);
+    uint32_t  status = SAFETY_CHECKERS_SOK, i=10U;
 
-    while(i > 0)
-    {
-        if(gSafetyCheckers_TifsFlag == 1)
-        {
-            gSafetyCheckers_TifsFlag = 0;
-            status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckers_TifsCfgSize);
-
-            if(status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
-            {
-                SAFETY_CHECKERS_log("Register Mismatch with Golden Reference \n");
-            }
-            i--;
-        }
-    }
-    if(status == SAFETY_CHECKERS_SOK)
-    {
-        SAFETY_CHECKERS_log("No Register Mismatch with Golden Reference \n");
-    }
-    status = TimerP_delete(handle);
-}
-
-void SafetyCheckersApp_tifsUnitTest(void *args)
-{
-    uint32_t  status = SAFETY_CHECKERS_SOK;
     status = SafetyCheckers_tifsReqFwlOpen();
 
     if (status == SAFETY_CHECKERS_SOK)
     {
-        SAFETY_CHECKERS_log("Firewall open Successful \n");
+        SAFETY_CHECKERS_log("\n Firewall open successful \r\n");
     }
     else
     {
-        SAFETY_CHECKERS_log("Firewall open Unsuccessful \n");
+        SAFETY_CHECKERS_log("\n Firewall open unsuccessful !!\r\n");
     }
 
-    status = SafetyCheckers_tifsGetFwlCfg(pFwlConfig, gSafetyCheckers_TifsCfgSize);
+    status = SafetyCheckers_tifsGetFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
     if (status == SAFETY_CHECKERS_SOK)
     {
-        SAFETY_CHECKERS_log("GetFwlCfg Successful \n");
+        SAFETY_CHECKERS_log("\n Get firewall configuration successful \r\n");
     }
     else
     {
-        SAFETY_CHECKERS_log("GetFwlCfg Unsuccessful \n");
+        SAFETY_CHECKERS_log("\n Get firewall configuration unsuccessful !!\r\n");
     }
 
     /* Place to verify and save firewall configuration as Golden Reference */
 
-    TimerP_Params_init(&timerParams);
-    timerParams.runMode    = TimerP_RunMode_CONTINUOUS;
-    timerParams.startMode  = TimerP_StartMode_USER;
-    timerParams.periodType = TimerP_PeriodType_MICROSECS;
-    timerParams.period     = SAFETY_CHECKERS_APP_TIMER_PERIOD;
+    while (i > 0)
+    {
+        status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
 
-    handle = TimerP_create(SAFETY_CHECKERS_APP_TIMER_ID, (TimerP_Fxn)&SafetyCheckersApp_timerIsr, &timerParams);
-    
-    SafetyCheckersApp_tifsSafetyLoop();
-    
+        if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+        {
+            SAFETY_CHECKERS_log("\n Firewall register mismatch with Golden Reference !!\r\n");
+        }
+
+        SafetyCheckersApp_softwareDelay();
+        i--;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("\n No firewall register mismatch with Golden Reference \n");
+    }
+
     status = SafetyCheckers_tifsReqFwlClose();
     if (status == SAFETY_CHECKERS_SOK)
     {
-        SAFETY_CHECKERS_log("Firewall close Successful \n");
+        SAFETY_CHECKERS_log("\n Firewall close successful \n");
     }
     else
     {
-        SAFETY_CHECKERS_log("Firewall close Unsuccessful \n");
+        SAFETY_CHECKERS_log("\n Firewall close unsuccessful !!\n");
     }
 }

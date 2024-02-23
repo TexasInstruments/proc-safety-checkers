@@ -67,7 +67,7 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-void SafetyCheckersApp_tifsUnitTest(void *args);
+void SafetyCheckersApp_tifsTest(void *args);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -87,7 +87,7 @@ __attribute__((aligned(32*1024))) = { 0 };
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-static void SafetyCheckersApp_tifsUnitTestTask(void* a0, void* a1)
+static void SafetyCheckersApp_tifsTestTask(void* a0, void* a1)
 {
     int8_t status = SAFETY_CHECKERS_FAIL;
     Board_initCfg boardCfg;
@@ -99,7 +99,7 @@ static void SafetyCheckersApp_tifsUnitTestTask(void* a0, void* a1)
     status = Board_init(boardCfg);
     if(status == SAFETY_CHECKERS_SOK)
     {
-        SafetyCheckersApp_tifsUnitTest(NULL);
+        SafetyCheckersApp_tifsTest(NULL);
     }
 }
 
@@ -118,7 +118,7 @@ int32_t main(void)
     taskParams.stack        = gSafetyCheckersAppTskStackMain;
     taskParams.stacksize    = sizeof (gSafetyCheckersAppTskStackMain);
 
-    task = TaskP_create(&SafetyCheckersApp_tifsUnitTestTask, &taskParams);
+    task = TaskP_create(&SafetyCheckersApp_tifsTestTask, &taskParams);
     if(NULL == task)
     {
         OS_stop();

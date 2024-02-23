@@ -4,7 +4,7 @@ let device = "am62x";
 
 const files = {
     common: [
-        "tifs_checkers_app.c",
+        "safety_checkers_tifs_app.c",
         "main.c",
     ],
 };
@@ -90,7 +90,7 @@ const templates_freertos_r5f =
         input: ".project/templates/am62x/freertos/main_freertos_dm.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "SafetyCheckers_tifsUnitTest",
+            entryFunction: "SafetyCheckersApp_tifsTest",
         },
     }
 ];

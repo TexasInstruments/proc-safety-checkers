@@ -50,7 +50,7 @@ StackType_t gMainTaskStack[TASK_SIZE] __attribute__((aligned(32)));
 StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
 
-void SafetyCheckers_tifsUnitTest(void *args);
+void SafetyCheckersApp_tifsTest(void *args);
 
 void main_thread(void *args)
 {
@@ -64,7 +64,7 @@ void main_thread(void *args)
 
     sciServer_init();
 
-    SafetyCheckers_tifsUnitTest(NULL);
+    SafetyCheckersApp_tifsTest(NULL);
 
     /* Close board and flash drivers */
     Board_driversClose();
