@@ -107,6 +107,14 @@ extern "C" {
  */
 #define SAFETY_CHECKERS_PM_PLL_REGDUMP_SIZE                       (237U)
 
+/**
+ * \brief  Total register dump size for RM.
+ *         This has been calculated by iterating through each element in gSafetyCheckers_RmRegData
+ *         array. Within the loop, calculates the total talLength by multiplying the regNum and regArrayLen
+ *         in the array. The final result is the total size of register array for RM module registers.
+ */
+#define SAFETY_CHECKERS_RM_REGDUMP_SIZE                           (24486U)
+
 /** \brief RM IR module base addresses */
 #define SAFETY_CHECKERS_RM_IR_BASE_ADDR0						 (CSL_MAIN2MCU_LVL_INTRTR0_CFG_BASE)
 #define SAFETY_CHECKERS_RM_IR_BASE_ADDR1						 (CSL_MAIN2MCU_PLS_INTRTR0_CFG_BASE)

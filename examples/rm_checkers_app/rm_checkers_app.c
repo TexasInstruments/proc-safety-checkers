@@ -44,14 +44,14 @@
 
 #include <stdint.h>
 #include <safety_checkers_common.h>
+#include <safety_checkers_soc.h>
 #include <safety_checkers_rm.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/** \brief This is the size of buffer which stores the blob of registers. */
-#define SAFETY_CHECKERS_RM_REG_BLOB_SIZE  25000
+/* None */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -104,12 +104,12 @@ void SafetyCheckersApp_rmRun(void *arg0)
 static int32_t SafetyCheckersApp_rmregVerify()
 {
     int32_t      status = SAFETY_CHECKERS_SOK;
-    uintptr_t    rmRegisterData[SAFETY_CHECKERS_RM_REG_BLOB_SIZE];
+    uintptr_t    rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
     
-    status = SafetyCheckers_rmGetRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REG_BLOB_SIZE);
+    status = SafetyCheckers_rmGetRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
     if(status == SAFETY_CHECKERS_SOK)
     {
-        status = SafetyCheckers_rmVerifyRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REG_BLOB_SIZE);
+        status = SafetyCheckers_rmVerifyRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
 		if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
 		{
 			SAFETY_CHECKERS_log("\nRM register blob test failed\r\n\n");

@@ -116,6 +116,14 @@ extern "C" {
 #define SAFETY_CHECKERS_RM_IR_BASE_ADDR2						 (CSL_MAIN_GPIOMUX_INTROUTER0_INTR_ROUTER_CFG_BASE)
 #define SAFETY_CHECKERS_RM_IR_BASE_ADDR3						 (CSL_CMP_EVENT_INTROUTER0_INTR_ROUTER_CFG_BASE)
 
+/**
+ * \brief  Total register dump size for RM.
+ *         This has been calculated by iterating through each element in gSafetyCheckers_RmRegData
+ *         array. Within the loop, calculates the total talLength by multiplying the regNum and regArrayLen
+ *         in the array. The final result is the total size of register array for RM module registers.
+ */
+#define SAFETY_CHECKERS_RM_REGDUMP_SIZE                           (3360U)
+
 /** \brief Formula input of IR module to read relevant registers from register group */
 #define SAFETY_CHECKERS_RM_IR_TOTAL_REG0	                     (64U)
 #define SAFETY_CHECKERS_RM_IR_TOTAL_REG1	                     (48U)
