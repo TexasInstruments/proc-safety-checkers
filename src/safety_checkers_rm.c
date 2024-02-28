@@ -78,11 +78,11 @@
 
 int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size)
 {
-    uint32_t offset = 0;
-    uint32_t totalModule = 0;
-    uint32_t regNum = 0;
-    uint32_t regArrayLen = 0;
-    uint32_t totalLength = 0;
+    uint32_t offset = 0U;
+    uint32_t totalLength = 0U;
+    uint32_t totalModule;
+    uint32_t regNum;
+    uint32_t regArrayLen;
 	int32_t status = SAFETY_CHECKERS_SOK;
 	
 	if (rmRegCfg == NULL)
@@ -92,7 +92,7 @@ int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size)
 
     if (status == SAFETY_CHECKERS_SOK)
 	{
-		for (totalModule = 0; totalModule < (sizeof(gSafetyCheckers_RmRegData) / sizeof(SafetyCheckers_RmRegData)); totalModule++)
+		for (totalModule = 0U; totalModule < (sizeof(gSafetyCheckers_RmRegData) / sizeof(SafetyCheckers_RmRegData)); totalModule++)
 		{
 			totalLength += (gSafetyCheckers_RmRegData[totalModule].regNum) * (gSafetyCheckers_RmRegData[totalModule].regArrayLen);
 		}
@@ -105,11 +105,11 @@ int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size)
 
     if (status == SAFETY_CHECKERS_SOK)
 	{
-		for (totalModule = 0; totalModule < (sizeof(gSafetyCheckers_RmRegData) / sizeof(SafetyCheckers_RmRegData)); totalModule++)
+		for (totalModule = 0U; totalModule < (sizeof(gSafetyCheckers_RmRegData) / sizeof(SafetyCheckers_RmRegData)); totalModule++)
 		{
-			for (regNum = 0; regNum < gSafetyCheckers_RmRegData[totalModule].regNum; regNum++)
+			for (regNum = 0U; regNum < gSafetyCheckers_RmRegData[totalModule].regNum; regNum++)
 			{
-				for (regArrayLen = 0; regArrayLen < gSafetyCheckers_RmRegData[totalModule].regArrayLen; regArrayLen++)
+				for (regArrayLen = 0U; regArrayLen < gSafetyCheckers_RmRegData[totalModule].regArrayLen; regArrayLen++)
 				{
 					rmRegCfg[offset] = (uintptr_t)CSL_REG32_RD((uint32_t *)gSafetyCheckers_RmRegData[totalModule].baseAddr +\
 					((gSafetyCheckers_RmRegData[totalModule].regStartOffset * regArrayLen) + gSafetyCheckers_RmRegData[totalModule].regOffsetArr[regNum]));
@@ -125,12 +125,12 @@ int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size)
 
 int32_t SafetyCheckers_rmVerifyRegCfg (const uintptr_t *rmRegCfg, uint32_t size)
 {
-    uint32_t offset = 0;
-    uint32_t totalModule = 0;
-    uint32_t regNum = 0;
-    uint32_t regArrayLen = 0;
-    uint32_t mismatchCnt = 0;
-    uint32_t totalLength = 0;
+    uint32_t offset = 0U;
+    uint32_t mismatchCnt = 0U;
+    uint32_t totalLength = 0U;
+    uint32_t totalModule;
+    uint32_t regNum;
+    uint32_t regArrayLen;
 	int32_t status = SAFETY_CHECKERS_SOK;
 	
 	if (rmRegCfg == NULL)
@@ -140,7 +140,7 @@ int32_t SafetyCheckers_rmVerifyRegCfg (const uintptr_t *rmRegCfg, uint32_t size)
 
     if (status == SAFETY_CHECKERS_SOK)
 	{
-		for (totalModule = 0; totalModule < (sizeof(gSafetyCheckers_RmRegData) / sizeof(SafetyCheckers_RmRegData)); totalModule++)
+		for (totalModule = 0U; totalModule < (sizeof(gSafetyCheckers_RmRegData) / sizeof(SafetyCheckers_RmRegData)); totalModule++)
 		{
 			totalLength += (gSafetyCheckers_RmRegData[totalModule].regNum) * (gSafetyCheckers_RmRegData[totalModule].regArrayLen);
 		}
@@ -153,11 +153,11 @@ int32_t SafetyCheckers_rmVerifyRegCfg (const uintptr_t *rmRegCfg, uint32_t size)
 
     if (status == SAFETY_CHECKERS_SOK)
 	{
-		for (totalModule = 0; totalModule < (sizeof(gSafetyCheckers_RmRegData) / sizeof(SafetyCheckers_RmRegData)); totalModule++)
+		for (totalModule = 0U; totalModule < (sizeof(gSafetyCheckers_RmRegData) / sizeof(SafetyCheckers_RmRegData)); totalModule++)
 		{
-			for (regNum = 0; regNum < gSafetyCheckers_RmRegData[totalModule].regNum; regNum++)
+			for (regNum = 0U; regNum < gSafetyCheckers_RmRegData[totalModule].regNum; regNum++)
 			{
-				for (regArrayLen = 0; regArrayLen < gSafetyCheckers_RmRegData[totalModule].regArrayLen; regArrayLen++)
+				for (regArrayLen = 0U; regArrayLen < gSafetyCheckers_RmRegData[totalModule].regArrayLen; regArrayLen++)
 				{
 					uint32_t readData = (uint32_t)CSL_REG32_RD((uint32_t *)gSafetyCheckers_RmRegData[totalModule].baseAddr +\
 					((gSafetyCheckers_RmRegData[totalModule].regStartOffset * regArrayLen) + gSafetyCheckers_RmRegData[totalModule].regOffsetArr[regNum]));			
