@@ -72,50 +72,32 @@ extern "C" {
 /** \brief Safety checkers status Insufficient Buffer */
 #define SAFETY_CHECKERS_INSUFFICIENT_BUFF                            (-3)
 
-/** \brief Safety checkers valid request frequency */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_REQ_FREQ                    (0x0U)
-/** \brief Safety checkers default device ID */
-#define SAFETY_CHECKERS_PM_DEFAULT_DEVICE_ID                         (0x0U)
-/** \brief Safety checkers default device state */
-#define SAFETY_CHECKERS_PM_DEFAULT_DEVICE_STATE                      (0x0U)
-/** \brief Safety checkers default device Reset-bit */
-#define SAFETY_CHECKERS_PM_DEFAULT_DEVICE_RESET_BIT                  (0x0U)
-/** \brief Safety checkers default Clock ID */
-#define SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ID                          (0x0U)
-/** \brief Safety checkers default Clock State */
-#define SAFETY_CHECKERS_PM_DEFAULT_CLOCK_STATE                       (0x0U)
-/** \brief Safety checkers default Clock Additional Flag */
-#define SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ADD_FLAG                    (0x0U)
-/** \brief Safety checkers default Parent Clock */
-#define SAFETY_CHECKERS_PM_DEFAULT_CLOCK_PARENT                      (0x0U)
-/** \brief Safety checkers default Clock Frequency */
-#define SAFETY_CHECKERS_PM_DEFAULT_CLOCK_FREQUENCY                   (0x0U)
-/** \brief Safety checkers valid request frequency */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_REQ_FREQ                    (0x0U)
+/** \brief Safety checkers default ID */
+#define SAFETY_CHECKERS_PM_DEFAULT_ID                                (0x0U)
 /** \brief Safety checkers valid Device Request flag */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_REQUEST_FLAG                (TISCI_MSG_FLAG_AOP)
+#define SAFETY_CHECKERS_PM_DFT_VAL_REQUEST_FLAG                      (TISCI_MSG_FLAG_AOP)
 /** \brief Safety checkers invalid device ID */
-#define SAFETY_CHECKERS_PM_INVALID_DEVICE_ID                         (-1)
+#define SAFETY_CHECKERS_PM_INVAL_DEV_ID                              (-1)
 /** \brief Safety checkers valid parameter offset range */
-#define SAFETY_CHECKERS_PM_VALID_PARAM_OFFSET_RANGE                  (0x0U)
+#define SAFETY_CHECKERS_PM_VAL_PARAM_OFFSET_RANGE                    (0x0U)
 /** \brief Safety checkers invalid parameter offset range */
-#define SAFETY_CHECKERS_PM_INVALID_PARAM_OFFSET_RANGE                (0x1U)
+#define SAFETY_CHECKERS_PM_INVAL_PARAM_OFFSET_RANGE                  (0x1U)
 
 #if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_J722S)
 /** \brief Safety checkers valid device ID */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID                   (TISCI_DEV_MCU_MCAN1)
+#define SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID                         (TISCI_DEV_MCU_MCAN1)
 /** \brief Safety checkers valid Clock ID */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_CLOCK_ID                    (TISCI_DEV_MCU_MCAN1_MCANSS_CCLK_CLK)
+#define SAFETY_CHECKERS_PM_DFT_VAL_CLOCK_ID                          (TISCI_DEV_MCU_MCAN1_MCANSS_CCLK_CLK)
 /** \brief Safety checkers valid device state to turn device */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_STATE                (TISCI_MSG_VALUE_DEVICE_SW_STATE_ON)
+#define SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_STATE                      (TISCI_MSG_VALUE_DEVICE_SW_STATE_ON)
 /** \brief Safety checkers valid Clock ID */
-#define SAFETY_CHECKERS_PM_VALID_CLOCK_ID                            (SAFETY_CHECKERS_PM_DEFAULT_VALID_CLOCK_ID)
+#define SAFETY_CHECKERS_PM_VALID_CLOCK_ID                            (SAFETY_CHECKERS_PM_DFT_VAL_CLOCK_ID)
 /** \brief Safety checkers valid Parent Clock ID */
 #define SAFETY_CHECKERS_PM_VALID_PARENT_CLOCK_ID                     (SAFETY_CHECKERS_PM_VALID_CLOCK_ID + 1U)
 /** \brief Safety checkers valid Device ID */
-#define SAFETY_CHECKERS_PM_VALID_DEVICE_ID                           (SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID)
+#define SAFETY_CHECKERS_PM_VALID_DEVICE_ID                           (SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID)
 /** \brief Safety checkers valid Clock freq requested */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_CLOCK_FREQ                  (80000000U)
+#define SAFETY_CHECKERS_PM_DFT_VAL_CLOCK_FREQ                        (80000000U)
 /** \brief Safety checkers WKUP reset status register */
 #define SAFETY_CHECKERS_PM_WKUP_CTRL_MMR_CFG0_RESET_SRC_STAT         (CSL_WKUP_CTRL_MMR_CFG0_RST_SRC)
 /** \brief Safety checkers warm reset masking bit */
@@ -124,19 +106,19 @@ extern "C" {
 #define SAFETY_CHECKERS_DEFAULT_TIMEOUT                              (SystemP_WAIT_FOREVER)
 #elif defined (SOC_J7200) || defined (SOC_J721E) || defined (SOC_J721S2) || defined (SOC_J784S4)
 /** \brief Safety checkers valid device ID */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID                   (TISCI_DEV_USB0)
+#define SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID                         (TISCI_DEV_USB0)
 /** \brief Safety checkers valid Clock ID */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_CLOCK_ID                    (TISCI_DEV_USB0_CLK_LPM_CLK)
+#define SAFETY_CHECKERS_PM_DFT_VAL_CLOCK_ID                          (TISCI_DEV_USB0_CLK_LPM_CLK)
 /** \brief Safety checkers valid device state to turn device */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_STATE                (TISCI_MSG_VALUE_DEVICE_SW_STATE_AUTO_OFF)
+#define SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_STATE                      (TISCI_MSG_VALUE_DEVICE_SW_STATE_AUTO_OFF)
 /** \brief Safety checkers valid Clock ID */
 #define SAFETY_CHECKERS_PM_VALID_CLOCK_ID                            (TISCI_DEV_USB0_PIPE_REFCLK)
 /** \brief Safety checkers valid Device ID */
-#define SAFETY_CHECKERS_PM_VALID_DEVICE_ID                           (SAFETY_CHECKERS_PM_DEFAULT_DEVICE_ID)
+#define SAFETY_CHECKERS_PM_VALID_DEVICE_ID                           (SAFETY_CHECKERS_PM_DEFAULT_ID)
 /** \brief Safety checkers valid Parent Clock ID */
 #define SAFETY_CHECKERS_PM_VALID_PARENT_CLOCK_ID                     (SAFETY_CHECKERS_PM_VALID_CLOCK_ID + 1U)
 /** \brief Safety checkers valid Clock freq requested */
-#define SAFETY_CHECKERS_PM_DEFAULT_VALID_CLOCK_FREQ                  (96000000U)
+#define SAFETY_CHECKERS_PM_DFT_VAL_CLOCK_FREQ                        (96000000U)
 /** \brief Safety checkers WKUP reset status register */
 #define SAFETY_CHECKERS_PM_WKUP_CTRL_MMR_CFG0_RESET_SRC_STAT         (CSL_WKUP_CTRL_MMR_CFG0_RESET_SRC_STAT)
 /** \brief Safety checkers warm reset masking bit */

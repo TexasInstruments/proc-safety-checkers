@@ -94,40 +94,40 @@ void SafetyCheckersApp_pmRun(void *arg0)
 {
 	uint32_t    status = SAFETY_CHECKERS_SOK;
 
-	status = SafetyCheckersApp_pmClockIdCheck(SAFETY_CHECKERS_PM_INVALID_PARAM_OFFSET_RANGE);
+	status = SafetyCheckersApp_pmClockIdCheck(SAFETY_CHECKERS_PM_INVAL_PARAM_OFFSET_RANGE);
     if(SAFETY_CHECKERS_SOK == status)
     {
-   	    status = SafetyCheckersApp_pmClockStateCheck(SAFETY_CHECKERS_PM_INVALID_PARAM_OFFSET_RANGE);
+   	    status = SafetyCheckersApp_pmClockStateCheck(SAFETY_CHECKERS_PM_INVAL_PARAM_OFFSET_RANGE);
     }
 
     if(SAFETY_CHECKERS_SOK == status)
    	{
-   	    status = SafetyCheckersApp_pmDevIdCheck(SAFETY_CHECKERS_PM_INVALID_PARAM_OFFSET_RANGE);
+   	    status = SafetyCheckersApp_pmDevIdCheck(SAFETY_CHECKERS_PM_INVAL_PARAM_OFFSET_RANGE);
     }
 
     if(SAFETY_CHECKERS_SOK == status)
    	{
-   	    status = SafetyCheckersApp_pmDevResetCheck(SAFETY_CHECKERS_PM_INVALID_PARAM_OFFSET_RANGE);
+   	    status = SafetyCheckersApp_pmDevResetCheck(SAFETY_CHECKERS_PM_INVAL_PARAM_OFFSET_RANGE);
     }
 
     if(SAFETY_CHECKERS_SOK == status)
    	{
-   	    status = SafetyCheckersApp_pmDevStateCheck(SAFETY_CHECKERS_PM_INVALID_PARAM_OFFSET_RANGE);
+   	    status = SafetyCheckersApp_pmDevStateCheck(SAFETY_CHECKERS_PM_INVAL_PARAM_OFFSET_RANGE);
     }
 
     if(SAFETY_CHECKERS_SOK == status)
    	{
-   	    status = SafetyCheckersApp_pmParentClkCheck(SAFETY_CHECKERS_PM_INVALID_PARAM_OFFSET_RANGE);
+   	    status = SafetyCheckersApp_pmParentClkCheck(SAFETY_CHECKERS_PM_INVAL_PARAM_OFFSET_RANGE);
     }
 
    	if(SAFETY_CHECKERS_SOK == status)
     {
-        status = SafetyCheckersApp_pmRegCfgVerify(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID);
+        status = SafetyCheckersApp_pmRegCfgVerify(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID);
    	}
 
    	if(SAFETY_CHECKERS_SOK == status)
     {
-        status = SafetyCheckersApp_pmPllLockVerify(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID);
+        status = SafetyCheckersApp_pmPllLockVerify(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID);
    	}
 
     if(SAFETY_CHECKERS_SOK == status)
@@ -142,40 +142,40 @@ void SafetyCheckersApp_pmRun(void *arg0)
 
     if(SAFETY_CHECKERS_SOK == status)
     {
-        status = SafetyCheckersApp_pmClockIdCheck(SAFETY_CHECKERS_PM_VALID_PARAM_OFFSET_RANGE);
+        status = SafetyCheckersApp_pmClockIdCheck(SAFETY_CHECKERS_PM_VAL_PARAM_OFFSET_RANGE);
         if(SAFETY_CHECKERS_SOK != status)
         {
-   	        status = SafetyCheckersApp_pmClockStateCheck(SAFETY_CHECKERS_PM_VALID_PARAM_OFFSET_RANGE);
+   	        status = SafetyCheckersApp_pmClockStateCheck(SAFETY_CHECKERS_PM_VAL_PARAM_OFFSET_RANGE);
         }
 
         if(SAFETY_CHECKERS_SOK != status)
    	    {
-   	        status = SafetyCheckersApp_pmDevIdCheck(SAFETY_CHECKERS_PM_VALID_PARAM_OFFSET_RANGE);
+   	        status = SafetyCheckersApp_pmDevIdCheck(SAFETY_CHECKERS_PM_VAL_PARAM_OFFSET_RANGE);
         }
 
         if(SAFETY_CHECKERS_SOK != status)
    	    {
-   	        status = SafetyCheckersApp_pmDevResetCheck(SAFETY_CHECKERS_PM_VALID_PARAM_OFFSET_RANGE);
+   	        status = SafetyCheckersApp_pmDevResetCheck(SAFETY_CHECKERS_PM_VAL_PARAM_OFFSET_RANGE);
         }
 
         if(SAFETY_CHECKERS_SOK != status)
    	    {
-   	        status = SafetyCheckersApp_pmDevStateCheck(SAFETY_CHECKERS_PM_VALID_PARAM_OFFSET_RANGE);
+   	        status = SafetyCheckersApp_pmDevStateCheck(SAFETY_CHECKERS_PM_VAL_PARAM_OFFSET_RANGE);
         }
 
         if(SAFETY_CHECKERS_SOK != status)
    	    {
-   	        status = SafetyCheckersApp_pmParentClkCheck(SAFETY_CHECKERS_PM_VALID_PARAM_OFFSET_RANGE);
+   	        status = SafetyCheckersApp_pmParentClkCheck(SAFETY_CHECKERS_PM_VAL_PARAM_OFFSET_RANGE);
         }
 
    	    if(SAFETY_CHECKERS_SOK != status)
         {
-            status = SafetyCheckersApp_pmRegCfgVerify(SAFETY_CHECKERS_PM_INVALID_DEVICE_ID);
+            status = SafetyCheckersApp_pmRegCfgVerify(SAFETY_CHECKERS_PM_INVAL_DEV_ID);
    	    }
 
    	    if(SAFETY_CHECKERS_SOK != status)
         {
-            status = SafetyCheckersApp_pmPllLockVerify(SAFETY_CHECKERS_PM_INVALID_DEVICE_ID);
+            status = SafetyCheckersApp_pmPllLockVerify(SAFETY_CHECKERS_PM_INVAL_DEV_ID);
    	    }
 
         if(SAFETY_CHECKERS_SOK != status)
@@ -214,34 +214,34 @@ static int32_t SafetyCheckersApp_pmClockIdCheck(uint32_t offset)
         if(SAFETY_CHECKERS_SOK != status)
         {
             /* TISCI_MSG_SET_CLOCK PM message */
-            status = Sciclient_pmModuleClkRequest(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+            status = Sciclient_pmModuleClkRequest(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                   clockId[clockIdRange],
-                                                  SAFETY_CHECKERS_PM_DEFAULT_CLOCK_STATE,
-                                                  SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ADD_FLAG,
+                                                  SAFETY_CHECKERS_PM_DEFAULT_ID,
+                                                  SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                   SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             if(SAFETY_CHECKERS_SOK != status)
             {
                 /* TISCI_MSG_SET_CLOCK_PARENT PM message */
-                status = Sciclient_pmSetModuleClkParent(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+                status = Sciclient_pmSetModuleClkParent(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                         clockId[clockIdRange],
-                                                        SAFETY_CHECKERS_PM_DEFAULT_CLOCK_PARENT,
+                                                        SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                         SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
 
             if(SAFETY_CHECKERS_SOK != status)
             {
                 /* TISCI_MSG_SET_FREQ PM message */
-                status = Sciclient_pmSetModuleClkFreq(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+                status = Sciclient_pmSetModuleClkFreq(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                        clockId[clockIdRange],
-                                                       SAFETY_CHECKERS_PM_DEFAULT_CLOCK_FREQUENCY,
-                                                       SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ADD_FLAG,
+                                                       SAFETY_CHECKERS_PM_DEFAULT_ID,
+                                                       SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                        SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
 
             if(SAFETY_CHECKERS_SOK != status)
             {
                 /* TISCI_MSG_GET_CLOCK PM message */
-                status = Sciclient_pmModuleGetClkStatus(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+                status = Sciclient_pmModuleGetClkStatus(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                         clockId[clockIdRange],
                                                         &clockStatus,
                                                         SAFETY_CHECKERS_DEFAULT_TIMEOUT);
@@ -250,7 +250,7 @@ static int32_t SafetyCheckersApp_pmClockIdCheck(uint32_t offset)
             if(SAFETY_CHECKERS_SOK != status)
             {
                 /* TISCI_MSG_GET_CLOCK_PARENT PM message */
-                status = Sciclient_pmGetModuleClkParent(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+                status = Sciclient_pmGetModuleClkParent(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                         clockId[clockIdRange],
                                                         &clockParent,
                                                         SAFETY_CHECKERS_DEFAULT_TIMEOUT);
@@ -259,7 +259,7 @@ static int32_t SafetyCheckersApp_pmClockIdCheck(uint32_t offset)
             if(SAFETY_CHECKERS_SOK != status)
             {
                 /* TISCI_MSG_GET_NUM_CLOCK_PARENTS PM message */
-                status = Sciclient_pmGetModuleClkNumParent(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+                status = Sciclient_pmGetModuleClkNumParent(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                           clockId[clockIdRange],
                                                           &clockNumParent,
                                                           SAFETY_CHECKERS_DEFAULT_TIMEOUT);
@@ -268,9 +268,9 @@ static int32_t SafetyCheckersApp_pmClockIdCheck(uint32_t offset)
             if(SAFETY_CHECKERS_SOK != status)
             {
                 /* TISCI_MSG_QUERY_FREQ PM message */
-                status = Sciclient_pmQueryModuleClkFreq(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+                status = Sciclient_pmQueryModuleClkFreq(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                         clockId[clockIdRange],
-                                                        SAFETY_CHECKERS_PM_DEFAULT_VALID_REQ_FREQ,
+                                                        SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                         &reqFreqHz,
                                                         SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
@@ -278,7 +278,7 @@ static int32_t SafetyCheckersApp_pmClockIdCheck(uint32_t offset)
             if(SAFETY_CHECKERS_SOK != status)
             {
                 /* TISCI_MSG_GET_FREQ PM message */
-                status = Sciclient_pmGetModuleClkFreq(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+                status = Sciclient_pmGetModuleClkFreq(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                       clockId[clockIdRange],
                                                       &freqHz,
                                                       SAFETY_CHECKERS_DEFAULT_TIMEOUT);
@@ -306,17 +306,17 @@ static int32_t SafetyCheckersApp_pmClockStateCheck(uint32_t offset)
     int32_t      clockStateRange;
 
     /* Valid Clock State Range is 0 - 2 */
-    int32_t clockStates[] = {SAFETY_CHECKERS_PM_DEFAULT_CLOCK_STATE, -1, 3};
+    int32_t clockStates[] = {SAFETY_CHECKERS_PM_DEFAULT_ID, -1, 3};
 
     for (clockStateRange = offset; clockStateRange < (sizeof(clockStates) / sizeof(clockStates[0])); clockStateRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {
             /* TISCI_MSG_SET_CLOCK PM message */
-            status = Sciclient_pmModuleClkRequest(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+            status = Sciclient_pmModuleClkRequest(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                   SAFETY_CHECKERS_PM_VALID_CLOCK_ID,
                                                   clockStates[clockStateRange],
-                                                  SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ADD_FLAG,
+                                                  SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                   SAFETY_CHECKERS_DEFAULT_TIMEOUT);
         }
     }
@@ -383,8 +383,8 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
         {
             /* TISCI_MSG_SET_DEVICE PM message */
             status = Sciclient_pmSetModuleState(deviceId[deviceIdRange],
-                                                SAFETY_CHECKERS_PM_DEFAULT_DEVICE_STATE,
-                                                SAFETY_CHECKERS_PM_DEFAULT_VALID_REQUEST_FLAG,
+                                                SAFETY_CHECKERS_PM_DEFAULT_ID,
+                                                SAFETY_CHECKERS_PM_DFT_VAL_REQUEST_FLAG,
                                                 SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             if(SAFETY_CHECKERS_SOK != status)
             {
@@ -400,7 +400,7 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             {
                 /* TISCI_MSG_SET_DEVICE_RESETS PM message */
                 status = Sciclient_pmSetModuleRst (deviceId[deviceIdRange],
-                                                   SAFETY_CHECKERS_PM_DEFAULT_DEVICE_RESET_BIT,
+                                                   SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                    SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
 
@@ -408,9 +408,9 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             {
                 /* TISCI_MSG_SET_CLOCK PM message */
                 status = Sciclient_pmModuleClkRequest(deviceId[deviceIdRange],
-                                                      SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ID,
-                                                      SAFETY_CHECKERS_PM_DEFAULT_CLOCK_STATE,
-                                                      SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ADD_FLAG,
+                                                      SAFETY_CHECKERS_PM_DEFAULT_ID,
+                                                      SAFETY_CHECKERS_PM_DEFAULT_ID,
+                                                      SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                       SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
 
@@ -418,8 +418,8 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             {
                 /* TISCI_MSG_SET_CLOCK_PARENT PM message */
                 status = Sciclient_pmSetModuleClkParent(deviceId[deviceIdRange],
-                                                        SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ID,
-                                                        SAFETY_CHECKERS_PM_DEFAULT_CLOCK_PARENT,
+                                                        SAFETY_CHECKERS_PM_DEFAULT_ID,
+                                                        SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                         SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
 
@@ -427,9 +427,9 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             {
                 /* TISCI_MSG_SET_FREQ PM message */
                 status = Sciclient_pmSetModuleClkFreq(deviceId[deviceIdRange],
-                                                       SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ID,
-                                                       SAFETY_CHECKERS_PM_DEFAULT_CLOCK_FREQUENCY,
-                                                       SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ADD_FLAG,
+                                                       SAFETY_CHECKERS_PM_DEFAULT_ID,
+                                                       SAFETY_CHECKERS_PM_DEFAULT_ID,
+                                                       SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                        SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
 
@@ -437,7 +437,7 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             {
                 /* TISCI_MSG_GET_CLOCK PM message */
                 status = Sciclient_pmModuleGetClkStatus(deviceId[deviceIdRange],
-                                                        SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ID,
+                                                        SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                         &clockStatus,
                                                         SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
@@ -446,7 +446,7 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             {
                 /* TISCI_MSG_GET_CLOCK_PARENT PM message */
                 status = Sciclient_pmGetModuleClkParent(deviceId[deviceIdRange],
-                                                        SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ID,
+                                                        SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                         &clockParent,
                                                         SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
@@ -455,7 +455,7 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             {
                 /* TISCI_MSG_GET_NUM_CLOCK_PARENTS PM message */
                 status = Sciclient_pmGetModuleClkNumParent(deviceId[deviceIdRange],
-                                                          SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ID,
+                                                          SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                           &clockNumParent,
                                                           SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
@@ -464,8 +464,8 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             {
                 /* TISCI_MSG_QUERY_FREQ PM message */
                 status = Sciclient_pmQueryModuleClkFreq(deviceId[deviceIdRange],
-                                                        SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ID,
-                                                        SAFETY_CHECKERS_PM_DEFAULT_VALID_REQ_FREQ,
+                                                        SAFETY_CHECKERS_PM_DEFAULT_ID,
+                                                        SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                         &reqFreqHz,
                                                         SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
@@ -474,7 +474,7 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             {
                 /* TISCI_MSG_GET_FREQ PM message */
                 status = Sciclient_pmGetModuleClkFreq(deviceId[deviceIdRange],
-                                                      SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ID,
+                                                      SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                       &freqHz,
                                                       SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
@@ -501,14 +501,14 @@ static int32_t SafetyCheckersApp_pmDevResetCheck(uint32_t offset)
     int32_t      deviceRstRange;
 
     /* Valid Device resets Range is 0 - 3 */
-    int32_t deviceResets[] = {SAFETY_CHECKERS_PM_DEFAULT_DEVICE_RESET_BIT, -1, 4};
+    int32_t deviceResets[] = {SAFETY_CHECKERS_PM_DEFAULT_ID, -1, 4};
 
     for (deviceRstRange = offset; deviceRstRange < (sizeof(deviceResets) / sizeof(deviceResets[0])); deviceRstRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {
             /* TISCI_MSG_SET_DEVICE_RESETS PM message */
-            status = Sciclient_pmSetModuleRst (SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+            status = Sciclient_pmSetModuleRst (SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                deviceResets[deviceRstRange],
                                                SAFETY_CHECKERS_DEFAULT_TIMEOUT);
         }
@@ -534,16 +534,16 @@ static int32_t SafetyCheckersApp_pmDevStateCheck(uint32_t offset)
     int32_t      deviceStateRange;
 
     /* Valid  Device State Range is 0 - 2 */
-    int32_t deviceState[] = {SAFETY_CHECKERS_PM_DEFAULT_CLOCK_STATE, -1, 3};
+    int32_t deviceState[] = {SAFETY_CHECKERS_PM_DEFAULT_ID, -1, 3};
 
     for (deviceStateRange = offset; deviceStateRange < (sizeof(deviceState) / sizeof(deviceState[0])); deviceStateRange++)
     {
         if(SAFETY_CHECKERS_SOK != status)
         {
             /* TISCI_MSG_SET_DEVICE PM message */
-            status = Sciclient_pmSetModuleState(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+            status = Sciclient_pmSetModuleState(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                 deviceState[deviceStateRange],
-                                                SAFETY_CHECKERS_PM_DEFAULT_VALID_REQUEST_FLAG,
+                                                SAFETY_CHECKERS_PM_DFT_VAL_REQUEST_FLAG,
                                                 SAFETY_CHECKERS_DEFAULT_TIMEOUT);
         }
     }
@@ -575,7 +575,7 @@ static int32_t SafetyCheckersApp_pmParentClkCheck(uint32_t offset)
         if(SAFETY_CHECKERS_SOK != status)
         {
             /* TISCI_MSG_SET_CLOCK_PARENT PM message */
-            status = Sciclient_pmSetModuleClkParent(SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_ID,
+            status = Sciclient_pmSetModuleClkParent(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                     SAFETY_CHECKERS_PM_VALID_CLOCK_ID,
                                                     parentClk[parentClkRange],
                                                     SAFETY_CHECKERS_DEFAULT_TIMEOUT);
@@ -610,9 +610,9 @@ static int32_t SafetyCheckersApp_pmPllLockVerify(int32_t deviceID)
         {
             /* Call the API which changes PLL register values */
             status = Sciclient_pmSetModuleClkFreq(deviceID,
-                                                  SAFETY_CHECKERS_PM_DEFAULT_VALID_CLOCK_ID,
-                                                  SAFETY_CHECKERS_PM_DEFAULT_VALID_CLOCK_FREQ,
-                                                  SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ADD_FLAG,
+                                                  SAFETY_CHECKERS_PM_DFT_VAL_CLOCK_ID,
+                                                  SAFETY_CHECKERS_PM_DFT_VAL_CLOCK_FREQ,
+                                                  SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                   SAFETY_CHECKERS_DEFAULT_TIMEOUT);
         }
 
@@ -655,8 +655,8 @@ static int32_t SafetyCheckersApp_pmRegCfgVerify(int32_t deviceID)
 
             /* Call the API which changes PSC register values */
             status = Sciclient_pmSetModuleState(deviceID,
-                                                SAFETY_CHECKERS_PM_DEFAULT_VALID_DEVICE_STATE,
-                                                SAFETY_CHECKERS_PM_DEFAULT_VALID_REQUEST_FLAG,
+                                                SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_STATE,
+                                                SAFETY_CHECKERS_PM_DFT_VAL_REQUEST_FLAG,
                                                 SAFETY_CHECKERS_DEFAULT_TIMEOUT);
         }
         if(SAFETY_CHECKERS_SOK == status)
@@ -684,9 +684,9 @@ static int32_t SafetyCheckersApp_pmRegCfgVerify(int32_t deviceID)
             {
                 /* Call the API which changes PLL register values */
                 status = Sciclient_pmSetModuleClkFreq(deviceID,
-                                                      SAFETY_CHECKERS_PM_DEFAULT_VALID_CLOCK_ID,
-                                                      SAFETY_CHECKERS_PM_DEFAULT_VALID_CLOCK_FREQ,
-                                                      SAFETY_CHECKERS_PM_DEFAULT_CLOCK_ADD_FLAG,
+                                                      SAFETY_CHECKERS_PM_DFT_VAL_CLOCK_ID,
+                                                      SAFETY_CHECKERS_PM_DFT_VAL_CLOCK_FREQ,
+                                                      SAFETY_CHECKERS_PM_DEFAULT_ID,
                                                       SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
             if(SAFETY_CHECKERS_SOK == status)
