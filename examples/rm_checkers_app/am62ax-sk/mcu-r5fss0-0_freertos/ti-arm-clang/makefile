@@ -21,17 +21,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=SafetyCheckersApp_rmCheckers.$(PROFILE).out
+OUTNAME:=SafetyCheckersApp_rm.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=SafetyCheckersApp_rmCheckers.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=SafetyCheckersApp_rmCheckers.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=SafetyCheckersApp_rmCheckers.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=SafetyCheckersApp_rm.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=SafetyCheckersApp_rm.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=SafetyCheckersApp_rm.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=SafetyCheckersApp_rm.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=SafetyCheckersApp_rm.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=SafetyCheckersApp_rm.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=SafetyCheckersApp_rm.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=SafetyCheckersApp_rm.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -103,18 +103,23 @@ LNK_FILES_common = \
 	linker.cmd \
 
 LIBS_PATH_common = \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/dm_stub/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciclient_direct/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciserver/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/self_reset/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciserver/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciclient_direct/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/self_reset/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/dm_stub/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/safety_checkers/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
+	-lsciserver.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lsciclient_direct.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lrm_pm_hal.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lself_reset.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldm_stub.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lfreertos.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
@@ -130,6 +135,11 @@ LFLAGS_common = \
 
 
 LIBS_NAME = \
+	sciserver.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
+	sciclient_direct.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
+	rm_pm_hal.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
+	self_reset.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
+	dm_stub.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
 	freertos.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am62ax.r5f.ti-arm-clang.${ConfigName}.lib \
@@ -138,14 +148,14 @@ LIBS_NAME = \
 	libsysbm.a \
 
 LIBS_PATH_NAME = \
-	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/dm_stub/lib \
-	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/lib \
-	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciclient_direct/lib \
-	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciserver/lib \
-	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/self_reset/lib \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
+	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciserver/lib \
+	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/lib \
+	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciclient_direct/lib \
+	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/self_reset/lib \
+	${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/dm_stub/lib \
 	${MCU_PLUS_SDK_PATH}/source/safety_checkers/lib \
 	${CG_TOOL_ROOT}/lib \
 
@@ -193,6 +203,8 @@ $(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 	@echo  .
 	@echo  Linking: am62ax:mcu-r5fss0-0:freertos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
+	$(RM) SafetyCheckersApp_rm.mcu-r5f0_0.${ConfigName}.strip.out
+	$(STRIP) -p $@ -o=SafetyCheckersApp_rm.mcu-r5f0_0.${ConfigName}.strip.out
 	@echo  Linking: am62ax:mcu-r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
@@ -200,6 +212,7 @@ clean:
 	@echo  Cleaning: am62ax:mcu-r5fss0-0:freertos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
+	$(RM) SafetyCheckersApp_rm.mcu-r5f0_0.${ConfigName}.strip.out
 	$(RM) $(BOOTIMAGE_NAME)
 	$(RM) $(BOOTIMAGE_NAME_XIP)
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
@@ -210,7 +223,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am62ax:mcu-r5fss0-0:freertos:ti-arm-clang SafetyCheckersApp_rmCheckers ...
+	@echo  Scrubing: am62ax:mcu-r5fss0-0:freertos:ti-arm-clang SafetyCheckersApp_rm ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

@@ -103,7 +103,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "SafetyCheckersApp_rmCheckers";
+    property.name = "SafetyCheckersApp_rm";
     property.isInternal = false;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
     property.description = "RM safety checkers app"

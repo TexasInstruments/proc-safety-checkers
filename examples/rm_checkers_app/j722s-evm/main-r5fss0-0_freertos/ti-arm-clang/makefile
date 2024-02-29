@@ -21,17 +21,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=SafetyCheckersApp_rmCheckers.$(PROFILE).out
+OUTNAME:=SafetyCheckersApp_rm.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=SafetyCheckersApp_rmCheckers.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=SafetyCheckersApp_rmCheckers.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=SafetyCheckersApp_rmCheckers.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=SafetyCheckersApp_rmCheckers.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=SafetyCheckersApp_rm.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=SafetyCheckersApp_rm.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=SafetyCheckersApp_rm.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=SafetyCheckersApp_rm.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=SafetyCheckersApp_rm.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=SafetyCheckersApp_rm.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=SafetyCheckersApp_rm.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=SafetyCheckersApp_rm.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -204,7 +204,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: j722s:main-r5fss0-0:freertos:ti-arm-clang SafetyCheckersApp_rmCheckers ...
+	@echo  Scrubing: j722s:main-r5fss0-0:freertos:ti-arm-clang SafetyCheckersApp_rm ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

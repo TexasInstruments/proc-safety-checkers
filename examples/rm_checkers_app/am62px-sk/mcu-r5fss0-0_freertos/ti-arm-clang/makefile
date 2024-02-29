@@ -21,24 +21,24 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=RM_safetyCheckers_unitTest.$(PROFILE).out
+OUTNAME:=SafetyCheckersApp_rm.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=RM_safetyCheckers_unitTest.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=RM_safetyCheckers_unitTest.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=RM_safetyCheckers_unitTest.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=RM_safetyCheckers_unitTest.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=RM_safetyCheckers_unitTest.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=RM_safetyCheckers_unitTest.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=RM_safetyCheckers_unitTest.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=RM_safetyCheckers_unitTest.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=SafetyCheckersApp_rm.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=SafetyCheckersApp_rm.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=SafetyCheckersApp_rm.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=SafetyCheckersApp_rm.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=SafetyCheckersApp_rm.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=SafetyCheckersApp_rm.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=SafetyCheckersApp_rm.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=SafetyCheckersApp_rm.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
 
 FILES_common := \
-	safety_checkers_rm_test.c \
+	rm_checkers_app.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -51,7 +51,7 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
-	../../../../../../source/drivers/device_manager/sciclient_direct \
+	../../../../../../drivers/device_manager/sciclient_direct \
 	generated \
 
 INCLUDES_common := \
@@ -114,7 +114,7 @@ LIBS_common = \
 	-lfreertos.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lsafety_checkers_rm_pm.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lsafety_checkers.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -129,7 +129,7 @@ LIBS_NAME = \
 	freertos.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
-	safety_checkers_rm_pm.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
+	safety_checkers.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -202,7 +202,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am62px:mcu-r5fss0-0:freertos:ti-arm-clang RM_safetyCheckers_unitTest ...
+	@echo  Scrubing: am62px:mcu-r5fss0-0:freertos:ti-arm-clang SafetyCheckersApp_rm ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

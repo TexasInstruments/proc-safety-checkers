@@ -84,51 +84,9 @@ const lnkfiles = {
 const syscfgfile = "../example.syscfg";
 const readmeDoxygenPageTag = "EXAMPLES_SAFETY_CHECKERS"
 
-const templates_freertos_mcu_r5f =
-[
-	{
-		input: ".project/templates/am62ax/common/linker_mcu-r5f.cmd.xdt",
-		output: "linker.cmd",
-	},
-	{
-		input: ".project/templates/am62ax/freertos/main_freertos.c.xdt",
-		output: "../main.c",
-		options: {
-		stackSize: 0x10000,
-		entryFunction: "SafetyCheckersApp_rmRun",
-		},
-	}
-];
-
-const templates_freertos_dm_r5f =
-[
-	{
-		input: ".project/templates/am62ax/common/linker_dm_r5f.cmd.xdt",
-		output: "linker.cmd",
-		options: {
-			heapSize: 0x8000,
-			stackSize: 0x4000,
-			irqStackSize: 0x1000,
-			svcStackSize: 0x0100,
-			fiqStackSize: 0x0100,
-			abortStackSize: 0x0100,
-			undefinedStackSize: 0x0100,
-			dmStubstacksize: 0x0400,
-		},
-	},
-	{
-		input: ".project/templates/am62ax/freertos/main_freertos_dm.c.xdt",
-		output: "../main.c",
-		options: {
-			stackSize: 0x10000,
-			entryFunction: "SafetyCheckersApp_rmRun",
-		},
-	}
-];
-
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am62ax-sk", os: "freertos"},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am62ax-sk-lp", os: "freertos"},
+    { device: device, cpu: "mcu-r5fss0-0", cgt: "ti-arm-clang", board: "am62ax-sk", os: "freertos"},
+    { device: device, cpu: "r5fss0-0",     cgt: "ti-arm-clang", board: "am62ax-sk", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -136,7 +94,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "SafetyCheckersApp_rmCheckers";
+    property.name = "SafetyCheckersApp_rm";
     property.isInternal = false;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
     property.description = "RM safety checkers app"
@@ -164,8 +122,6 @@ function getComponentBuildProperty(buildOption) {
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;
-	    
-	    build_property.templates = templates_freertos_dm_r5f;
         }
     }
 

@@ -84,22 +84,6 @@ const lnkfiles = {
 const syscfgfile = "../example.syscfg";
 const readmeDoxygenPageTag = "EXAMPLES_SAFETY_CHECKERS"
 
-const templates_freertos_mcu_r5f =
-[
-	{
-		input: ".project/templates/am62ax/common/linker_mcu-r5f.cmd.xdt",
-		output: "linker.cmd",
-	},
-	{
-		input: ".project/templates/am62ax/freertos/main_freertos.c.xdt",
-		output: "../main.c",
-		options: {
-		stackSize: 0x10000,
-		entryFunction: "SafetyCheckersApp_rmRun",
-		},
-	}
-];
-
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am62x-sk", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am62x-sk-lp", os: "freertos"},
@@ -110,7 +94,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "SafetyCheckersApp_rmCheckers";
+    property.name = "SafetyCheckersApp_rm";
     property.isInternal = false;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
     property.description = "RM safety checkers app"

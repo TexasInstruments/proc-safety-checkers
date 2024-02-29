@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Safetycheckersapp Pmcheckers"
-        name = "SafetyCheckersApp_pmCheckers_j722s-evm_wkup-r5fss0-0_freertos_ti-arm-clang"
+        title="Safetycheckersapp Pm"
+        name = "SafetyCheckersApp_pm_j722s-evm_wkup-r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Debug,
@@ -62,7 +62,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/safety_checkers/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=SafetyCheckersApp_pmCheckers.${ConfigName}.map
+            -m=SafetyCheckersApp_pm.${ConfigName}.map
             --diag_suppress=10063
             --priority
             --ram_model
@@ -76,7 +76,7 @@
             --context wkup-r5fss0-0 --part Default --package AMW
         "
 
-        description="A Safetycheckersapp Pmcheckers FREERTOS project">
+        description="A Safetycheckersapp Pm FREERTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

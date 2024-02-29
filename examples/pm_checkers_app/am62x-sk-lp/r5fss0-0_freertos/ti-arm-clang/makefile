@@ -21,17 +21,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=SafetyCheckersApp_pmCheckers.$(PROFILE).out
+OUTNAME:=SafetyCheckersApp_pm.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=SafetyCheckersApp_pmCheckers.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=SafetyCheckersApp_pmCheckers.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=SafetyCheckersApp_pmCheckers.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=SafetyCheckersApp_pmCheckers.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=SafetyCheckersApp_pmCheckers.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=SafetyCheckersApp_pmCheckers.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=SafetyCheckersApp_pmCheckers.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=SafetyCheckersApp_pmCheckers.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=SafetyCheckersApp_pm.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=SafetyCheckersApp_pm.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=SafetyCheckersApp_pm.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=SafetyCheckersApp_pm.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=SafetyCheckersApp_pm.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=SafetyCheckersApp_pm.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=SafetyCheckersApp_pm.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=SafetyCheckersApp_pm.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -208,8 +208,8 @@ $(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 	@echo  .
 	@echo  Linking: am62x:r5fss0-0:freertos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PREBUILD_PATH) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS_PREBUILD) $(LIBS) $(LNK_FILES)
-	$(RM) SafetyCheckersApp_pmCheckers.wkup-r5f0_0.${ConfigName}.strip.out
-	$(STRIP) -p $@ -o=SafetyCheckersApp_pmCheckers.wkup-r5f0_0.${ConfigName}.strip.out
+	$(RM) SafetyCheckersApp_pm.wkup-r5f0_0.${ConfigName}.strip.out
+	$(STRIP) -p $@ -o=SafetyCheckersApp_pm.wkup-r5f0_0.${ConfigName}.strip.out
 	@echo  Linking: am62x:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
@@ -217,7 +217,7 @@ clean:
 	@echo  Cleaning: am62x:r5fss0-0:freertos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
-	$(RM) SafetyCheckersApp_pmCheckers.wkup-r5f0_0.${ConfigName}.strip.out
+	$(RM) SafetyCheckersApp_pm.wkup-r5f0_0.${ConfigName}.strip.out
 	$(RM) $(BOOTIMAGE_NAME)
 	$(RM) $(BOOTIMAGE_NAME_XIP)
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
@@ -228,7 +228,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am62x:r5fss0-0:freertos:ti-arm-clang SafetyCheckersApp_pmCheckers ...
+	@echo  Scrubing: am62x:r5fss0-0:freertos:ti-arm-clang SafetyCheckersApp_pm ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

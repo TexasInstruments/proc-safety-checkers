@@ -85,7 +85,7 @@ TaskHandle_t gSafetyCheckersAppTskMain;
 
 void SafetyCheckersApp_rmRun(void *args);
 
-void main_thread(void *args)
+void SafetyCheckersApp_rmCheckersTask(void *args)
 {
     int32_t status = SystemP_SUCCESS;
 
