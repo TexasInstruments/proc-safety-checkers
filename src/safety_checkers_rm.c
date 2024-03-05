@@ -111,7 +111,7 @@ int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size)
 			{
 				for (regArrayLen = 0U; regArrayLen < gSafetyCheckers_RmRegData[totalModule].regArrayLen; regArrayLen++)
 				{
-					rmRegCfg[offset] = (uintptr_t)CSL_REG32_RD((uint32_t *)gSafetyCheckers_RmRegData[totalModule].baseAddr +\
+					rmRegCfg[offset] = CSL_REG32_RD(gSafetyCheckers_RmRegData[totalModule].baseAddr +\
 					((gSafetyCheckers_RmRegData[totalModule].regStartOffset * regArrayLen) + gSafetyCheckers_RmRegData[totalModule].regOffsetArr[regNum]));
 
 					offset++;
@@ -159,7 +159,7 @@ int32_t SafetyCheckers_rmVerifyRegCfg (const uintptr_t *rmRegCfg, uint32_t size)
 			{
 				for (regArrayLen = 0U; regArrayLen < gSafetyCheckers_RmRegData[totalModule].regArrayLen; regArrayLen++)
 				{
-					uint32_t readData = (uint32_t)CSL_REG32_RD((uint32_t *)gSafetyCheckers_RmRegData[totalModule].baseAddr +\
+					uint32_t readData = CSL_REG32_RD(gSafetyCheckers_RmRegData[totalModule].baseAddr +\
 					((gSafetyCheckers_RmRegData[totalModule].regStartOffset * regArrayLen) + gSafetyCheckers_RmRegData[totalModule].regOffsetArr[regNum]));			
 					mismatchCnt |= rmRegCfg[offset] ^ readData;
 					offset++;
