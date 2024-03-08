@@ -122,7 +122,7 @@ LIBS_common = \
 	-ldrivers.j722s.wkup-r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.j722s.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsciserver.j722s.wkup-r5f.ti-arm-clang.${ConfigName}.lib \
-	-lsafety_checkers.j722s.wkup-r5f.ti-arm-clang.${ConfigName}.lib \
+	-lsafety_checkers.j722s.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -141,7 +141,7 @@ LIBS_NAME = \
 	drivers.j722s.wkup-r5f.ti-arm-clang.${ConfigName}.lib \
 	board.j722s.r5f.ti-arm-clang.${ConfigName}.lib \
 	sciserver.j722s.wkup-r5f.ti-arm-clang.${ConfigName}.lib \
-	safety_checkers.j722s.wkup-r5f.ti-arm-clang.${ConfigName}.lib \
+	safety_checkers.j722s.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

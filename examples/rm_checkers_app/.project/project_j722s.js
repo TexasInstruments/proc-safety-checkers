@@ -73,7 +73,7 @@ const libs_freertos_wkup_r5f = {
         "drivers.j722s.wkup-r5f.ti-arm-clang.${ConfigName}.lib",
         "board.j722s.r5f.ti-arm-clang.${ConfigName}.lib",
         "sciserver.j722s.wkup-r5f.ti-arm-clang.${ConfigName}.lib",
-        "safety_checkers.j722s.wkup-r5f.ti-arm-clang.${ConfigName}.lib",
+        "safety_checkers.j722s.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 

@@ -90,7 +90,7 @@
                 -ldrivers.j722s.wkup-r5f.ti-arm-clang.debug.lib
                 -lboard.j722s.r5f.ti-arm-clang.debug.lib
                 -lsciserver.j722s.wkup-r5f.ti-arm-clang.debug.lib
-                -lsafety_checkers.j722s.wkup-r5f.ti-arm-clang.debug.lib
+                -lsafety_checkers.j722s.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -107,7 +107,7 @@
                 -ldrivers.j722s.wkup-r5f.ti-arm-clang.release.lib
                 -lboard.j722s.r5f.ti-arm-clang.release.lib
                 -lsciserver.j722s.wkup-r5f.ti-arm-clang.release.lib
-                -lsafety_checkers.j722s.wkup-r5f.ti-arm-clang.release.lib
+                -lsafety_checkers.j722s.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "
