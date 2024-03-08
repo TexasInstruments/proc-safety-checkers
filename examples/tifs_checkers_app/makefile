@@ -1,5 +1,5 @@
 #
-# This file is the makefile for building TIFS safety checkers unit test
+# This file is the makefile for building TIFS safety checkers tests
 #
 ifeq ($(RULES_MAKE), )
 include $(PDK_INSTALL_PATH)/ti/build/Rules.make

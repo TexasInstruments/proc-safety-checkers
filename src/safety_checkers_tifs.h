@@ -74,19 +74,19 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define SAFETY_CHECKERS_TIFS_TISCI_MSG_ALLOW_FWL_CTRL_READ              0x902CU
-#define SAFETY_CHECKERS_TIFS_TISCI_MSG_FORBID_FWL_CTRL_READ             0x902DU
+#define SAFETY_CHECKERS_TIFS_FWL_OPEN              0x902CU
+#define SAFETY_CHECKERS_TIFS_FWL_CLOSE             0x902DU
 
-#define SAFETY_CHECKERS_TIFS_FWL_BLK_BASEADDR                           0x45000000U
-#define SAFETY_CHECKERS_TIFS_CONTROL_REG                                0x0U
-#define SAFETY_CHECKERS_TIFS_PRIV_ID0                                   0x4U
-#define SAFETY_CHECKERS_TIFS_PRIV_ID1                                   0x8U
-#define SAFETY_CHECKERS_TIFS_PRIV_ID2                                   0xCU
-#define SAFETY_CHECKERS_TIFS_START_ADDR_LOW                             0x10U
-#define SAFETY_CHECKERS_TIFS_START_ADDR_HIGH                            0x14U
-#define SAFETY_CHECKERS_TIFS_END_ADDR_LOW                               0x18U
-#define SAFETY_CHECKERS_TIFS_END_ADDR_HIGH                              0x1CU
-#define SAFETY_CHECKERS_TIFS_MAX_REGIONS                                32U
+#define SAFETY_CHECKERS_TIFS_FWL_BASE              0x45000000U
+#define SAFETY_CHECKERS_TIFS_CONTROL_REG           0x0U
+#define SAFETY_CHECKERS_TIFS_PRIV_ID0              0x4U
+#define SAFETY_CHECKERS_TIFS_PRIV_ID1              0x8U
+#define SAFETY_CHECKERS_TIFS_PRIV_ID2              0xCU
+#define SAFETY_CHECKERS_TIFS_START_ADDRL           0x10U
+#define SAFETY_CHECKERS_TIFS_START_ADDRH           0x14U
+#define SAFETY_CHECKERS_TIFS_END_ADDRL             0x18U
+#define SAFETY_CHECKERS_TIFS_END_ADDRH             0x1CU
+#define SAFETY_CHECKERS_TIFS_MAX_REGIONS           32U
 
 /** @} */
 
@@ -127,9 +127,9 @@ typedef struct
  */
 typedef struct
 {
-    uint16_t fwlId; /* Firewall id */
-    uint8_t numRegions; /* Number of regions stored in the firewall config for an id */
-    uint8_t maxNumRegions; /* Maximum number of regions present in an id */
+    uint32_t fwlId; /* Firewall id */
+    uint32_t numRegions; /* Number of regions stored in the firewall config for an id */
+    uint32_t maxNumRegions; /* Maximum number of regions present in an id */
     SafetyCheckers_TifsFwlRegList fwlCfgPerRegion[SAFETY_CHECKERS_TIFS_MAX_REGIONS]; /* Firewall registers for a given region */
 } SafetyCheckers_TifsFwlConfig;
 

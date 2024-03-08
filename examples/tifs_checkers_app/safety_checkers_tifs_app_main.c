@@ -34,7 +34,7 @@
  /**
   *  \file     safety_checkers_tifs_app_main.c
   *
-  *  \brief    This file contains TIFS safety checkers unit test main source code.
+  *  \brief    This file contains TIFS safety checkers test main source code.
   *
   */
 

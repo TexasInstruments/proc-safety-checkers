@@ -91,8 +91,8 @@ int32_t SafetyCheckers_tifsReqFwlOpen(void)
 
     Sciclient_ReqPrm_t  reqParam = {0};
     Sciclient_RespPrm_t respParam = {0};
- 
-    reqParam.messageType    = (uint16_t) SAFETY_CHECKERS_TIFS_TISCI_MSG_ALLOW_FWL_CTRL_READ;
+
+    reqParam.messageType    = (uint16_t) SAFETY_CHECKERS_TIFS_FWL_OPEN;
     reqParam.flags          = (uint32_t) TISCI_MSG_FLAG_AOP;
     reqParam.pReqPayload    = (const uint8_t *) &request;
     reqParam.reqPayloadSize = (uint32_t) sizeof (request);
@@ -116,16 +116,15 @@ int32_t SafetyCheckers_tifsReqFwlOpen(void)
 
 int32_t SafetyCheckers_tifsGetFwlCfg(SafetyCheckers_TifsFwlConfig *fwlConfig, uint32_t size)
 {
-    uint32_t i = 0U, j = 0U;
+    uint32_t i = 0U, j = 0U, id = 0U;
     int32_t status = SAFETY_CHECKERS_SOK;
-    uint16_t id = 0U;
 
-    for (i = 0; i<size; i++)
+    for (i = 0U; i<size; i++)
     {
         id = fwlConfig[i].fwlId;
         if (fwlConfig[i].numRegions <= fwlConfig[i].maxNumRegions)
         {
-            for (j = 0; j<fwlConfig[i].numRegions; j++)
+            for (j = 0U; j<fwlConfig[i].numRegions; j++)
             {
                 /* Read control register from firewall registers */
                 fwlConfig[i].fwlCfgPerRegion[j].controlReg = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_CONTROL_REG);
@@ -136,12 +135,12 @@ int32_t SafetyCheckers_tifsGetFwlCfg(SafetyCheckers_TifsFwlConfig *fwlConfig, ui
                 fwlConfig[i].fwlCfgPerRegion[j].privId2 = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_PRIV_ID2);
 
                 /* Read start address from firewall registers */
-                fwlConfig[i].fwlCfgPerRegion[j].startAddrLow =  SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDR_LOW);
-                fwlConfig[i].fwlCfgPerRegion[j].startAddrHigh = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDR_HIGH);
+                fwlConfig[i].fwlCfgPerRegion[j].startAddrLow =  SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDRL);
+                fwlConfig[i].fwlCfgPerRegion[j].startAddrHigh = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDRH);
 
                 /* Read end address from firewall register */
-                fwlConfig[i].fwlCfgPerRegion[j].endAddrLow =  SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDR_LOW);
-                fwlConfig[i].fwlCfgPerRegion[j].endAddrHigh = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDR_HIGH);
+                fwlConfig[i].fwlCfgPerRegion[j].endAddrLow =  SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRL);
+                fwlConfig[i].fwlCfgPerRegion[j].endAddrHigh = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRH);
             }
         }
         else
@@ -154,18 +153,17 @@ int32_t SafetyCheckers_tifsGetFwlCfg(SafetyCheckers_TifsFwlConfig *fwlConfig, ui
 
 int32_t SafetyCheckers_tifsVerifyFwlCfg(const SafetyCheckers_TifsFwlConfig *fwlConfig, uint32_t size)
 {
-    uint32_t i = 0U, j = 0U, regData = 0U, mismatch = 0U;
+    uint32_t i = 0U, j = 0U, regData = 0U, id = 0U, mismatch = 0U;
     int32_t status = SAFETY_CHECKERS_SOK;
-    uint16_t id = 0U;
 
-    for (i = 0; i<size; i++)
+    for (i = 0U; i<size; i++)
     {
         id = fwlConfig[i].fwlId;
         if (fwlConfig[i].numRegions <= fwlConfig[i].maxNumRegions)
         {
-            for (j = 0; j<fwlConfig[i].numRegions; j++)
+            for (j = 0U; j<fwlConfig[i].numRegions; j++)
             {
-                mismatch = 0;
+                mismatch = 0U;
 
                 /* Read control register and check for mismatch */
                 regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_CONTROL_REG);
@@ -182,20 +180,20 @@ int32_t SafetyCheckers_tifsVerifyFwlCfg(const SafetyCheckers_TifsFwlConfig *fwlC
                 mismatch |= fwlConfig[i].fwlCfgPerRegion[j].privId2 ^ regData;
 
                 /* Read start address and check for mismatch */
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDR_LOW);
+                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDRL);
                 mismatch |= fwlConfig[i].fwlCfgPerRegion[j].startAddrLow ^ regData;
 
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDR_HIGH);
+                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDRH);
                 mismatch |= fwlConfig[i].fwlCfgPerRegion[j].startAddrHigh ^ regData;
 
                 /* Read end address and check for mismatch */
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDR_LOW);
+                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRL);
                 mismatch |= fwlConfig[i].fwlCfgPerRegion[j].endAddrLow ^ regData;
 
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDR_HIGH);
+                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRH);
                 mismatch |= fwlConfig[i].fwlCfgPerRegion[j].endAddrHigh ^ regData;
 
-                if(0U != mismatch)
+                if(mismatch != 0U)
                 {
                     status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
                 }
@@ -219,7 +217,7 @@ int32_t SafetyCheckers_tifsReqFwlClose(void)
     Sciclient_ReqPrm_t  reqParam = {0};
     Sciclient_RespPrm_t respParam = {0};
 
-    reqParam.messageType    = (uint16_t) SAFETY_CHECKERS_TIFS_TISCI_MSG_FORBID_FWL_CTRL_READ;
+    reqParam.messageType    = (uint16_t) SAFETY_CHECKERS_TIFS_FWL_CLOSE;
     reqParam.flags          = (uint32_t) TISCI_MSG_FLAG_AOP;
     reqParam.pReqPayload    = (const uint8_t *) &request;
     reqParam.reqPayloadSize = (uint32_t) sizeof (request);
@@ -248,7 +246,7 @@ int32_t SafetyCheckers_tifsReqFwlClose(void)
 static uint32_t SafetyCheckers_tifsGetFwlRegValue(uint32_t fwlId, uint32_t fwlRegion, uint32_t fwlReg)
 {
     uint32_t fwlBlkBaseAddr = 0U, fwlBlkOffset = 0U, fwlRegionOffset = 0U, fwlRegValue = 0U;
-    fwlBlkBaseAddr = SAFETY_CHECKERS_TIFS_FWL_BLK_BASEADDR;
+    fwlBlkBaseAddr = SAFETY_CHECKERS_TIFS_FWL_BASE;
     fwlBlkOffset = fwlBlkBaseAddr + (0x400U * fwlId);
     fwlRegionOffset = fwlBlkOffset + (0x20U * fwlRegion);
     fwlRegValue = CSL_REG32_RD(fwlRegionOffset + fwlReg);
