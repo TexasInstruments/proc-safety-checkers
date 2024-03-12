@@ -86,7 +86,7 @@ extern "C" {
 #define SAFETY_CHECKERS_TIFS_START_ADDRH           0x14U
 #define SAFETY_CHECKERS_TIFS_END_ADDRL             0x18U
 #define SAFETY_CHECKERS_TIFS_END_ADDRH             0x1CU
-#define SAFETY_CHECKERS_TIFS_MAX_REGIONS           32U
+#define SAFETY_CHECKERS_TIFS_MAX_REGIONS           36U
 
 /** @} */
 
