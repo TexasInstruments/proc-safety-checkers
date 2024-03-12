@@ -124,12 +124,6 @@ extern "C" {
  */
 #define SAFETY_CHECKERS_RM_REGDUMP_SIZE                           (3360U)
 
-/** \brief RM Register Change.
- *         This is to check the register change for the mismatch verification.
- */
-#define SAFETY_CHECKERS_RM_REG_CHANGE 							  (CSL_DMASS0_PKTDMA_TCHAN_BASE)
-
-
 /** \brief RM IR module base addresses */
 #define SAFETY_CHECKERS_RM_BA0_IR						          (CSL_TIMESYNC_EVENT_INTROUTER0_INTR_ROUTER_CFG_BASE)
 #define SAFETY_CHECKERS_RM_BA1_IR						          (CSL_WKUP_MCU_GPIOMUX_INTROUTER0_INTR_ROUTER_CFG_BASE)

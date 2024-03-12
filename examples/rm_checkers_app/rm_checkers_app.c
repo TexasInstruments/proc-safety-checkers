@@ -51,7 +51,18 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* None */
+#define SAFETY_CHECKERS_RM_INSUFFICIENT_SIZE	(10U)
+
+/** \brief RM Register Change.
+ *         This is to check the register change for the mismatch verification.
+ */
+#if defined(SOC_J721E) || defined(SOC_J7200)
+#define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_NAVSS0_UDMASS_UDMAP0_CFG_TCHAN_BASE)
+#elif defined(SOC_J721S2) || defined(SOC_J784S4)
+#define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_NAVSS0_BCDMA0_CFG_TCHAN_BASE)
+#elif defined(SOC_AM62AX) || defined(SOC_AM62PX) || defined(SOC_AM62X) || defined(SOC_J722S)
+#define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_DMASS0_PKTDMA_TCHAN_BASE)
+#endif
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -78,6 +89,8 @@ extern uint64_t SafetyCheckersApp_getTimeUsec(void);
 
 static int32_t SafetyCheckersApp_rmregVerify();
 static int32_t SafetyCheckersApp_rmPerfTest(void);
+static int32_t SafetyCheckersApp_rmBuffCheck();
+static int32_t SafetyCheckersApp_rmRegMismatch();
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -89,6 +102,11 @@ void SafetyCheckersApp_rmRun(void *arg0)
    	
     status = SafetyCheckersApp_rmregVerify();
 	
+    if(status == SAFETY_CHECKERS_SOK)
+	{
+		status = SafetyCheckersApp_rmBuffCheck();
+	}
+
 	if(status == SAFETY_CHECKERS_SOK)
 	{
 		status = SafetyCheckersApp_rmPerfTest();
@@ -96,7 +114,7 @@ void SafetyCheckersApp_rmRun(void *arg0)
 
 	if(status == SAFETY_CHECKERS_SOK)
 	{
-		SAFETY_CHECKERS_log("\n  RM safety checkers app has passed \r\n");
+		SAFETY_CHECKERS_log("All tests have PASSED.\r\n");
 	}
 	else
 	{
@@ -118,25 +136,89 @@ void SafetyCheckersApp_rmRun(void *arg0)
 
 static int32_t SafetyCheckersApp_rmregVerify()
 {
-    int32_t status = SAFETY_CHECKERS_SOK;
-    uintptr_t rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
-    
+    int32_t      status = SAFETY_CHECKERS_SOK;
+    uintptr_t    rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
+	
     status = SafetyCheckers_rmGetRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
     if(status == SAFETY_CHECKERS_SOK)
     {
         status = SafetyCheckers_rmVerifyRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
-		if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+		if (SAFETY_CHECKERS_SOK == status)
 		{
-			SAFETY_CHECKERS_log("\nRM register test fail!!\r\n\n");
-			status = SAFETY_CHECKERS_SOK;
+			SAFETY_CHECKERS_log("\nRM register test pass\r\n\n");
 		}
 		else
 		{
-			SAFETY_CHECKERS_log("\nRM register test pass!!\r\n\n");
-			status = SAFETY_CHECKERS_SOK;
+			SAFETY_CHECKERS_log("\nRM register test fail!!\r\n\n");
 		}
+		
+    /* SafetyCheckersApp_rmRegMismatch function is not supported
+     * for mcu R5 and main R5 cores in am62p and j722s.
+     * Because only WakeUp R5 has write permission to change
+     * DMASS0_PKTDMA_TCHAN_BASE register.
+     */
+#if ((!defined (SOC_J722S) && !defined(SOC_AM62PX)) || defined (BUILD_WKUP_R5))
+	if(status == SAFETY_CHECKERS_SOK)
+	{
+		status = SafetyCheckersApp_rmRegMismatch();
+	}
+#endif
     }
+	
+    return (status);
+}
+
+static int32_t SafetyCheckersApp_rmRegMismatch(void)
+{
+	int32_t     status = SAFETY_CHECKERS_SOK;
+	uintptr_t   rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
+	uint32_t    readVal;
+
+	readVal = CSL_REG32_RD(SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR);
+	CSL_REG32_WR(SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR,~readVal);
+
+	status = SafetyCheckers_rmVerifyRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
+
+	if(SAFETY_CHECKERS_REG_DATA_MISMATCH == status)
+	{
+		SAFETY_CHECKERS_log("\nRM register change verified\r\n\n");
+		status = SAFETY_CHECKERS_SOK;
+	}
+	else
+	{
+		SAFETY_CHECKERS_log("\nRM register change failed\r\n\n");
+		status = SAFETY_CHECKERS_FAIL;
+	}
+
 	return (status);
+}
+
+static int32_t SafetyCheckersApp_rmBuffCheck(void)
+{	
+	int32_t      status = SAFETY_CHECKERS_FAIL;
+    uintptr_t    rmRegisterData[SAFETY_CHECKERS_RM_INSUFFICIENT_SIZE];
+
+    status = SafetyCheckers_rmGetRegCfg (NULL, SAFETY_CHECKERS_RM_INSUFFICIENT_SIZE);
+    if(SAFETY_CHECKERS_FAIL == status)
+    {
+        status = SafetyCheckers_rmVerifyRegCfg (NULL, SAFETY_CHECKERS_RM_INSUFFICIENT_SIZE);
+    }
+
+    if(SAFETY_CHECKERS_FAIL == status)
+    {
+        status = SafetyCheckers_rmGetRegCfg (rmRegisterData, SAFETY_CHECKERS_RM_INSUFFICIENT_SIZE);
+        if(SAFETY_CHECKERS_INSUFFICIENT_BUFF == status)
+        {
+            status = SafetyCheckers_rmVerifyRegCfg (rmRegisterData, SAFETY_CHECKERS_RM_INSUFFICIENT_SIZE);
+        }
+    }
+
+    if(SAFETY_CHECKERS_INSUFFICIENT_BUFF == status)
+    {
+        SAFETY_CHECKERS_log("\nRM error condition check test passed\r\n\n");
+    }
+
+    return ( SAFETY_CHECKERS_SOK);
 }
 
 static int32_t SafetyCheckersApp_rmPerfTest(void)

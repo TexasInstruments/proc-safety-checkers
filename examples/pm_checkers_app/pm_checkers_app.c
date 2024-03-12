@@ -191,7 +191,7 @@ void SafetyCheckersApp_pmRun(void *arg0)
 
         if(SAFETY_CHECKERS_SOK == status)
         {
-            SAFETY_CHECKERS_log("\nAll the PM safety checkers test passed\r\n");
+            SAFETY_CHECKERS_log("\nAll tests have PASSED.\r\n");
         }
     }
 
