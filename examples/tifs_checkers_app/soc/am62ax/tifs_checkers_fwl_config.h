@@ -31,7 +31,7 @@
  */
 
 /* 
- * Auto-generated cfg using the command 'python create_fwl_config.py am62a' on 16/02/2024 14:32:07 
+ * Auto-generated cfg using the command 'python create_fwl_config.py am62ax' on 16/02/2024 14:32:07 
  */
 
 #ifndef TIFS_CHECKERS_FWL_CONFIG_H_

@@ -6,6 +6,7 @@ const files = {
     common: [
         "safety_checkers_pm.c",
 		"safety_checkers_rm.c",
+        "safety_checkers_tifs.c",
     ],
 };
 
@@ -20,6 +21,7 @@ const includedirs = {
         "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/",
         "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/",
         "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/am62ax/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/",
         "${MCU_PLUS_SDK_PATH}/source/drivers/hw_include/",
     ],
 };

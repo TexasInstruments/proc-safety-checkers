@@ -206,7 +206,7 @@ export tifs_checkers_app_$(1)_CORE_DEPENDENCY = yes
 export tifs_checkers_app_$(1)_MAKEFILE = -fmakefile BUILD_OS_TYPE=$(1)
 tifs_checkers_app_$(1)_PKG_LIST = tifs_checkers_app_$(1)
 tifs_checkers_app_$(1)_INCLUDE = $(tifs_checkers_app_$(1)_PATH)
-export tifs_checkers_app_$(1)_BOARDLIST = j784s4_evm
+export tifs_checkers_app_$(1)_BOARDLIST = $(filter $(DEFAULT_BOARDLIST_$(1)), $(safety_checkers_BOARDLIST) )
 export tifs_checkers_app_$(1)_$(SOC)_CORELIST = $(filter $(DEFAULT_$(SOC)_CORELIST_$(1)), $(safety_checkers_$(SOC)_CORELIST))
 export tifs_checkers_app_$(1)_SBL_APPIMAGEGEN = yes
 ifneq ($(1),$(filter $(1), safertos))
