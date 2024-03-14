@@ -142,6 +142,8 @@ void SafetyCheckersApp_pmRun(void *arg0)
 
     if(SAFETY_CHECKERS_SOK == status)
     {
+        SAFETY_CHECKERS_log("\n*****  Starting negative test cases  *****\r\n");
+
         status = SafetyCheckersApp_pmClockIdCheck(SAFETY_CHECKERS_PM_VAL_PARAM_OFFSET_RANGE);
         if(SAFETY_CHECKERS_SOK != status)
         {
@@ -177,6 +179,8 @@ void SafetyCheckersApp_pmRun(void *arg0)
         {
             status = SafetyCheckersApp_pmPllLockVerify(SAFETY_CHECKERS_PM_INVAL_DEV_ID);
    	    }
+
+        SAFETY_CHECKERS_log("\nEnding negative test cases\r\n");
 
         if(SAFETY_CHECKERS_SOK != status)
         {
