@@ -58,7 +58,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/j722s/r5f",
         "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src",
 		"${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc",
-        "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/am62px/",
+        "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/j722s/",
         "${MCU_PLUS_SDK_PATH}/source/drivers/",
         "${MCU_PLUS_SDK_PATH}/source/drivers/hw_include/",
     ],
