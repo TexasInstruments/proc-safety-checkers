@@ -31,11 +31,16 @@
  */
 
 /* 
- * Auto-generated cfg using the command 'python create_fwl_config.py j784s4' on 16/02/2024 16:22:20 
+ * Auto-generated cfg using the command 'python tifs_checkers_create_fwl_config.py j784s4' 
+ * on 20/03/2024 14:41:17 
  */
 
 #ifndef TIFS_CHECKERS_FWL_CONFIG_H_
 #define TIFS_CHECKERS_FWL_CONFIG_H_
+
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
 
 #include <safety_checkers_soc.h>
 
@@ -43,6 +48,23 @@
 extern "C" {
 #endif
 
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
+
+/* None */
+
+/* ========================================================================== */
+/*                         Structure Declarations                             */
+/* ========================================================================== */
+
+/* None */
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+/* Static firewall configuration to be populated with register values */ 
 SafetyCheckers_TifsFwlConfig gSafetyCheckers_TifsFwlConfig[TIFS_CHECKER_FWL_MAX_NUM] = {
 {
 	257U,	/* fwlId */

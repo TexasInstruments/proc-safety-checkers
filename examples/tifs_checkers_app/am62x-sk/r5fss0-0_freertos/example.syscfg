@@ -32,8 +32,6 @@ uart1.UART.$assign               = "USART1";
 uart1.UART.RXD.$assign           = "I2C1_SCL";
 uart1.UART.TXD.$assign           = "I2C1_SDA";
 
-clock.instance = "TIMER1";
-
 debug_log.enableUartLog = true;
 debug_log.uartTrace     = true;
 debug_log.uartLog.$name = "CONFIG_UART0";

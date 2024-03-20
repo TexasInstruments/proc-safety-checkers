@@ -23,8 +23,6 @@ const mpu_armv78 = mpu_armv7.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-clock.instance = "TIMER1";
-
 debug_log.enableUartLog = true;
 debug_log.uartTrace     = true;
 debug_log.uartLog.$name = "CONFIG_UART0";
