@@ -69,10 +69,10 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM62PX \
+	-DENABLE_SCICLIENT_DIRECT \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
-	-DBUILD_WKUP_R5 \
 	-mfloat-abi=hard \
 	-mfpu=vfpv3-d16 \
 	-mthumb \

@@ -92,6 +92,11 @@ const lnkfiles = {
 const syscfgfile = "../example.syscfg";
 const readmeDoxygenPageTag = "EXAMPLES_SAFETY_CHECKERS"
 
+const defines_wkup_r5 = {
+    common: [
+        "ENABLE_SCICLIENT_DIRECT",
+    ],
+}
 const buildOptionCombos = [
     { device: device, cpu: "mcu-r5fss0-0", cgt: "ti-arm-clang", board: "am62px-sk", os: "freertos"},
 	{ device: device, cpu: "wkup-r5fss0-0", cgt: "ti-arm-clang", board: "am62px-sk", os: "freertos"},
@@ -134,6 +139,7 @@ function getComponentBuildProperty(buildOption) {
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos_wkup_r5f;
             build_property.libs = libs_freertos_wkup_r5f;
+			build_property.defines = defines_wkup_r5;
             
         }
     }
