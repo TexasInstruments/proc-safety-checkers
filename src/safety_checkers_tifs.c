@@ -82,6 +82,9 @@ static uint32_t SafetyCheckers_tifsGetFwlRegValue(uint32_t fwlId, uint32_t fwlRe
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+/**
+ * Design: SAFETY_CHECKERS-40
+*/
 int32_t SafetyCheckers_tifsReqFwlOpen(void)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
@@ -114,6 +117,9 @@ int32_t SafetyCheckers_tifsReqFwlOpen(void)
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-41
+*/
 int32_t SafetyCheckers_tifsGetFwlCfg(SafetyCheckers_TifsFwlConfig *fwlConfig, uint32_t size)
 {
     uint32_t i = 0U, j = 0U, id = 0U;
@@ -151,6 +157,9 @@ int32_t SafetyCheckers_tifsGetFwlCfg(SafetyCheckers_TifsFwlConfig *fwlConfig, ui
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-42
+*/
 int32_t SafetyCheckers_tifsVerifyFwlCfg(const SafetyCheckers_TifsFwlConfig *fwlConfig, uint32_t size)
 {
     uint32_t i = 0U, j = 0U, regData = 0U, id = 0U, mismatch = 0U;
@@ -207,6 +216,9 @@ int32_t SafetyCheckers_tifsVerifyFwlCfg(const SafetyCheckers_TifsFwlConfig *fwlC
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-43
+*/
 int32_t SafetyCheckers_tifsReqFwlClose(void)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
