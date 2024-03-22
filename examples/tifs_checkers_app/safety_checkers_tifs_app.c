@@ -37,6 +37,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <sciclient.h>
 #include <safety_checkers_common.h>
 #include <safety_checkers_tifs.h>
 #include <tifs_checkers_fwl_config.h>
@@ -57,7 +58,11 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-/* None */
+void SafetyCheckersApp_tifsTestFwlOpenClose(void *args);
+void SafetyCheckersApp_tifsNegativeTests(void *args);
+void SafetyCheckersApp_tifsRegisterMismatchTest(void *args);
+void SafetyCheckersApp_tifsInvalidInputTest(void *args);
+void SafetyCheckersApp_softwareDelay(void);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -70,64 +75,240 @@ uint32_t gSafetyCheckersTifsCfgSize = TIFS_CHECKER_FWL_MAX_NUM;
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void SafetyCheckersApp_softwareDelay(void)
-{
-    volatile uint32_t i = 0U;
-    for (i=0; i<0xFFFFF; i++);
-}
-
 void SafetyCheckersApp_tifsTest(void *args)
 {
-    uint32_t  status = SAFETY_CHECKERS_SOK, i=10U;
+    uint32_t status = SAFETY_CHECKERS_SOK, i = 10U;
+
+    SAFETY_CHECKERS_log("\n--------- Test TIFS safety checker ---------\r\n\n");
 
     status = SafetyCheckers_tifsReqFwlOpen();
 
     if (status == SAFETY_CHECKERS_SOK)
     {
-        SAFETY_CHECKERS_log("\n Firewall open successful \r\n");
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+        status = SAFETY_CHECKERS_SOK;
     }
     else
     {
-        SAFETY_CHECKERS_log("\n Firewall open unsuccessful !!\r\n");
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
+        status = SAFETY_CHECKERS_FAIL;
     }
 
-    status = SafetyCheckers_tifsGetFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
     if (status == SAFETY_CHECKERS_SOK)
     {
-        SAFETY_CHECKERS_log("\n Get firewall configuration successful \r\n");
-    }
-    else
-    {
-        SAFETY_CHECKERS_log("\n Get firewall configuration unsuccessful !!\r\n");
-    }
-
-    /* Place to verify and save firewall configuration as Golden Reference */
-
-    while (i > 0)
-    {
-        status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
-
-        if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+        status = SafetyCheckers_tifsGetFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
+        if (status == SAFETY_CHECKERS_SOK)
         {
-            SAFETY_CHECKERS_log("\n Firewall register mismatch with Golden Reference !!\r\n");
+            SAFETY_CHECKERS_log("Get firewall configuration successful\r\n");
+        }
+        else
+        {
+            SAFETY_CHECKERS_log("Get firewall configuration unsuccessful!!\r\n");
         }
 
-        SafetyCheckersApp_softwareDelay();
-        i--;
+        /* Place to verify and save firewall configuration as Golden Reference */
+
+        while (i > 0)
+        {
+            status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
+
+            if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+            {
+                SAFETY_CHECKERS_log("Firewall register mismatch with Golden Reference!!\r\n");
+            }
+
+            SafetyCheckersApp_softwareDelay();
+            i--;
+        }
+
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("No firewall register mismatch with Golden Reference\r\n");
+        }
+
+        status = SafetyCheckers_tifsReqFwlClose();
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("Firewall close successful\r\n");
+        }
+        else
+        {
+            SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+        }
     }
+}
+
+void SafetyCheckersApp_tifsTestFwlOpenClose(void *args)
+{
+    uint32_t status = SAFETY_CHECKERS_SOK;
+
+    SAFETY_CHECKERS_log("\n------ Test firewall request messages ------\r\n\n");
+
+    status = SafetyCheckers_tifsReqFwlOpen();
 
     if (status == SAFETY_CHECKERS_SOK)
     {
-        SAFETY_CHECKERS_log("\n No firewall register mismatch with Golden Reference \r\n");
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
     }
 
     status = SafetyCheckers_tifsReqFwlClose();
     if (status == SAFETY_CHECKERS_SOK)
     {
-        SAFETY_CHECKERS_log("\n Firewall close successful \n");
+        SAFETY_CHECKERS_log("Firewall close successful\r\n");
     }
     else
     {
-        SAFETY_CHECKERS_log("\n Firewall close unsuccessful !!\n");
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
     }
+}
+
+void SafetyCheckersApp_tifsNegativeTests(void *args)
+{
+    SAFETY_CHECKERS_log("\n---------- Register mismatch test ----------\r\n\n");
+    SafetyCheckersApp_tifsRegisterMismatchTest(NULL);
+    SAFETY_CHECKERS_log("\n------------ Invalid input test ------------\r\n\n");
+    SafetyCheckersApp_tifsInvalidInputTest(NULL);
+}
+
+void SafetyCheckersApp_tifsRegisterMismatchTest(void *args)
+{
+    uint32_t status = SAFETY_CHECKERS_SOK;
+
+    status = SafetyCheckers_tifsReqFwlOpen();
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+        status = SAFETY_CHECKERS_SOK;
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
+        status = SAFETY_CHECKERS_FAIL;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        status = SafetyCheckers_tifsGetFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("Get firewall configuration successful\r\n");
+        }
+        else
+        {
+            SAFETY_CHECKERS_log("Get firewall configuration unsuccessful!!\r\n");
+        }
+
+        /* Place to verify and save firewall configuration as Golden Reference */
+
+        /* Update firewall registers */
+        const struct tisci_msg_fwl_set_firewall_region_req fwl_set_req =
+            {
+                .fwl_id = 1,
+                .region = 0,
+                .n_permission_regs = 3,
+                .control = 0x30A,
+                .permissions[0] = 0xC3FFFF,
+                .permissions[1] = 0xC3FFFF,
+                .permissions[2] = 0xC3FFFF,
+                .start_address = 0x00000000,
+                .end_address = 0xFFFFFFFF,
+            };
+
+        struct tisci_msg_fwl_set_firewall_region_resp fwl_set_resp = {0};
+
+        status = Sciclient_firewallSetRegion(&fwl_set_req, &fwl_set_resp, SAFETY_CHECKERS_DEFAULT_TIMEOUT);
+        status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
+
+        if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+        {
+            SAFETY_CHECKERS_log("Firewall register mismatch with Golden Reference!!\r\n");
+        }
+
+        SafetyCheckersApp_softwareDelay();
+
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("No firewall register mismatch with Golden Reference\r\n");
+        }
+
+        status = SafetyCheckers_tifsReqFwlClose();
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("Firewall close successful\n");
+        }
+        else
+        {
+            SAFETY_CHECKERS_log("Firewall close unsuccessful!!\n");
+        }
+    }
+}
+
+void SafetyCheckersApp_tifsInvalidInputTest(void *args)
+{
+    uint32_t  status = SAFETY_CHECKERS_SOK;
+
+    status = SafetyCheckers_tifsReqFwlOpen();
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
+        status = SAFETY_CHECKERS_FAIL;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        /* Update numRegions with invalid value*/
+        pFwlConfig[5].numRegions= 100U;
+
+        status = SafetyCheckers_tifsGetFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("Get firewall configuration successful\r\n");
+        }
+        else
+        {
+            SAFETY_CHECKERS_log("Get firewall configuration unsuccessful!!\r\n");
+        }
+
+        /* Place to verify and save firewall configuration as Golden Reference */
+
+        status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
+
+        if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+        {
+            SAFETY_CHECKERS_log("Firewall register mismatch with Golden Reference!!\r\n");
+        }
+
+        SafetyCheckersApp_softwareDelay();
+
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("No firewall register mismatch with Golden Reference\r\n");
+        }
+
+        status = SafetyCheckers_tifsReqFwlClose();
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("Firewall close successful\r\n");
+        }
+        else
+        {
+            SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+        }
+    }
+}
+
+void SafetyCheckersApp_softwareDelay(void)
+{
+    volatile uint32_t i = 0U;
+    for (i = 0; i < 0xFFFFF; i++);
 }

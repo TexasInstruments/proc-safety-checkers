@@ -43,7 +43,6 @@
 
 #define TASK_PRI_MAIN_THREAD  (configMAX_PRIORITIES-1)
 
-
 #define TASK_SIZE (16384U/sizeof(configSTACK_DEPTH_TYPE))
 
 StackType_t gMainTaskStack[TASK_SIZE] __attribute__((aligned(32)));
@@ -51,6 +50,8 @@ StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
 
 void SafetyCheckersApp_tifsTest(void *args);
+void SafetyCheckersApp_tifsTestFwlOpenClose(void *args);
+void SafetyCheckersApp_tifsNegativeTests(void *args);
 
 void main_thread(void *args)
 {
@@ -65,6 +66,16 @@ void main_thread(void *args)
     sciServer_init();
 
     SafetyCheckersApp_tifsTest(NULL);
+
+    SafetyCheckersApp_tifsTestFwlOpenClose(NULL);
+
+    SafetyCheckersApp_tifsNegativeTests(NULL);
+
+    #if defined LDRA_DYN_COVERAGE_EXIT
+    DebugP_log("\n LDRA ENTRY... \n");
+    upload_execution_history();
+    DebugP_log("\n LDRA EXIT... \n");
+    #endif
 
     /* Close board and flash drivers */
     Board_driversClose();

@@ -1,0 +1,12 @@
+lib/
+obj/
+*.out
+*.out*
+*.map
+*.rprc
+*.rprc_xip
+*.appimage
+*.appimage_xip
+*.appimage.hs
+*.appimage.hs_fs
+generated/

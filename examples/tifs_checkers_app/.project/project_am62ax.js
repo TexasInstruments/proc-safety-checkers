@@ -72,13 +72,6 @@ const templates_freertos_mcu_r5f =
 	{
 		input: ".project/templates/am62ax/common/linker_mcu-r5f.cmd.xdt",
 		output: "linker.cmd",
-	},
-	{
-		input: ".project/templates/am62ax/freertos/main_freertos.c.xdt",
-		output: "../main.c",
-		options: {
-		entryFunction: "SafetyCheckersApp_tifsTest",
-		},
 	}
 ];
 

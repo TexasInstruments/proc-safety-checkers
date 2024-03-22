@@ -85,13 +85,6 @@ const templates_freertos_r5f =
             undefinedStackSize: 0x0100,
             dmStubstacksize: 0x0400,
         },
-    },
-    {
-        input: ".project/templates/am62x/freertos/main_freertos_dm.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "SafetyCheckersApp_tifsTest",
-        },
     }
 ];
 

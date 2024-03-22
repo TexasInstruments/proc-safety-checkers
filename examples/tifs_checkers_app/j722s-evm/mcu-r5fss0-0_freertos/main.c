@@ -47,6 +47,8 @@ StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
 
 void SafetyCheckersApp_tifsTest(void *args);
+void SafetyCheckersApp_tifsTestFwlOpenClose(void *args);
+void SafetyCheckersApp_tifsNegativeTests(void *args);
 
 void freertos_main(void *args)
 {
@@ -54,6 +56,16 @@ void freertos_main(void *args)
     Drivers_uartOpen();
 
     SafetyCheckersApp_tifsTest(NULL);
+
+    SafetyCheckersApp_tifsTestFwlOpenClose(NULL);
+
+    SafetyCheckersApp_tifsNegativeTests(NULL);
+
+    #if defined LDRA_DYN_COVERAGE_EXIT
+    DebugP_log("\n LDRA ENTRY... \n");
+    upload_execution_history();
+    DebugP_log("\n LDRA EXIT... \n");
+    #endif
 
     /* Close UART */
     Drivers_uartClose();
