@@ -4,7 +4,7 @@ let device = "j722s";
 
 const files = {
     common: [
-        "tifs_checkers_app.c",
+        "safety_checkers_tifs_app.c",
         "main.c",
     ],
 };
@@ -126,13 +126,6 @@ const templates_freertos_main_r5f =
             undefinedStackSize: 0x0100,
             dmStubstacksize: 0x0400,
         },
-    },
-    {
-        input: ".project/templates/j722s/freertos/main_freertos.c.xdt",
-        output: "../main.c",
-        options: {
-        entryFunction: "SafetyCheckers_tifsUnitTest",
-        },
     }
 ];
 
@@ -151,13 +144,6 @@ const templates_freertos_mcu_r5f =
             undefinedStackSize: 0x0100,
             dmStubstacksize: 0x0400,
         },
-    },
-    {
-        input: ".project/templates/j722s/freertos/main_freertos.c.xdt",
-        output: "../main.c",
-        options: {
-        entryFunction: "SafetyCheckers_tifsUnitTest",
-        },
     }
 ];
 
@@ -175,13 +161,6 @@ const templates_freertos_wkup_r5f =
             abortStackSize: 0x0100,
             undefinedStackSize: 0x0100,
             dmStubstacksize: 0x0400,
-        },
-    },
-    {
-        input: ".project/templates/j722s/freertos/main_freertos_wkup.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "SafetyCheckers_tifsUnitTest",
         },
     }
 ];
