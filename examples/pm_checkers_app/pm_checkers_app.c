@@ -64,6 +64,7 @@
 /* ========================================================================== */
 
 void SafetyCheckersApp_pmRun(void *arg0);
+extern uint64_t SafetyCheckersApp_getTimeUsec(void);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -85,6 +86,7 @@ static int32_t SafetyCheckersApp_pmParentClkCheck(uint32_t offset);
 static int32_t SafetyCheckersApp_pmPllLockVerify(int32_t deviceID);
 static int32_t SafetyCheckersApp_pmRegCfgVerify(int32_t deviceID);
 static int32_t SafetyCheckersApp_pmErrCheck(void);
+static int32_t SafetyCheckersApp_pmPerfTest(void);
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -181,8 +183,13 @@ void SafetyCheckersApp_pmRun(void *arg0)
    	    }
 
         SAFETY_CHECKERS_log("\nEnding negative test cases\r\n");
+		
+		if(SAFETY_CHECKERS_SOK != status)
+        {
+            status = SafetyCheckersApp_pmPerfTest();
+   	    }
 
-        if(SAFETY_CHECKERS_SOK != status)
+        if(SAFETY_CHECKERS_SOK == status)
         {
             SAFETY_CHECKERS_log("\nAll the PM safety checkers test passed\r\n");
         }
@@ -257,16 +264,16 @@ static int32_t SafetyCheckersApp_pmClockIdCheck(uint32_t offset)
                 status = Sciclient_pmGetModuleClkParent(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
                                                         clockId[clockIdRange],
                                                         &clockParent,
-                                                        SAFETY_CHECKERS_DEFAULT_TIMEOUT);
+														SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
 
             if(SAFETY_CHECKERS_SOK != status)
             {
                 /* TISCI_MSG_GET_NUM_CLOCK_PARENTS PM message */
                 status = Sciclient_pmGetModuleClkNumParent(SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID,
-                                                          clockId[clockIdRange],
-                                                          &clockNumParent,
-                                                          SAFETY_CHECKERS_DEFAULT_TIMEOUT);
+                                                           clockId[clockIdRange],
+                                                           &clockNumParent,
+                                                           SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
 
             if(SAFETY_CHECKERS_SOK != status)
@@ -403,9 +410,9 @@ static int32_t SafetyCheckersApp_pmDevIdCheck(uint32_t offset)
             if(SAFETY_CHECKERS_SOK != status)
             {
                 /* TISCI_MSG_SET_DEVICE_RESETS PM message */
-                status = Sciclient_pmSetModuleRst (deviceId[deviceIdRange],
-                                                   SAFETY_CHECKERS_PM_DEFAULT_ID,
-                                                   SAFETY_CHECKERS_DEFAULT_TIMEOUT);
+                status = Sciclient_pmSetModuleRst(deviceId[deviceIdRange],
+												  SAFETY_CHECKERS_PM_DEFAULT_ID,
+												  SAFETY_CHECKERS_DEFAULT_TIMEOUT);
             }
 
             if(SAFETY_CHECKERS_SOK != status)
@@ -761,6 +768,82 @@ static int32_t SafetyCheckersApp_pmErrCheck(void)
     {
         SAFETY_CHECKERS_log("\nPM error condition check test passed\r\n\n");
         status = SAFETY_CHECKERS_SOK;
+    }
+
+    return (status);
+}
+
+static int32_t SafetyCheckersApp_pmPerfTest(void)
+{
+    int32_t      status = SAFETY_CHECKERS_FAIL;
+    uint64_t     startTime = 0U;
+    uint64_t     endTime = 0U;
+    uint32_t     timeDiff = 0U;
+    uintptr_t    pscRegisterData[SAFETY_CHECKERS_PM_PSC_REGDUMP_SIZE];
+    uintptr_t    pllRegisterData[SAFETY_CHECKERS_PM_PLL_REGDUMP_SIZE];
+
+    /* Get the PSC register dump */
+    status = SafetyCheckers_pmGetPscRegCfg (pscRegisterData, SAFETY_CHECKERS_PM_PSC_REGDUMP_SIZE);
+
+    if(SAFETY_CHECKERS_SOK == status)
+    {
+        startTime = SafetyCheckersApp_getTimeUsec();
+
+        /* validate register dump with current value */
+        status = SafetyCheckers_pmVerifyPscRegCfg (pscRegisterData, SAFETY_CHECKERS_PM_PSC_REGDUMP_SIZE);
+
+        endTime = SafetyCheckersApp_getTimeUsec();
+
+        if (endTime < startTime)
+        {
+            /* Counter overflow occured */
+            timeDiff = (0xFFFFFFFFU - startTime) + endTime + 1U;
+        }
+        timeDiff = endTime - startTime;
+
+        SAFETY_CHECKERS_log("\nTime taken for the execution of PSC register dump and readback : %d usecs\r\n", timeDiff);
+    }
+
+    if(SAFETY_CHECKERS_SOK == status)
+    {
+        /* Get the PLL register dump */
+        status = SafetyCheckers_pmGetPllRegCfg (pllRegisterData, SAFETY_CHECKERS_PM_PLL_REGDUMP_SIZE);
+
+        if(SAFETY_CHECKERS_SOK == status)
+        {
+            startTime = SafetyCheckersApp_getTimeUsec();
+
+            /* validate register dump with current value */
+            status = SafetyCheckers_pmVerifyPllRegCfg (pllRegisterData, SAFETY_CHECKERS_PM_PLL_REGDUMP_SIZE);
+
+            endTime = SafetyCheckersApp_getTimeUsec();
+            if (endTime < startTime)
+            {
+                /* Counter overflow occured */
+                timeDiff = (0xFFFFFFFFU - startTime) + endTime + 1U;
+            }
+            timeDiff = endTime - startTime;
+
+            SAFETY_CHECKERS_log("\nTime taken for the execution of PLL register dump and readback : %d usecs\r\n", timeDiff);
+        }
+    }
+
+    if(SAFETY_CHECKERS_SOK == status)
+    {
+        startTime = SafetyCheckersApp_getTimeUsec();
+
+        /* validate PLL register lock */
+        status = SafetyCheckers_pmRegisterLock();
+
+        endTime = SafetyCheckersApp_getTimeUsec();
+        if (endTime < startTime)
+        {
+            /* Counter overflow occured */
+            timeDiff = (0xFFFFFFFFU - startTime) + endTime + 1U;
+        }
+        timeDiff = endTime - startTime;
+
+        SAFETY_CHECKERS_log("\nTime taken for the execution of PLL register lock : %d usecs\r\n", timeDiff);
     }
 
     return (status);
