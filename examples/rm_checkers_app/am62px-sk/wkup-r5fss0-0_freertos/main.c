@@ -131,3 +131,8 @@ int main()
 
     return 0;
 }
+
+uint64_t SafetyCheckersApp_getTimeUsec(void)
+{
+    return (ClockP_getTimeUsec());
+}

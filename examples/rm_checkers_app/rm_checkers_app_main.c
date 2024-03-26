@@ -45,6 +45,7 @@
 #include "ti/osal/osal.h"
 #include "ti/osal/TaskP.h"
 #include <ti/board/board.h>
+#include <ti/osal/TimerP.h>
 #include <safety_checkers_common.h>
 
 /* ========================================================================== */
@@ -139,4 +140,9 @@ int32_t main(void)
 
     return (0);
 #endif
+}
+
+uint64_t SafetyCheckersApp_getTimeUsec(void)
+{
+    return (TimerP_getTimeInUsecs());
 }

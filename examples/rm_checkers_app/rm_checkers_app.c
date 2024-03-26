@@ -64,6 +64,7 @@
 /* ========================================================================== */
 
 void SafetyCheckersApp_rmRun(void *arg0);
+extern uint64_t SafetyCheckersApp_getTimeUsec(void);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -76,6 +77,7 @@ void SafetyCheckersApp_rmRun(void *arg0);
 /* ========================================================================== */
 
 static int32_t SafetyCheckersApp_rmregVerify();
+static int32_t SafetyCheckersApp_rmPerfTest(void);
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -83,11 +85,24 @@ static int32_t SafetyCheckersApp_rmregVerify();
 
 void SafetyCheckersApp_rmRun(void *arg0)
 {
-	uint32_t    status = SAFETY_CHECKERS_SOK;
-   	if(status == SAFETY_CHECKERS_SOK)
-    {
-        status = SafetyCheckersApp_rmregVerify();
-   	}
+	uint32_t status = SAFETY_CHECKERS_SOK;
+   	
+    status = SafetyCheckersApp_rmregVerify();
+	
+	if(status == SAFETY_CHECKERS_SOK)
+	{
+		status = SafetyCheckersApp_rmPerfTest();
+	}
+
+	if(status == SAFETY_CHECKERS_SOK)
+	{
+		SAFETY_CHECKERS_log("\n  RM safety checkers app has passed \r\n");
+	}
+	else
+	{
+		SAFETY_CHECKERS_log("\n One or more RM safety checkers apps have failed \r\n");
+	}
+	
 #if defined LDRA_DYN_COVERAGE_EXIT
     SAFETY_CHECKERS_log("\n LDRA ENTRY... \r\n");
     upload_execution_history();
@@ -103,8 +118,8 @@ void SafetyCheckersApp_rmRun(void *arg0)
 
 static int32_t SafetyCheckersApp_rmregVerify()
 {
-    int32_t      status = SAFETY_CHECKERS_SOK;
-    uintptr_t    rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
+    int32_t status = SAFETY_CHECKERS_SOK;
+    uintptr_t rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
     
     status = SafetyCheckers_rmGetRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
     if(status == SAFETY_CHECKERS_SOK)
@@ -112,14 +127,47 @@ static int32_t SafetyCheckersApp_rmregVerify()
         status = SafetyCheckers_rmVerifyRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
 		if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
 		{
-			SAFETY_CHECKERS_log("\nRM register blob test failed\r\n\n");
+			SAFETY_CHECKERS_log("\nRM register test fail!!\r\n\n");
 			status = SAFETY_CHECKERS_SOK;
 		}
 		else
 		{
-			SAFETY_CHECKERS_log("\nRM register blob test match !!!\r\n\n");
+			SAFETY_CHECKERS_log("\nRM register test pass!!\r\n\n");
 			status = SAFETY_CHECKERS_SOK;
 		}
     }
+	return (status);
+}
+
+static int32_t SafetyCheckersApp_rmPerfTest(void)
+{
+    int32_t      status = SAFETY_CHECKERS_FAIL;
+    uint64_t     startTime = 0U;
+    uint64_t     endTime = 0U;
+    uint32_t     timeDiff = 0U;
+    uintptr_t    rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
+
+    /* Get the RM register dump */
+    status = SafetyCheckers_rmGetRegCfg (rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
+
+    if(SAFETY_CHECKERS_SOK == status)
+    {
+        startTime = SafetyCheckersApp_getTimeUsec();
+
+        /* validate register dump with current value */
+        status = SafetyCheckers_rmVerifyRegCfg (rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
+
+        endTime = SafetyCheckersApp_getTimeUsec();
+
+        if (endTime < startTime)
+        {
+            /* Counter overflow occured */
+            timeDiff = (0xFFFFFFFFU - startTime) + endTime + 1U;
+        }
+        timeDiff = endTime - startTime;
+
+        SAFETY_CHECKERS_log("\nTime taken for the execution of RM register dump and readback : %d usecs\r\n", timeDiff);
+    }
+
     return (status);
 }
