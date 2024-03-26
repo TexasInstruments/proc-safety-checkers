@@ -95,6 +95,7 @@ const readmeDoxygenPageTag = "EXAMPLES_SAFETY_CHECKERS"
 const defines_wkup_r5 = {
     common: [
         "ENABLE_SCICLIENT_DIRECT",
+        "BUILD_WKUP_R5",
     ],
 }
 const buildOptionCombos = [
@@ -140,7 +141,6 @@ function getComponentBuildProperty(buildOption) {
             build_property.libdirs = libdirs_freertos_wkup_r5f;
             build_property.libs = libs_freertos_wkup_r5f;
 			build_property.defines = defines_wkup_r5;
-            
         }
     }
     return build_property;
