@@ -76,6 +76,9 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+/**
+ * Design: SAFETY_CHECKERS-244
+ */
 int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size)
 {
     uint32_t offset = 0U;
@@ -123,6 +126,9 @@ int32_t SafetyCheckers_rmGetRegCfg(uintptr_t *rmRegCfg, uint32_t size)
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-245, SAFETY_CHECKERS-251
+ */
 int32_t SafetyCheckers_rmVerifyRegCfg (const uintptr_t *rmRegCfg, uint32_t size)
 {
     uint32_t offset = 0U;

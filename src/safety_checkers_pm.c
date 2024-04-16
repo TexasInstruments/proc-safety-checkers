@@ -76,6 +76,9 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+/**
+ * Design: SAFETY_CHECKERS-249
+ */
 int32_t SafetyCheckers_pmGetPscRegCfg(uintptr_t *pscRegCfg, uint32_t size)
 {
     uint32_t md = 0U;
@@ -126,6 +129,9 @@ int32_t SafetyCheckers_pmGetPscRegCfg(uintptr_t *pscRegCfg, uint32_t size)
     return (status);
 }
 
+/**
+ * Design: SAFETY_CHECKERS-250, SAFETY_CHECKERS-251
+ */
 int32_t SafetyCheckers_pmVerifyPscRegCfg(const uintptr_t *pscRegCfg, uint32_t size)
 {
     uint32_t md = 0U;
@@ -188,6 +194,9 @@ int32_t SafetyCheckers_pmVerifyPscRegCfg(const uintptr_t *pscRegCfg, uint32_t si
     return (status);
 }
 
+/**
+ * Design: SAFETY_CHECKERS-248
+ */
 int32_t SafetyCheckers_pmGetPllRegCfg(uintptr_t *pllRegCfg, uint32_t size)
 {
     uint32_t offset = 0U;
@@ -239,6 +248,9 @@ int32_t SafetyCheckers_pmGetPllRegCfg(uintptr_t *pllRegCfg, uint32_t size)
     return (status);
 }
 
+/**
+ * Design: SAFETY_CHECKERS-247, SAFETY_CHECKERS-251
+ */
 int32_t SafetyCheckers_pmVerifyPllRegCfg(const uintptr_t *pllRegCfg, uint32_t size)
 {
     uint32_t offset = 0U;
@@ -299,6 +311,9 @@ int32_t SafetyCheckers_pmVerifyPllRegCfg(const uintptr_t *pllRegCfg, uint32_t si
     return (status);
 }
 
+/**
+ * Design: SAFETY_CHECKERS-246, SAFETY_CHECKERS-251
+ */
 int32_t SafetyCheckers_pmRegisterLock(void)
 {
     uint32_t index;
