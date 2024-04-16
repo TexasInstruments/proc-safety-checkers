@@ -63,7 +63,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/j722s/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src \
 	-I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc \
-	-I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/am62px/ \
+	-I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/j722s/ \
 	-I${MCU_PLUS_SDK_PATH}/source/drivers/ \
 	-I${MCU_PLUS_SDK_PATH}/source/drivers/hw_include/ \
 	-Igenerated \
