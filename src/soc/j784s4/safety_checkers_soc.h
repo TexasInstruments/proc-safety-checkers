@@ -123,7 +123,7 @@ extern "C" {
  *         array. Within the loop, calculates the total talLength by multiplying the regNum and regArrayLen
  *         in the array. The final result is the total size of register array for RM module registers.
  */
-#define SAFETY_CHECKERS_RM_REGDUMP_SIZE                           (24230U)
+#define SAFETY_CHECKERS_RM_REGDUMP_SIZE                           (24486U)
 
 /** \brief RM IR module base addresses */
 #define SAFETY_CHECKERS_RM_BA0_IR						          (CSL_MAIN2MCU_LVL_INTRTR0_CFG_BASE)
@@ -194,6 +194,17 @@ extern "C" {
 
 /** \brief Number of registers in RA register group */
 #define SAFETY_CHECKERS_RM_SUBMOD0_RA						  	  (5U)
+
+/** \brief RM RA_MON module base addresses */
+#define SAFETY_CHECKERS_RM_RA_MON_BA0                             (CSL_NAVSS0_UDMASS_RINGACC0_CFG_MON_BASE)
+#define SAFETY_CHECKERS_RM_RA_MON_BA1                             (CSL_MCU_NAVSS0_UDMASS_RINGACC0_CFG_MON_BASE)
+
+/** \brief Formula input of RA_MON module to read relevant registers from register group*/
+#define SAFETY_CHECKERS_RM_RA_MON_REG0_NUM                        (32U)
+#define SAFETY_CHECKERS_RM_RA_MON_REG1_NUM                        (32U)
+
+/** \brief Number of registers in RA_MON register group  */
+#define SAFETY_CHECKERS_RM_SUBMOD0_RA_MON                         (4U)
 
 /** \brief RM UDMA TX module base addresses */
 #define SAFETY_CHECKERS_RM_BA0_UDMA_TX                     		  (CSL_NAVSS0_BCDMA0_CFG_TCHAN_BASE)
@@ -351,6 +362,9 @@ static SafetyCheckers_RmRegData gSafetyCheckers_RmRegData[] =
 	{SAFETY_CHECKERS_RM_BA0_UDMA_GCFG, SAFETY_CHECKERS_RM_SUBMOD0_UDMA_GCFG, SAFETY_CHECKERS_RM_REG0_UDMA_GCFG, SAFETY_CHECKERS_RM_REG_HEX0, {0x0U, 0x04U, 0X08U, 0x10U, 0x20U, 0x24U, 0x28U, 0x2CU, 0x30U, 0x60U, 0x64U, 0x78U, 0x7CU, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U}},
 	{SAFETY_CHECKERS_RM_BA1_UDMA_GCFG, SAFETY_CHECKERS_RM_SUBMOD1_UDMA_GCFG, SAFETY_CHECKERS_RM_REG1_UDMA_GCFG, SAFETY_CHECKERS_RM_REG_HEX0, {0x0U, 0x04U, 0X08U, 0x10U, 0x1CU, 0x20U, 0x24U, 0x28U, 0x2CU, 0x40U, 0x44U, 0x48U, 0x4CU, 0x60U, 0x64U, 0x78U, 0x7CU, 0x80U, 0x88U, 0x0U}},
 	{SAFETY_CHECKERS_RM_BA2_UDMA_GCFG, SAFETY_CHECKERS_RM_SUBMOD0_UDMA_GCFG, SAFETY_CHECKERS_RM_REG2_UDMA_GCFG, SAFETY_CHECKERS_RM_REG_HEX0, {0x0U, 0x04U, 0X08U, 0x10U, 0x1CU, 0x20U, 0x24U, 0x28U, 0x2CU, 0x40U, 0x44U, 0x48U, 0x4CU, 0x60U, 0x64U, 0x78U, 0x7CU, 0x80U, 0x88U, 0x0U}},
+	
+	{SAFETY_CHECKERS_RM_RA_MON_BA0, SAFETY_CHECKERS_RM_SUBMOD0_RA_MON, SAFETY_CHECKERS_RM_RA_MON_REG0_NUM, SAFETY_CHECKERS_RM_REG_HEX1000, {0x0U, 0x04U, 0X08U, 0xCU, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U}},
+	{SAFETY_CHECKERS_RM_RA_MON_BA1, SAFETY_CHECKERS_RM_SUBMOD0_RA_MON, SAFETY_CHECKERS_RM_RA_MON_REG1_NUM, SAFETY_CHECKERS_RM_REG_HEX1000, {0x0U, 0x04U, 0X08U, 0xCU, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U}},
 };
 
 /* ========================================================================== */
