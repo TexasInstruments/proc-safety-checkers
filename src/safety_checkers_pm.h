@@ -33,7 +33,9 @@
 
  /**
  *  \defgroup SAFETY_CHECKERS_PM PM Safety Checkers Library
- *  \ingroup  PM SAFETY CHECKERS
+ *  \ingroup  SAFETY_CHECKERS_PM
+ *
+ *  This module defines PM safety checker library APIs and related data structures.
  */
 
 /**
@@ -65,7 +67,9 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup SAFETY_CHECKERS_PM_DATA_STRUCTURES  SAFETY_CHECKERS_PM structure definition
+ * @defgroup SAFETY_CHECKERS_PM_DATA_STRUCTURES  PM safety checkers structure definition
+ *
+ * This contains the structure definition for PM safety checkers module
  *  @{
  */
 
@@ -115,7 +119,9 @@ typedef struct
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup SAFETY_CHECKERS_PM_MODULE_API  SAFETY_CHECKERS PM checkers APIs
+ * @defgroup SAFETY_CHECKERS_PM_MODULE_API PM safety checkers library APIs
+ *
+ * This module defines the PM safety checkers APIs 
  *  @{
  */
 
