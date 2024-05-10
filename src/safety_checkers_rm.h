@@ -33,9 +33,7 @@
 
  /**
  *  \defgroup SAFETY_CHECKERS_RM RM Safety Checkers Library
- *  \ingroup  SAFETY_CHECKERS_RM
- *
- *  This module defines RM Safety Checker library APIs and related data structures.
+ *  \ingroup  RM SAFETY CHECKERS
  */
 
 /**
@@ -61,9 +59,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_RM
  *
- * @defgroup SAFETY_CHECKERS_RM_MACROS SAFETY_CHECKERS_RM macro definition
- *
- * This includes the RM safety checkers macro definitions
+ * @defgroup SAFETY_CHECKERS_RM_MACROS  SAFETY_CHECKERS_RM macro definition
  *  @{
  */
 
@@ -85,10 +81,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_RM
  *
- * @defgroup SAFETY_CHECKERS_RM_STRUCTURE SAFETY_CHECKERS_RM structure definition
- *
- * This contains the structure definition for RM safety checkers module
- *
+ * @defgroup SAFETY_CHECKERS_RM_STRUCTURE  SAFETY_CHECKERS_RM structure definition
  *  @{
  */
 
@@ -127,9 +120,7 @@ typedef struct
 /**
  * @ingroup SAFETY_CHECKERS_RM
  *
- * @defgroup SAFETY_CHECKERS_RM_MODULE_API SAFETY_CHECKERS_RM library APIs
- *
- * This module defines the RM safety checkers APIs 
+ * @defgroup SAFETY_CHECKERS_RM_MODULE_API  SAFETY_CHECKERS RM checkers APIs
  *  @{
  */
 

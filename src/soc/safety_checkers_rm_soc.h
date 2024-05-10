@@ -39,7 +39,7 @@
 /**
  *  \file     safety_checkers_rm_soc.h
  *
- *  \brief    This file contains data structures for RM Safety Checker module
+ *  \brief    This file contains data structures for RM safety checker module
  *
  */
 
@@ -58,8 +58,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_RM
  *
- * @defgroup SAFETY_CHECKERS_RM_MACROS SAFETY_CHECKERS_RM macro definition
- *
+ * @defgroup SAFETY_CHECKERS_RM_SOC_MACROS  SAFETY_CHECKERS_RM RM safety checkers macro definition
  *  @{
  */
 

@@ -60,9 +60,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup SAFETY_CHECKERS_PM_MACROS SAFETY_CHECKERS_PM macro definition
- *
- * This includes the PM safety checkers macro definitions
+ * @defgroup SAFETY_CHECKERS_PM_MACROS  SAFETY_CHECKERS_PM PM safety checkers macro definition
  *  @{
  */
 
@@ -92,9 +90,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup SAFETY_CHECKERS_PM_GLOBAL_VAR SAFETY_CHECKERS_PM global variables declarations
- *
- * This contains the structure declaration for PM safety checkers library module
+ * @defgroup SAFETY_CHECKERS_PM_GLOBAL_VAR  SAFETY_CHECKERS_PM PM safety checkers global variables declarations
  *  @{
  */
 
