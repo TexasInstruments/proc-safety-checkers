@@ -194,7 +194,7 @@ extern "C" {
 #define SAFETY_CHECKERS_RM_BA0_UDMA_FLW                  		  (CSL_DMASS0_PKTDMA_RFLOW_BASE)
 
 /** \brief Formula input of UDMA FLOW to read relevant registers from register group */
-#define SAFETY_CHECKERS_RM_REG0_UDMA_FLW                  		  (50U)
+#define SAFETY_CHECKERS_RM_REG0_UDMA_FLW                  		  (51U)
 
 /** \brief Number of registers in UDMA FLOW register group */
 #define SAFETY_CHECKERS_RM_SUBMOD0_UDMA_FLW                 	  (1U)
