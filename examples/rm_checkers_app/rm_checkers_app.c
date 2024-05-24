@@ -81,7 +81,7 @@ extern uint64_t SafetyCheckersApp_getTimeUsec(void);
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* None */
+uintptr_t rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
 
 /* ========================================================================== */
 /*                  Internal/Private Function Declarations                    */
@@ -137,7 +137,6 @@ void SafetyCheckersApp_rmRun(void *arg0)
 static int32_t SafetyCheckersApp_rmregVerify()
 {
     int32_t      status = SAFETY_CHECKERS_SOK;
-    uintptr_t    rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
 	
     status = SafetyCheckers_rmGetRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
     if(status == SAFETY_CHECKERS_SOK)
@@ -171,7 +170,6 @@ static int32_t SafetyCheckersApp_rmregVerify()
 static int32_t SafetyCheckersApp_rmRegMismatch(void)
 {
 	int32_t     status = SAFETY_CHECKERS_SOK;
-	uintptr_t   rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
 	uint32_t    readVal;
 
 	readVal = CSL_REG32_RD(SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR);
@@ -227,7 +225,6 @@ static int32_t SafetyCheckersApp_rmPerfTest(void)
     uint64_t     startTime = 0U;
     uint64_t     endTime = 0U;
     uint32_t     timeDiff = 0U;
-    uintptr_t    rmRegisterData[SAFETY_CHECKERS_RM_REGDUMP_SIZE];
 
     /* Get the RM register dump */
     status = SafetyCheckers_rmGetRegCfg (rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
