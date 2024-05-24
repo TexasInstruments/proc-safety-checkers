@@ -58,7 +58,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_RM
  *
- * @defgroup SAFETY_CHECKERS_RM_SOC_MACROS  SAFETY_CHECKERS_RM RM safety checkers macro definition
+ * @defgroup SAFETY_CHECKERS_RM_SOC_MACROS  SAFETY_CHECKERS_RM library macro definition
  *  @{
  */
 

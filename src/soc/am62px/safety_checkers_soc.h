@@ -60,7 +60,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup SAFETY_CHECKERS_PM_SOC_MACROS  SAFETY_CHECKERS_PM PM safety checkers SOC specific macro definition
+ * @defgroup SAFETY_CHECKERS_PM_SOC_MACROS  SAFETY_CHECKERS_PM SOC specific macro definition
  *  @{
  */
 
@@ -223,7 +223,7 @@ extern "C" {
 /**
  * @ingroup SAFETY_CHECKERS_PM
  *
- * @defgroup SAFETY_CHECKERS_PM_STRUCTURE  SAFETY_CHECKERS_PM PM safety checkers SOC specific structure declaration
+ * @defgroup SAFETY_CHECKERS_PM_STRUCTURE  SAFETY_CHECKERS_PM SOC specific structure declaration
  *  @{
  */
 
