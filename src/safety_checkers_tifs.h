@@ -39,7 +39,7 @@
  */
 
 /**
- *  \defgroup SAFETY_CHECKERS_TIFS_MODULE  API for TIFS Safety Checkers
+ *  \defgroup SAFETY_CHECKERS_TIFS_MODULE  TIFS Safety Checkers Library
  *  \ingroup  SAFETY_CHECKERS_TIFS MODULE
  *  \section  SAFETY_CHECKERS_TIFS Overview
  *            TIFS Safety Checker (TIFS-SC) provides APIs
