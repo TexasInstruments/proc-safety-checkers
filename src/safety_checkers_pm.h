@@ -31,9 +31,35 @@
  *
  */
 
+/**
+ *  \defgroup SAFETY_CHECKERS Safety checkers
+ * 
+ *  @{
+ * 
+ *   The Safety Checkers Library provides productized APIs for ensuring the
+ *   safety of TIFS, RM and PM modules.C provides these interfaces to assist
+ *   in the development of software applications involving Functional Safety.
+ * 
+ *   The high-level design of the Safety checker implementation for the TIFS,
+ *   RM and PM module. The primary objective of implementing the safety checker
+ *   is to make sure the detection of the failure modes for TIFS, RM and PM module
+ *   are handled properly. Also providing the safety examples as a reference which
+ *   calls the checker APIs to verify the module operations are done properly during
+ *   the boot.
+ */
+/** @} */
+
  /**
- *  \defgroup SAFETY_CHECKERS_PM PM Safety Checkers Library
- *  \ingroup  PM SAFETY CHECKERS
+ *  \ingroup  SAFETY_CHECKERS
+ *  \defgroup PM_SAFETY_CHECKERS PM Safety Checkers Library
+ *
+ *  @{
+ *
+ *    PM safety checkers library APIs are integrated into the safety application to verify
+ *    the PSC/PLL configurations and validate the current PSC and PLL configurations against
+ *    golden reference. Also provides the PLL lock API which is responsible for locking a PLL
+ *    control module registers by preventing the stray writes.
+ * 
  */
 
 /**
@@ -42,6 +68,8 @@
  *  \brief    This file contains PM safety checkers library interfaces and related data structures.
  *
  */
+
+/** @} */
 
 #ifndef SAFETY_CHECKERS_PM_H_
 #define SAFETY_CHECKERS_PM_H_
@@ -63,7 +91,7 @@ extern "C" {
 /* None */
 
 /**
- * @ingroup SAFETY_CHECKERS_PM
+ * @ingroup PM_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_PM_DATA_STRUCTURES  SAFETY_CHECKERS_PM structure definition
  *  @{
@@ -113,7 +141,7 @@ typedef struct
 /* None */
 
 /**
- * @ingroup SAFETY_CHECKERS_PM
+ * @ingroup PM_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_PM_MODULE_API  SAFETY_CHECKERS PM checkers APIs
  *  @{

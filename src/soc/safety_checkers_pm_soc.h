@@ -31,9 +31,16 @@
  *
  */
 
+
+/**
+ *  \defgroup SAFETY_CHECKERS Safety checkers
+ */
+
  /**
- *  \defgroup SAFETY_CHECKERS_PM PM Safety Checkers Library
- *  \ingroup  PM SAFETY CHECKERS
+ *  \ingroup  SAFETY_CHECKERS
+ *  \defgroup PM_SAFETY_CHECKERS PM Safety Checkers Library
+ *
+ *  @{
  */
 
 /**
@@ -42,6 +49,7 @@
  *  \brief    This file contains data structures for PM safety checker module
  *
  */
+/** @} */
 
 #ifndef SAFETY_CHECKERS_PM_SOC_H_
 #define SAFETY_CHECKERS_PM_SOC_H_
@@ -58,7 +66,7 @@ extern "C" {
 #endif
 
 /**
- * @ingroup SAFETY_CHECKERS_PM
+ * @ingroup PM_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_PM_MACROS  SAFETY_CHECKERS_PM library macro definition
  *  @{
@@ -88,7 +96,7 @@ extern "C" {
 /** @} */
 
 /**
- * @ingroup SAFETY_CHECKERS_PM
+ * @ingroup PM_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_PM_GLOBAL_VAR  SAFETY_CHECKERS_PM global variables declarations
  *  @{
@@ -157,3 +165,4 @@ static uint32_t gSafetyCheckers_PmPllRegOffset5 [] =
 #endif
 
 #endif  /* #ifndef SAFETY_CHECKERS_PM_SOC_H_ */
+

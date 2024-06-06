@@ -31,9 +31,19 @@
  *
  */
 
+/**
+ *  \defgroup SAFETY_CHECKERS Safety checkers
+ */
+
  /**
- *  \defgroup SAFETY_CHECKERS_RM RM Safety Checkers Library
- *  \ingroup  RM SAFETY CHECKERS
+ *  \ingroup  SAFETY_CHECKERS
+ *  \defgroup RM_SAFETY_CHECKERS RM Safety Checkers Library
+ *
+ *  @{
+ *
+ *   RM safety checker library APIs are integrated into the safety application to
+ *   verify the RM modules configurations and validate the current RM module configurations
+ *   against golden reference.
  */
 
 /**
@@ -42,6 +52,7 @@
  *  \brief   This file contains RM safety checkers library interfaces and related data structures.
  *
  */
+/** @} */
 
 #ifndef SAFETY_CHECKERS_RM_H_
 #define SAFETY_CHECKERS_RM_H_
@@ -57,7 +68,7 @@ extern "C" {
 #endif
 
 /**
- * @ingroup SAFETY_CHECKERS_RM
+ * @ingroup RM_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_RM_MACROS  SAFETY_CHECKERS_RM macro definition
  *  @{
@@ -79,7 +90,7 @@ extern "C" {
 /* None */
 
 /**
- * @ingroup SAFETY_CHECKERS_RM
+ * @ingroup RM_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_RM_STRUCTURE  SAFETY_CHECKERS_RM structure definition
  *  @{
@@ -118,7 +129,7 @@ typedef struct
 /* None */
 
 /**
- * @ingroup SAFETY_CHECKERS_RM
+ * @ingroup RM_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_RM_MODULE_API  SAFETY_CHECKERS RM checkers APIs
  *  @{
@@ -175,3 +186,4 @@ int32_t SafetyCheckers_rmVerifyRegCfg(const uintptr_t *rmRegCfg, uint32_t size);
 #endif
 
 #endif /* #ifndef SAFETY_CHECKERS_RM_H_ */
+

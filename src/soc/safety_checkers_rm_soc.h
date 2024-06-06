@@ -31,9 +31,15 @@
  *
  */
 
+/**
+ *  \defgroup SAFETY_CHECKERS Safety checkers
+ */
+
  /**
- *  \defgroup SAFETY_CHECKERS_RM RM Safety Checkers Library
- *  \ingroup  RM SAFETY CHECKERS
+ *  \ingroup  SAFETY_CHECKERS
+ *  \defgroup RM_SAFETY_CHECKERS RM Safety Checkers Library
+ *
+ *  @{
  */
 
 /**
@@ -56,7 +62,7 @@ extern "C" {
 #endif
 
 /**
- * @ingroup SAFETY_CHECKERS_RM
+ * @ingroup RM_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_RM_SOC_MACROS  SAFETY_CHECKERS_RM library macro definition
  *  @{
@@ -104,3 +110,5 @@ extern "C" {
 #endif
 
 #endif  /* #ifndef SAFETY_CHECKERS_RM_SOC_H_ */
+
+/** @} */

@@ -31,6 +31,11 @@
  *
  */
 
+
+/**
+ *  \defgroup SAFETY_CHECKERS Safety checkers
+ */
+
 /**
  *  \file     safety_checkers_tifs.h
  *
@@ -39,8 +44,8 @@
  */
 
 /**
- *  \defgroup SAFETY_CHECKERS_TIFS_MODULE  TIFS Safety Checkers Library
- *  \ingroup  SAFETY_CHECKERS_TIFS MODULE
+ *  \defgroup TIFS_SAFETY_CHECKERS  TIFS Safety Checkers Library
+ *  \ingroup  SAFETY_CHECKERS
  *  \section  SAFETY_CHECKERS_TIFS Overview
  *            TIFS Safety Checker (TIFS-SC) provides APIs
  *            to read the firewall configuration registers
@@ -48,7 +53,7 @@
  *
  *  @{
  */
-/* @} */
+/** @} */
 
 #ifndef SAFETY_CHECKERS_TIFS_H_
 #define SAFETY_CHECKERS_TIFS_H_
@@ -64,7 +69,7 @@ extern "C" {
 #endif
 
 /**
- * @ingroup  SAFETY_CHECKERS_TIFS
+ * @ingroup  TIFS_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_TIFS_MODULE_MACROS SAFETY_CHECKERS_TIFS Macros
  *  @{
@@ -91,7 +96,7 @@ extern "C" {
 /** @} */
 
 /**
- * @ingroup  SAFETY_CHECKERS_TIFS
+ * @ingroup  TIFS_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_TIFS_MODULE_DATA_STRUCTURE SAFETY_CHECKERS TIFS Structure Definitions
  *  @{
@@ -136,7 +141,7 @@ typedef struct
 /** @} */
 
 /**
- * @ingroup  SAFETY_CHECKERS_TIFS
+ * @ingroup  TIFS_SAFETY_CHECKERS
  *
  * @defgroup SAFETY_CHECKERS_TIFS_MODULE_API SAFETY_CHECKERS TIFS APIs
  *  @{
@@ -196,5 +201,4 @@ int32_t SafetyCheckers_tifsReqFwlClose(void);
 #endif
 
 #endif /* #ifndef SAFETY_CHECKERS_TIFS_H_ */
-/** @} */
 /** @} */
