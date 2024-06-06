@@ -109,7 +109,6 @@ extern "C" {
 /** \brief Vim Base address of MAIN R5 */
 #define SAFETY_CHECKERS_CSIRX_UDMA_CSI_VIM_CONFIG_BASE_ADDRESS        (CSL_MAIN_DOMAIN_VIM_BASE_ADDR0)
 
-/** @} */
 
 
 /** \brief DPHY configuration related macros: Register offsets */
@@ -154,6 +153,8 @@ extern "C" {
 #define SAFETY_CHECKERS_CSIRX_STREAM3_MONITOR_CTRL                    ((uint32_t)0x410U)
 #define SAFETY_CHECKERS_CSIRX_STERAM3_TIMER                           ((uint32_t)0x41CU)
 #define SAFETY_CHECKERS_CSIRX_STREAM3_FCC_CFG                         ((uint32_t)0x420U)
+
+/** @} */
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -271,8 +272,6 @@ static uint32_t gSafetyCheckers_DataTypeFrameSizeRegOffset [] =
     CSL_CSI_RX_IF_CNTX_CNTL_DMACNTX(0x1F),
 };
 
-/** @} */
-
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -296,3 +295,4 @@ static uint32_t gSafetyCheckers_DataTypeFrameSizeRegOffset [] =
 #endif
 
 #endif  /* #ifndef SAFETY_CHECKERS_CSIRX_SOC_H_ */
+/** @} */

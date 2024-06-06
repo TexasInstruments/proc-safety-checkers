@@ -31,16 +31,12 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- /**
- *  \defgroup SAFETY_CHECKERS_CSIRX CSIRX Safety Checkers Library
- *  \ingroup  CSIRX SAFETY CHECKERS
- */
-
 /**
  *  \file     safety_checkers_csirx_soc.h
  *
+ *
  *  \brief    This file is the top level file that includes soc specific header
- *  file for CSIRX safety checker module
+ *            file for CSIRX safety checker module
  *
  */
 

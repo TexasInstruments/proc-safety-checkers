@@ -228,13 +228,7 @@ typedef struct
 /* ========================================================================== */
 /*                  Internal/Private Function Declarations                    */
 /* ========================================================================== */
-/**
- * \ingroup CSIRX_SAFETY_CHECKERS_INTERFACE
- *
- * \defgroup SAFETY_CHECKERS_CSIRX_API  SAFETY_CHECKERS_CSIRX API
- *
- *  @{
- */
+
 /**
  *  \brief Function to get vim register configuration
  *
@@ -264,6 +258,14 @@ static int32_t SafetyCheckers_csirxVerifyVimRegCfgFromIntrNum(SafetyCheckers_Csi
 /* ========================================================================== */
 
 /**
+ * \ingroup CSIRX_SAFETY_CHECKERS_INTERFACE
+ *
+ * \defgroup SAFETY_CHECKERS_CSIRX_API  SAFETY_CHECKERS_CSIRX API
+ *
+ *  @{
+ */
+
+/**
  *  \brief Function to get register configuration of requested type
  *
  *  \param regCfg   Pointer to register configuration
@@ -281,8 +283,9 @@ int32_t SafetyCheckers_csirxGetRegCfg(uintptr_t *regCfg,
 /**
  *  \brief Function to verify register configuration of requested type
  *
- *  \param regCfg  Pointer to register configuration
- *  \param regType Type of register configuration
+ *  \param regCfg   Pointer to register configuration
+ *  \param regType  Type of register configuration
+ *  \param instance CSIRX instance ID
  *
  *  \return SAFETY_CHECKERS_SOK if successful
  *          SAFETY_CHECKERS_FAIL if null params are passed
@@ -350,7 +353,7 @@ int32_t  SafetyCheckers_csirxGetSensorCfg(void *i2cHandle,
 /**
  *  \brief Function to verify sensor configuration
  *
- *  \param i2cHandle  I2C driver handle to access sensor
+ *  \param handle     I2C driver handle to access sensor
  *  \param slaveAddr  I2C slave address of sensor
  *  \param regData    Pointer to sensor configuration
  *
@@ -401,4 +404,5 @@ int32_t SafetyCheckers_csirxVerifyQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSet
 
 #endif /* #ifndef SAFETY_CHECKERS_CSIRX_H_ */
 
+/** @} */
 /** @} */
