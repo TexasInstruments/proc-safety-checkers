@@ -260,7 +260,7 @@ int32_t SafetyCheckers_csirxVerifyCsiAvailBandwidth(void *drvHandle, uint32_t fp
     if(SAFETY_CHECKERS_SOK == status)
     {
         SafetyCheckers_CsirxFdmChannel *channel = (SafetyCheckers_CsirxFdmChannel*)drvHandle;
-        virtContext = channel->drvHandle;
+        virtContext = (CsirxDrv_VirtContext *)channel->drvHandle;
         instObj = virtContext->instObj;
 
         for(count=0U; count<instObj->createParams.numCh; count++)
@@ -277,7 +277,7 @@ int32_t SafetyCheckers_csirxVerifyCsiAvailBandwidth(void *drvHandle, uint32_t fp
     return status;
 }
 
-int32_t SafetyCheckers_csirxPopulateVimRegisterConfig(void *drvHandle, SafetyCheckers_CsirxVimCfg *vimCfg)
+int32_t SafetyCheckers_csirxGetVimCfg(void *drvHandle, SafetyCheckers_CsirxVimCfg *vimCfg)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
     uint32_t coreintrNum;
@@ -293,7 +293,7 @@ int32_t SafetyCheckers_csirxPopulateVimRegisterConfig(void *drvHandle, SafetyChe
     if(SAFETY_CHECKERS_SOK == status)
     {
         channel = (SafetyCheckers_CsirxFdmChannel*)drvHandle;
-        virtContext = channel->drvHandle;
+        virtContext = (CsirxDrv_VirtContext *)channel->drvHandle;
         instObj = virtContext->instObj;
 
         for(uint32_t iterator=0U; iterator<CSIRX_EVENT_GROUP_MAX; iterator++)
@@ -310,7 +310,7 @@ int32_t SafetyCheckers_csirxPopulateVimRegisterConfig(void *drvHandle, SafetyChe
     return status;
 }
 
-int32_t SafetyCheckers_csirxValidateVimRegisterConfig(void *drvHandle, SafetyCheckers_CsirxVimCfg *vimCfg)
+int32_t SafetyCheckers_csirxVerifyVimCfg(void *drvHandle, SafetyCheckers_CsirxVimCfg *vimCfg)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
     CsirxDrv_VirtContext *virtContext = NULL;
@@ -324,7 +324,7 @@ int32_t SafetyCheckers_csirxValidateVimRegisterConfig(void *drvHandle, SafetyChe
     if(SAFETY_CHECKERS_SOK == status)
     {
         SafetyCheckers_CsirxFdmChannel *channel = (SafetyCheckers_CsirxFdmChannel*)drvHandle;
-        virtContext = channel->drvHandle;
+        virtContext = (CsirxDrv_VirtContext *)channel->drvHandle;
         instObj = virtContext->instObj;
 
         for(uint32_t iterator=0U; iterator<CSIRX_EVENT_GROUP_MAX; iterator++)
@@ -417,17 +417,17 @@ int32_t SafetyCheckers_csirxGetQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSettin
     else
     {
         SafetyCheckers_CsirxFdmChannel *channel = (SafetyCheckers_CsirxFdmChannel*)drvHandle;
-        virtContext = channel->drvHandle;
+        virtContext = (CsirxDrv_VirtContext *)channel->drvHandle;
         instObj = virtContext->instObj;
 
         for(count = 0U; count < instObj->createParams.numCh; count++)
         {
             rxChObj = instObj->chObj[count].rxChObj;
-            qosSettings[count].chanType = CSL_REG32_FEXT(rxChObj.pBcdmaRxCfgRegs->RCFG,
+            qosSettings[count].chanType = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                                          BCDMA_RXCCFG_CHAN_RCFG_CHAN_TYPE);
-            qosSettings[count].priority = CSL_REG32_FEXT(rxChObj.pBcdmaRxCfgRegs->RCFG,
+            qosSettings[count].priority = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                                          BCDMA_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
-            qosSettings[count].busOrderId = CSL_REG32_FEXT(rxChObj.pBcdmaRxCfgRegs->RCFG,
+            qosSettings[count].busOrderId = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                                            BCDMA_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
         }
     }
@@ -453,19 +453,19 @@ int32_t SafetyCheckers_csirxVerifyQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSet
     else
     {
         SafetyCheckers_CsirxFdmChannel *channel = (SafetyCheckers_CsirxFdmChannel*)drvHandle;
-        virtContext = channel->drvHandle;
+        virtContext = (CsirxDrv_VirtContext *)channel->drvHandle;
         instObj = virtContext->instObj;
 
         for(count = 0U; count < instObj->createParams.numCh; count++)
         {
             rxChObj = instObj->chObj[count].rxChObj;
-            chanTypeVerif = CSL_REG32_FEXT(rxChObj.pBcdmaRxCfgRegs->RCFG,
+            chanTypeVerif = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                            BCDMA_RXCCFG_CHAN_RCFG_CHAN_TYPE);
             mismatchCnt |= chanTypeVerif ^ qosSettings[count].chanType;
-            priorityVerif = CSL_REG32_FEXT(rxChObj.pBcdmaRxCfgRegs->RCFG,
+            priorityVerif = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                            BCDMA_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
             mismatchCnt |= priorityVerif ^ qosSettings[count].priority;
-            busOrderIdVerif = CSL_REG32_FEXT(rxChObj.pBcdmaRxCfgRegs->RCFG,
+            busOrderIdVerif = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                              BCDMA_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
             mismatchCnt |= busOrderIdVerif ^ qosSettings[count].busOrderId;
 

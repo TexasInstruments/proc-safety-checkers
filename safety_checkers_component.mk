@@ -34,13 +34,16 @@
 #
 ifeq ($(safety_checkers_component_make_include), )
 
-safety_checkers_SOCLIST         = j7200 j721e j721s2 j784s4
-safety_checkers_BOARDLIST       = j7200_evm j721e_evm j721s2_evm j784s4_evm
-safety_checkers_j7200_CORELIST  = mcu1_0 mcu1_1 mcu2_0
-safety_checkers_j721e_CORELIST  = mcu1_0 mcu1_1 mcu2_0
-safety_checkers_j721s2_CORELIST = mcu1_0 mcu1_1 mcu2_0
-safety_checkers_j784s4_CORELIST = mcu1_0 mcu1_1 mcu2_0
-safety_checkers_RTOS_LIST       = $(DEFAULT_RTOS_LIST)
+safety_checkers_SOCLIST               = j7200 j721e j721s2 j784s4
+safety_checkers_BOARDLIST             = j7200_evm j721e_evm j721s2_evm j784s4_evm
+safety_checkers_csirx_SOCLIST         = j784s4
+safety_checkers_csirx_BOARDLIST       = j784s4_evm
+safety_checkers_j7200_CORELIST        = mcu1_0 mcu1_1 mcu2_0
+safety_checkers_j721e_CORELIST        = mcu1_0 mcu1_1 mcu2_0
+safety_checkers_j721s2_CORELIST       = mcu1_0 mcu1_1 mcu2_0
+safety_checkers_j784s4_CORELIST       = mcu1_0 mcu1_1 mcu2_0
+safety_checkers_csirx_j784s4_CORELIST = mcu2_0
+safety_checkers_RTOS_LIST             = $(DEFAULT_RTOS_LIST)
 
 ############################
 # Safety checkers package
@@ -219,6 +222,30 @@ endif
 endef
 TIFS_CHECKERS_APP_MACRO_LIST := $(foreach curos, $(safety_checkers_RTOS_LIST), $(call TIFS_CHECKERS_APP_RULE,$(curos)))
 $(eval ${TIFS_CHECKERS_APP_MACRO_LIST})
+
+# CSIRX safety checkers app
+define CSIRX_CHECKERS_APP_RULE
+export csirx_checkers_app_$(1)_COMP_LIST = csirx_checkers_app_$(1)
+csirx_checkers_app_$(1)_RELPATH = ti/safety_checkers/examples/csirx_checkers_app
+csirx_checkers_app_$(1)_PATH = $(SAFETY_CHECKERS_COMP_PATH)/examples/csirx_checkers_app
+export csirx_checkers_app_$(1)_BOARD_DEPENDENCY = yes
+export csirx_checkers_app_$(1)_CORE_DEPENDENCY = yes
+export csirx_checkers_app_$(1)_MAKEFILE = -fmakefile BUILD_OS_TYPE=$(1)
+csirx_checkers_app_$(1)_PKG_LIST = csirx_checkers_app_$(1)
+csirx_checkers_app_$(1)_INCLUDE = $(csirx_checkers_app_$(1)_PATH)
+export csirx_checkers_app_$(1)_BOARDLIST = $(filter $(DEFAULT_BOARDLIST_$(1)), $(safety_checkers_csirx_BOARDLIST) )
+export csirx_checkers_app_$(1)_$(SOC)_CORELIST = $(filter $(DEFAULT_$(SOC)_CORELIST_$(1)), $(safety_checkers_csirx_$(SOC)_CORELIST))
+export csirx_checkers_app_$(1)_SBL_APPIMAGEGEN = yes
+ifneq ($(1),$(filter $(1), safertos))
+safety_checkers_EXAMPLE_LIST += csirx_checkers_app_$(1)
+else
+ifneq ($(wildcard $(SAFERTOS_KERNEL_INSTALL_PATH)),)
+safety_checkers_EXAMPLE_LIST += csirx_checkers_app_$(1)
+endif
+endif
+endef
+CSIRX_CHECKERS_APP_MACRO_LIST := $(foreach curos, $(safety_checkers_RTOS_LIST), $(call CSIRX_CHECKERS_APP_RULE,$(curos)))
+$(eval ${CSIRX_CHECKERS_APP_MACRO_LIST})
 
 export safety_checkers_LIB_LIST
 export safety_checkers_EXAMPLE_LIST
