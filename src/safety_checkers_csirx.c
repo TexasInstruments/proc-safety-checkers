@@ -504,32 +504,31 @@ static int32_t SafetyCheckers_csirxGetVimRegCfgIntrNum(uint32_t intrNum,
         vimCfg->intrNum = intrNum;
     }
 
-    groupNum = intrNum / CSL_VIM_NUM_INTRS_PER_GROUP;
-    if((groupNum < num_groups) && (intrNum < maxIntrs) && (SAFETY_CHECKERS_SOK == status))
+    if(SAFETY_CHECKERS_SOK == status)
     {
-        bitNum = intrNum & ((uint32_t)(CSL_VIM_NUM_INTRS_PER_GROUP-1U));
-
-        /* Read INTMAP */
-        vimCfg->intrMap  = CSL_REG32_RD(&pRegs->GRP[groupNum].INTMAP);
-        /* Get the interrupt map value */
-        vimCfg->intrMap  = vimCfg->intrMap >> bitNum;
-        vimCfg->intrMap &= (uint32_t)(0x1U);
-
-        /* Read INTTYPE */
-        vimCfg->intrType  = CSL_REG32_RD(&pRegs->GRP[groupNum].INTTYPE);
-        /* Get the interrupt type value */
-        vimCfg->intrType  = vimCfg->intrType  >> bitNum;
-        vimCfg->intrType &= (uint32_t)(0x1U);
-
-        /* Read PRI */
-        vimCfg->pri = CSL_REG32_RD(&pRegs->PRI[intrNum].INT);
-
-        /* Read VEC */
-        vimCfg->vecAddr = CSL_REG32_RD(&pRegs->VEC[intrNum].INT);
-    }
-    else
-    {
-        status = SAFETY_CHECKERS_FAIL;
+        groupNum = intrNum / CSL_VIM_NUM_INTRS_PER_GROUP;
+        if((groupNum < num_groups) && (intrNum < maxIntrs))
+        {
+            bitNum = intrNum & ((uint32_t)(CSL_VIM_NUM_INTRS_PER_GROUP-1U));
+    
+            /* Read INTMAP */
+            vimCfg->intrMap  = CSL_REG32_RD(&pRegs->GRP[groupNum].INTMAP);
+            /* Get the interrupt map value */
+            vimCfg->intrMap  = vimCfg->intrMap >> bitNum;
+            vimCfg->intrMap &= (uint32_t)(0x1U);
+    
+            /* Read INTTYPE */
+            vimCfg->intrType  = CSL_REG32_RD(&pRegs->GRP[groupNum].INTTYPE);
+            /* Get the interrupt type value */
+            vimCfg->intrType  = vimCfg->intrType  >> bitNum;
+            vimCfg->intrType &= (uint32_t)(0x1U);
+    
+            /* Read PRI */
+            vimCfg->pri = CSL_REG32_RD(&pRegs->PRI[intrNum].INT);
+    
+            /* Read VEC */
+            vimCfg->vecAddr = CSL_REG32_RD(&pRegs->VEC[intrNum].INT);
+        }
     }
 
     return status;
@@ -556,35 +555,34 @@ static int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVi
         groupNum   = intrNum / CSL_VIM_NUM_INTRS_PER_GROUP;
     }
 
-    if((groupNum < num_groups) && (intrNum < maxIntrs) && (SAFETY_CHECKERS_SOK == status))
+    if(SAFETY_CHECKERS_SOK == status)
     {
-        bitNum = intrNum & (CSL_VIM_NUM_INTRS_PER_GROUP-1U);
-
-        /* Read INTMAP */
-        intrMapVal = CSL_REG32_RD(&pRegs->GRP[groupNum].INTMAP);
-        /* Get the interrupt map value */
-        intrMapVal   = intrMapVal >> bitNum;
-        intrMapVal  &= (uint32_t)(0x1U);
-        mismatchCnt |= vimCfg->intrMap ^ intrMapVal;
-
-        /* Read INTTYPE */
-        intrTypeVal  = CSL_REG32_RD(&pRegs->GRP[groupNum].INTTYPE);
-        /* Get the interrupt type value */
-        intrTypeVal  = intrTypeVal  >> bitNum;
-        intrTypeVal &= (uint32_t)(0x1U);
-        mismatchCnt |= vimCfg->intrType ^ intrTypeVal;
-
-        /* Read PRI */
-        priVal = CSL_REG32_RD(&pRegs->PRI[intrNum].INT);
-        mismatchCnt |= vimCfg->pri ^ priVal;
-
-        /* Read VEC */
-        vecVal = CSL_REG32_RD(&pRegs->VEC[intrNum].INT);
-        mismatchCnt |= vimCfg->vecAddr ^ vecVal;
-    }
-    else
-    {
-        status = SAFETY_CHECKERS_FAIL;
+        if((groupNum < num_groups) && (intrNum < maxIntrs))
+        {
+            bitNum = intrNum & (CSL_VIM_NUM_INTRS_PER_GROUP-1U);
+    
+            /* Read INTMAP */
+            intrMapVal = CSL_REG32_RD(&pRegs->GRP[groupNum].INTMAP);
+            /* Get the interrupt map value */
+            intrMapVal   = intrMapVal >> bitNum;
+            intrMapVal  &= (uint32_t)(0x1U);
+            mismatchCnt |= vimCfg->intrMap ^ intrMapVal;
+    
+            /* Read INTTYPE */
+            intrTypeVal  = CSL_REG32_RD(&pRegs->GRP[groupNum].INTTYPE);
+            /* Get the interrupt type value */
+            intrTypeVal  = intrTypeVal  >> bitNum;
+            intrTypeVal &= (uint32_t)(0x1U);
+            mismatchCnt |= vimCfg->intrType ^ intrTypeVal;
+    
+            /* Read PRI */
+            priVal = CSL_REG32_RD(&pRegs->PRI[intrNum].INT);
+            mismatchCnt |= vimCfg->pri ^ priVal;
+    
+            /* Read VEC */
+            vecVal = CSL_REG32_RD(&pRegs->VEC[intrNum].INT);
+            mismatchCnt |= vimCfg->vecAddr ^ vecVal;
+        }
     }
 
     if(0U != mismatchCnt)
