@@ -552,10 +552,9 @@ static int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVi
     {
         maxIntrs   = pRegs->INFO;
         num_groups = maxIntrs / CSL_VIM_NUM_INTRS_PER_GROUP;
+        intrNum    = vimCfg->intrNum;
+        groupNum   = intrNum / CSL_VIM_NUM_INTRS_PER_GROUP;
     }
-
-    intrNum = vimCfg->intrNum;
-    groupNum = intrNum / CSL_VIM_NUM_INTRS_PER_GROUP;
 
     if((groupNum < num_groups) && (intrNum < maxIntrs) && (SAFETY_CHECKERS_SOK == status))
     {
@@ -564,8 +563,8 @@ static int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVi
         /* Read INTMAP */
         intrMapVal = CSL_REG32_RD(&pRegs->GRP[groupNum].INTMAP);
         /* Get the interrupt map value */
-        intrMapVal  = intrMapVal >> bitNum;
-        intrMapVal &= (uint32_t)(0x1U);
+        intrMapVal   = intrMapVal >> bitNum;
+        intrMapVal  &= (uint32_t)(0x1U);
         mismatchCnt |= vimCfg->intrMap ^ intrMapVal;
 
         /* Read INTTYPE */
