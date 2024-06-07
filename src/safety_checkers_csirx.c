@@ -265,7 +265,7 @@ int32_t SafetyCheckers_csirxVerifyCsiAvailBandwidth(void *drvHandle, uint32_t fp
 
         for(count=0U; count<instObj->createParams.numCh; count++)
         {
-            frameSize += instObj->createParams.chCfg[count].outFmt.pitch[0U]*instObj->createParams.chCfg[count].outFmt.height;
+            frameSize += (instObj->createParams.chCfg[count].outFmt.pitch[0U]*instObj->createParams.chCfg[count].outFmt.height);
         }
 
         if(SAFETY_CHECKERS_CSIRX_MAX_FRAME_SIZE < (fps* frameSize))
@@ -383,8 +383,8 @@ int32_t SafetyCheckers_csirxVerifySensorCfg(void *i2cHandle,
     {
         while(0xFFFU != regData[cnt][0U])
         {
-            regAddr8 = regData[cnt][0U] & 0xFFU;
-            regValVerif = regData[cnt][1U] & 0xFFU;
+            regAddr8 = (uint8_t)(regData[cnt][0U] & 0xFFU);
+            regValVerif = (uint8_t)(regData[cnt][1U] & 0xFFU);
             status = Board_i2c8BitRegRd(i2cHandle, slaveAddr, regAddr8, &regVal, 0x1,
                                          0x1000U);
             mismatchCnt |= regValVerif ^ regVal;
@@ -423,11 +423,11 @@ int32_t SafetyCheckers_csirxGetQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSettin
         for(count = 0U; count < instObj->createParams.numCh; count++)
         {
             rxChObj = instObj->chObj[count].rxChObj;
-            qosSettings[count].chanType = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
+            qosSettings[count].chanType = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                                          BCDMA_RXCCFG_CHAN_RCFG_CHAN_TYPE);
-            qosSettings[count].priority = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
+            qosSettings[count].priority = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                                          BCDMA_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
-            qosSettings[count].busOrderId = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
+            qosSettings[count].busOrderId = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                                            BCDMA_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
         }
     }
@@ -459,13 +459,13 @@ int32_t SafetyCheckers_csirxVerifyQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSet
         for(count = 0U; count < instObj->createParams.numCh; count++)
         {
             rxChObj = instObj->chObj[count].rxChObj;
-            chanTypeVerif = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
+            chanTypeVerif = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                            BCDMA_RXCCFG_CHAN_RCFG_CHAN_TYPE);
             mismatchCnt |= chanTypeVerif ^ qosSettings[count].chanType;
-            priorityVerif = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
+            priorityVerif = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                            BCDMA_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
             mismatchCnt |= priorityVerif ^ qosSettings[count].priority;
-            busOrderIdVerif = CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
+            busOrderIdVerif = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
                                              BCDMA_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
             mismatchCnt |= busOrderIdVerif ^ qosSettings[count].busOrderId;
 
