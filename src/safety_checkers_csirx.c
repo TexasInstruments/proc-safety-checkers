@@ -355,9 +355,9 @@ int32_t SafetyCheckers_csirxGetSensorCfg(void *i2cHandle,
     {
         while(0xFFFU != regData[cnt][0U])
         {
-            regAddr8 = regData[cnt][0U] & 0xFFU;
+            regAddr8 = (uint8_t)(regData[cnt][0U] & 0xFFU);
             status = Board_i2c8BitRegRd(i2cHandle, slaveAddr, regAddr8, &regVal, 0x1U, 0x1000U);
-            regData[cnt][1U] = regVal & 0xFFU;
+            regData[cnt][1U] = (uint16_t)(regVal & 0xFFU);
             cnt++;
         }
     }

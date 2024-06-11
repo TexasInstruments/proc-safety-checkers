@@ -223,7 +223,7 @@ typedef struct
 #define SAFETY_CHECKERS_CSIRX_REG_TYPE_DATATYPE_FRAMESIZE           (0x5U)
 #define SAFETY_CHECKERS_CSIRX_NUM_REGTYPE_MAX                       (0x6U)
 /* @} */
-#define SAFETY_CHECKERS_CSIRX_MAX_FRAME_SIZE                        (uint32_t)((2.5*1024U*1024U*1024U)/2U)
+#define SAFETY_CHECKERS_CSIRX_MAX_FRAME_SIZE                        (((uint32_t)2.5*1024U*1024U*1024U)/2U)
 
 /* ========================================================================== */
 /*                  Internal/Private Function Declarations                    */
