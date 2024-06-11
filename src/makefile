@@ -15,6 +15,7 @@ ifeq ($(SOC), j742s2)
 endif
 
 SRCDIR = .
+SRCDIR += soc/$(SOC_DIR)/
 INCDIR = . soc/ soc/$(SOC_DIR)/
 INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC_DIR)/src/
 INCDIR += $(PDK_INSTALL_PATH)/ti/drv/sciclient
@@ -26,7 +27,7 @@ INCLUDE_INTERNAL_INTERFACES = pdk csl
 SRCS_COMMON += safety_checkers_pm.c safety_checkers_rm.c safety_checkers_tifs.c 
 
 ifeq ($(SOC),j784s4)
-SRCS_COMMON += safety_checkers_csirx.c
+SRCS_COMMON += safety_checkers_csirx.c safety_checkers_csirx_soc.c
 endif
 ifeq ($(SOC),$(filter $(SOC), j7200 j721e j721s2 j784s4 j742s2))
 PACKAGE_SRCS_COMMON += makefile soc/safety_checkers_pm_soc.h soc/safety_checkers_rm_soc.h  soc/$(SOC_DIR)
@@ -35,7 +36,7 @@ PACKAGE_SRCS_COMMON += ../safety_checkers_component.mk
 endif
 
 ifeq ($(SOC),$(filter $(SOC), j784s4 j742s2))
-PACKAGE_SRCS_COMMON += soc/safety_checkers_csirx_soc.h soc/$(SOC_DIR)/safety_checkers_csirx_soc.h safety_checkers_csirx.h safety_checkers_csirx.c
+PACKAGE_SRCS_COMMON += soc/safety_checkers_csirx_soc.h soc/$(SOC_DIR)/safety_checkers_csirx_soc.c soc/$(SOC_DIR)/safety_checkers_csirx_soc.h safety_checkers_csirx.h safety_checkers_csirx.c
 endif
 
 # Core/SoC/platform specific source files and CFLAGS

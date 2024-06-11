@@ -44,8 +44,8 @@
 
 #include <stdint.h>
 #include <ti/csl/cslr.h>
-#include <ti/board/board.h>
-#include <ti/board/src/devices/common/common.h>
+#include <ti/drv/i2c/i2c.h>
+#include <ti/drv/i2c/soc/i2c_soc.h>
 #include <ti/drv/csirx/src/csirx_drvPriv.h>
 #include <safety_checkers_csirx.h>
 #include <safety_checkers_common.h>
@@ -66,120 +66,19 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-static int32_t SafetyCheckers_csirxGetVimRegCfgIntrNum(uint32_t intrNum,
-                                                       SafetyCheckers_CsirxVimCfg *vimCfg);
-
-static int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVimCfg *vimCfg);
+/* None */
 
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_NUM_REGTYPE_MAX] =
-{
-    {
-        SAFETY_CHECKERS_CSIRX_REG_TYPE_STRM_CTRL,
-        {
-            {
-                0U,
-                SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_BASE_ADDRESS(0U),
-                gSafetyCheckers_StrmCtrlRegOffset,
-                SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_LENGTH
-            },
-            {
-                1U,
-                SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_BASE_ADDRESS(1U),
-                gSafetyCheckers_StrmCtrlRegOffset,
-                SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_LENGTH
-            },
-        }
-    },
-    {
-        SAFETY_CHECKERS_CSIRX_REG_TYPE_DPHY_CONFIG,
-        {
-            {
-                0U,
-                SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_BASE_ADDRESS(0U),
-                gSafetyCheckers_DphyConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_LENGTH
-            },
-            {
-                1U,
-                SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_BASE_ADDRESS(1U),
-                gSafetyCheckers_DphyConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_LENGTH
-            },
-        }
-    },
-    {
-        SAFETY_CHECKERS_CSIRX_REG_TYPE_DPHY_PLL,
-        {
-            {
-                0U,
-                SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_BASE_ADDRESS(0U),
-                gSafetyCheckers_DphyPllRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_LENGTH
-            },
-            {
-                1U,
-                SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_BASE_ADDRESS(1U),
-                gSafetyCheckers_DphyPllRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_LENGTH
-            },
-        }
-    },
-    {
-        SAFETY_CHECKERS_CSIRX_REG_TYPE_DPHY_LANE_CONFIG,
-        {
-            {
-                0U,
-                SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_BASE_ADDRESS(0U),
-                gSafetyCheckers_DphyLaneConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_REGS_LENGTH
-            },
-            {
-                1U,
-                SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_BASE_ADDRESS(1U),
-                gSafetyCheckers_DphyLaneConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_REGS_LENGTH
-            },
-        }
-    },
-    {
-        SAFETY_CHECKERS_CSIRX_REG_TYPE_VIRTUAL_CHANNEL,
-        {
-            {
-                0U,
-                SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_BASE_ADDRESS(0U),
-                gSafetyCheckers_VirtualChannelConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_REGS_LENGTH
-            },
-            {
-                1U,
-                SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_BASE_ADDRESS(1U),
-                gSafetyCheckers_VirtualChannelConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_REGS_LENGTH
-            },
-        }
-    },
-    {
-        SAFETY_CHECKERS_CSIRX_REG_TYPE_DATATYPE_FRAMESIZE,
-        {
-            {
-                0U,
-                SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_BASE_ADDRESS(0U),
-                gSafetyCheckers_DataTypeFrameSizeRegOffset,
-                SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_REGS_LENGTH
-            },
-            {
-                1U,
-                SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_BASE_ADDRESS(1U),
-                gSafetyCheckers_DataTypeFrameSizeRegOffset,
-                SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_REGS_LENGTH
-            },
-        }
-    },
-};
+extern SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_NUM_REGTYPE_MAX];
+
+/* ========================================================================== */
+/*                       Static Function Definitions                          */
+/* ========================================================================== */
+
+/* None */
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -189,9 +88,9 @@ int32_t SafetyCheckers_csirxGetRegCfg(uintptr_t *regCfg,
                                       uint32_t regType,
                                       uint32_t instance)
 {
-    uint32_t regNum;
+    uint32_t regNum, mask = SAFETY_CHECKERS_CSIRX_MASK_NONE;
     int32_t  status = SAFETY_CHECKERS_SOK;
-    uint32_t baseAddr;
+    SafetyCheckers_CsirxInstData *instData;
 
     /* Check if regCfg is NULL */
     if(NULL == regCfg)
@@ -201,11 +100,19 @@ int32_t SafetyCheckers_csirxGetRegCfg(uintptr_t *regCfg,
 
     if(SAFETY_CHECKERS_SOK == status)
     {
-        baseAddr = gSafetyCheckers_CsirxRegData[regType].instData[instance].baseAddr;
-        for(regNum=0U; regNum<(gSafetyCheckers_CsirxRegData[regType].instData[instance].length); regNum++)
+        instData = &gSafetyCheckers_CsirxRegData[regType].instData[instance];
+        for(regNum=0U; regNum<instData->length; regNum++)
         {
-            regCfg[regNum] = (uintptr_t)CSL_REG32_RD(baseAddr +
-                                                     gSafetyCheckers_CsirxRegData[regType].instData[instance].regOffsetArr[regNum]);
+            /* DPHY lane configuration register contains a dynamic register-field 
+             * which will change based on rx high speed clock active status. Hence omitting
+             * the field with the help of mask 
+             */
+            if (regType == SAFETY_CHECKERS_CSIRX_REG_TYPE_DPHY_LANE_CONFIG)
+            {
+                mask = SAFETY_CHECKERS_CSIRX_MASK_LANE_CONFIG;
+            }
+            regCfg[regNum] = (uintptr_t)CSL_REG32_RD(instData->baseAddr +
+                                                     instData->regOffsetArr[regNum]) & mask;
         }
     }
 
@@ -218,9 +125,9 @@ int32_t SafetyCheckers_csirxVerifyRegCfg(const uintptr_t *regCfg,
 {
     uint32_t readData = 0U;
     uint32_t mismatchCnt = 0U;
-    uint32_t regNum;
+    uint32_t regNum, mask = SAFETY_CHECKERS_CSIRX_MASK_NONE;
     int32_t  status = SAFETY_CHECKERS_SOK;
-    uint32_t baseAddr;
+    SafetyCheckers_CsirxInstData *instData;
 
     /* Check if regCfg is NULL */
     if(NULL == regCfg)
@@ -230,10 +137,14 @@ int32_t SafetyCheckers_csirxVerifyRegCfg(const uintptr_t *regCfg,
 
     if(SAFETY_CHECKERS_SOK == status)
     {
-        baseAddr = gSafetyCheckers_CsirxRegData[regType].instData[instance].baseAddr;
-        for(regNum=0U; regNum<(gSafetyCheckers_CsirxRegData[regType].instData[instance].length); regNum++)
+        instData = &gSafetyCheckers_CsirxRegData[regType].instData[instance];
+        for(regNum=0U; regNum<instData->length; regNum++)
         {
-            readData = (uintptr_t)CSL_REG32_RD(baseAddr + gSafetyCheckers_CsirxRegData[regType].instData[instance].regOffsetArr[regNum]);
+            if (regType == SAFETY_CHECKERS_CSIRX_REG_TYPE_DPHY_LANE_CONFIG)
+            {
+                mask = SAFETY_CHECKERS_CSIRX_MASK_LANE_CONFIG;
+            }
+            readData = (uintptr_t)CSL_REG32_RD(instData->baseAddr + instData->regOffsetArr[regNum]) & mask;
             mismatchCnt |= regCfg[regNum] ^ readData;
         }
 
@@ -296,11 +207,11 @@ int32_t SafetyCheckers_csirxGetVimCfg(void *drvHandle, SafetyCheckers_CsirxVimCf
         virtContext = (CsirxDrv_VirtContext *)channel->drvHandle;
         instObj = virtContext->instObj;
 
-        for(uint32_t iterator=0U; iterator<CSIRX_EVENT_GROUP_MAX; iterator++)
+        for(uint32_t count=0U; count<CSIRX_EVENT_GROUP_MAX; count++)
         {
-            if(1U == instObj->eventObj[iterator].eventInitDone)
+            if(1U == instObj->eventObj[count].eventInitDone)
             {
-                coreintrNum = instObj->eventObj[iterator].coreIntrNum;
+                coreintrNum = instObj->eventObj[count].coreIntrNum;
                 status += SafetyCheckers_csirxGetVimRegCfgIntrNum(coreintrNum,
                                                                   vimCfg);
             }
@@ -327,9 +238,9 @@ int32_t SafetyCheckers_csirxVerifyVimCfg(void *drvHandle, SafetyCheckers_CsirxVi
         virtContext = (CsirxDrv_VirtContext *)channel->drvHandle;
         instObj = virtContext->instObj;
 
-        for(uint32_t iterator=0U; iterator<CSIRX_EVENT_GROUP_MAX; iterator++)
+        for(uint32_t count=0U; count<CSIRX_EVENT_GROUP_MAX; count++)
         {
-            if(1U == instObj->eventObj[iterator].eventInitDone)
+            if(SAFETY_CHECKERS_CSIRX_EVENT_INIT_DONE == instObj->eventObj[count].eventInitDone)
             {
                 status += SafetyCheckers_csirxVerifyVimRegCfgIntrNum(vimCfg);
             }
@@ -353,11 +264,11 @@ int32_t SafetyCheckers_csirxGetSensorCfg(void *i2cHandle,
     }
     else
     {
-        while(0xFFFU != regData[cnt][0U])
+        while(SAFETY_CHECKERS_CSIRX_SENSOR_CFG_END_MARKER != regData[cnt][0U])
         {
             regAddr8 = (uint8_t)(regData[cnt][0U] & 0xFFU);
-            status = Board_i2c8BitRegRd(i2cHandle, slaveAddr, regAddr8, &regVal, 0x1U, 0x1000U);
-            regData[cnt][1U] = ((uint16_t)regVal & 0xFFU);
+            status = SafetyCheckers_csirxi2c8BitRegRd(i2cHandle, slaveAddr, regAddr8, &regVal, 0x1U, 0x1000U);
+            regData[cnt][1U] = (uint16_t)(regVal & 0xFFU);
             cnt++;
         }
     }
@@ -385,7 +296,7 @@ int32_t SafetyCheckers_csirxVerifySensorCfg(void *i2cHandle,
         {
             regAddr8 = (uint8_t)(regData[cnt][0U] & 0xFFU);
             regValVerif = (uint8_t)(regData[cnt][1U] & 0xFFU);
-            status = Board_i2c8BitRegRd(i2cHandle, slaveAddr, regAddr8, &regVal, 0x1,
+            status = SafetyCheckers_csirxi2c8BitRegRd(i2cHandle, slaveAddr, regAddr8, &regVal, 0x1,
                                          0x1000U);
             mismatchCnt |= regValVerif ^ regVal;
             if(mismatchCnt != 0U)
@@ -400,195 +311,3 @@ int32_t SafetyCheckers_csirxVerifySensorCfg(void *i2cHandle,
     return status;
 }
 
-int32_t SafetyCheckers_csirxGetQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSettings,
-                                      void *drvHandle)
-{
-
-    int32_t  status = SAFETY_CHECKERS_SOK;
-    uint32_t count=0U;
-    struct Udma_ChObj rxChObj;
-    CsirxDrv_VirtContext *virtContext = NULL;
-    CsirxDrv_InstObj *instObj = NULL;
-
-    if((NULL == qosSettings) || (NULL == drvHandle))
-    {
-        status = SAFETY_CHECKERS_FAIL;
-    }
-    else
-    {
-        SafetyCheckers_CsirxFdmChannel *channel = (SafetyCheckers_CsirxFdmChannel*)drvHandle;
-        virtContext = (CsirxDrv_VirtContext *)channel->drvHandle;
-        instObj = virtContext->instObj;
-
-        for(count = 0U; count < instObj->createParams.numCh; count++)
-        {
-            rxChObj = instObj->chObj[count].rxChObj;
-            qosSettings[count].chanType = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
-                                                         BCDMA_RXCCFG_CHAN_RCFG_CHAN_TYPE);
-            qosSettings[count].priority = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
-                                                         BCDMA_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
-            qosSettings[count].busOrderId = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
-                                                           BCDMA_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
-        }
-    }
-
-    return status;
-}
-
-int32_t SafetyCheckers_csirxVerifyQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSettings,
-                                         void *drvHandle)
-{
-
-    int32_t  status = SAFETY_CHECKERS_SOK;
-    uint32_t count=0U, mismatchCnt = 0U;
-    struct Udma_ChObj rxChObj;
-    uint8_t chanTypeVerif, priorityVerif, busOrderIdVerif;
-    CsirxDrv_VirtContext *virtContext = NULL;
-    CsirxDrv_InstObj *instObj = NULL;
-
-    if((NULL == qosSettings) || (NULL == drvHandle))
-    {
-        status = SAFETY_CHECKERS_FAIL;
-    }
-    else
-    {
-        SafetyCheckers_CsirxFdmChannel *channel = (SafetyCheckers_CsirxFdmChannel*)drvHandle;
-        virtContext = (CsirxDrv_VirtContext *)channel->drvHandle;
-        instObj = virtContext->instObj;
-
-        for(count = 0U; count < instObj->createParams.numCh; count++)
-        {
-            rxChObj = instObj->chObj[count].rxChObj;
-            chanTypeVerif = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
-                                           BCDMA_RXCCFG_CHAN_RCFG_CHAN_TYPE);
-            mismatchCnt |= chanTypeVerif ^ qosSettings[count].chanType;
-            priorityVerif = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
-                                           BCDMA_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
-            mismatchCnt |= priorityVerif ^ qosSettings[count].priority;
-            busOrderIdVerif = (uint8_t)CSL_REG32_FEXT(&rxChObj.pBcdmaRxCfgRegs->RCFG,
-                                             BCDMA_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
-            mismatchCnt |= busOrderIdVerif ^ qosSettings[count].busOrderId;
-
-        }
-
-        if(mismatchCnt != 0U)
-        {
-            status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
-        }
-    }
-
-    return status;
-}
-
-/* ========================================================================== */
-/*                       Static Function Definitions                          */
-/* ========================================================================== */
-
-static int32_t SafetyCheckers_csirxGetVimRegCfgIntrNum(uint32_t intrNum,
-                                                       SafetyCheckers_CsirxVimCfg *vimCfg)
-{
-    CSL_vimRegs *pRegs = (CSL_vimRegs*)(SAFETY_CHECKERS_CSIRX_UDMA_CSI_VIM_CONFIG_BASE_ADDRESS);
-    int32_t  status = SAFETY_CHECKERS_SOK;
-    uint32_t bitNum, groupNum;
-    uint32_t maxIntrs = 0U, num_groups = 0U;
-
-    if(NULL == vimCfg)
-    {
-        status = SAFETY_CHECKERS_FAIL;
-    }
-    else
-    {
-        maxIntrs   = pRegs->INFO;
-        num_groups = maxIntrs / CSL_VIM_NUM_INTRS_PER_GROUP;
-        vimCfg->pRegs = (CSL_vimRegs*)(SAFETY_CHECKERS_CSIRX_UDMA_CSI_VIM_CONFIG_BASE_ADDRESS);
-        vimCfg->intrNum = intrNum;
-    }
-
-    if(SAFETY_CHECKERS_SOK == status)
-    {
-        groupNum = intrNum / CSL_VIM_NUM_INTRS_PER_GROUP;
-        if((groupNum < num_groups) && (intrNum < maxIntrs))
-        {
-            bitNum = intrNum & ((uint32_t)(CSL_VIM_NUM_INTRS_PER_GROUP-1U));
-    
-            /* Read INTMAP */
-            vimCfg->intrMap  = CSL_REG32_RD(&pRegs->GRP[groupNum].INTMAP);
-            /* Get the interrupt map value */
-            vimCfg->intrMap  = vimCfg->intrMap >> bitNum;
-            vimCfg->intrMap &= (uint32_t)(0x1U);
-    
-            /* Read INTTYPE */
-            vimCfg->intrType  = CSL_REG32_RD(&pRegs->GRP[groupNum].INTTYPE);
-            /* Get the interrupt type value */
-            vimCfg->intrType  = vimCfg->intrType  >> bitNum;
-            vimCfg->intrType &= (uint32_t)(0x1U);
-    
-            /* Read PRI */
-            vimCfg->pri = CSL_REG32_RD(&pRegs->PRI[intrNum].INT);
-    
-            /* Read VEC */
-            vimCfg->vecAddr = CSL_REG32_RD(&pRegs->VEC[intrNum].INT);
-        }
-    }
-
-    return status;
-}
-
-static int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVimCfg *vimCfg)
-{
-    CSL_vimRegs *pRegs = (CSL_vimRegs*)(SAFETY_CHECKERS_CSIRX_UDMA_CSI_VIM_CONFIG_BASE_ADDRESS);
-    int32_t  status = SAFETY_CHECKERS_SOK;
-    uint32_t bitNum, groupNum, intrNum;
-    uint32_t intrMapVal, intrTypeVal, priVal, vecVal;
-    uint32_t maxIntrs = 0U, num_groups = 0U;
-    uint32_t mismatchCnt = 0U;
-
-    if(NULL == vimCfg)
-    {
-        status = SAFETY_CHECKERS_FAIL;
-    }
-    else
-    {
-        maxIntrs   = pRegs->INFO;
-        num_groups = maxIntrs / CSL_VIM_NUM_INTRS_PER_GROUP;
-        intrNum    = vimCfg->intrNum;
-        groupNum   = intrNum / CSL_VIM_NUM_INTRS_PER_GROUP;
-    }
-
-    if(SAFETY_CHECKERS_SOK == status)
-    {
-        if((groupNum < num_groups) && (intrNum < maxIntrs))
-        {
-            bitNum = intrNum & (CSL_VIM_NUM_INTRS_PER_GROUP-1U);
-    
-            /* Read INTMAP */
-            intrMapVal = CSL_REG32_RD(&pRegs->GRP[groupNum].INTMAP);
-            /* Get the interrupt map value */
-            intrMapVal   = intrMapVal >> bitNum;
-            intrMapVal  &= (uint32_t)(0x1U);
-            mismatchCnt |= vimCfg->intrMap ^ intrMapVal;
-    
-            /* Read INTTYPE */
-            intrTypeVal  = CSL_REG32_RD(&pRegs->GRP[groupNum].INTTYPE);
-            /* Get the interrupt type value */
-            intrTypeVal  = intrTypeVal  >> bitNum;
-            intrTypeVal &= (uint32_t)(0x1U);
-            mismatchCnt |= vimCfg->intrType ^ intrTypeVal;
-    
-            /* Read PRI */
-            priVal = CSL_REG32_RD(&pRegs->PRI[intrNum].INT);
-            mismatchCnt |= vimCfg->pri ^ priVal;
-    
-            /* Read VEC */
-            vecVal = CSL_REG32_RD(&pRegs->VEC[intrNum].INT);
-            mismatchCnt |= vimCfg->vecAddr ^ vecVal;
-        }
-    }
-
-    if(0U != mismatchCnt)
-    {
-        status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
-    }
-
-    return status;
-}

@@ -41,7 +41,7 @@ endif
 COMP_LIST_COMMON += safety_checkers fvid2 csirx
 
 # Common source files and CFLAGS across all platforms and cores
-SRCS_COMMON += main_rtos.c csirx_checkers_app_main.c 
+SRCS_COMMON += safety_checkers_app_csirx_main.c safety_checkers_app_csirx.c safety_checkers_app_csirx_sensor.c safety_checkers_app_utility.c
 PACKAGE_SRCS_COMMON = . src 
 
 CFLAGS_LOCAL_COMMON += $(PDK_CFLAGS) $(CFLAGS_OS_DEFINES) -DFVID2_CFG_TRACE_ENABLE

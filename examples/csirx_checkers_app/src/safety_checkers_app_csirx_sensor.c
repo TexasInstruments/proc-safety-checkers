@@ -32,7 +32,7 @@
  */
 
 /**
- *  \file main_rtos.c
+ *  \file safety_checkers_app_csirx_main.c
  *
  *  \brief Main file for RTOS builds
  */
@@ -41,20 +41,16 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include <stdint.h>
-#include <stdio.h>
-#include <ti/csl/csl_types.h>
-#include "ti/osal/osal.h"
-#include "ti/osal/TaskP.h"
 #include <ti/board/board.h>
-#include <ti/drv/sciclient/sciclient.h>
+#include <ti/board/src/devices/board_devices.h>
+#include "safety_checkers_app_csirx.h"
+#include "safety_checkers_app_csirx_sensor.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* Test application stack size */
-#define CSIRX_SAFETY_CHECKERS_APP_TSK_STACK_MAIN         (10U * 1024U)
+/* None */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -63,90 +59,64 @@
 /* None */
 
 /* ========================================================================== */
-/*                          Function Declarations                             */
-/* ========================================================================== */
-
-extern int CsirxSafetyCheckersApp_captureTest(void);
-static void taskFxn(void* a0, void* a1);
-void CsirxSafetyCheckersApp_wait(uint32_t wait_in_ms);
-
-/* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* Test application stack */
-static uint8_t gCaptAppTskStackMain[CSIRX_SAFETY_CHECKERS_APP_TSK_STACK_MAIN];
-
-/* Task handle */
-TaskP_Handle gCsirxSafetyCheckersAppTask;
+/* None */
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-int main(void)
+
+extern void SafetyCheckersApp_csirxWait(uint32_t wait_in_ms);
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
+
+int32_t SafetyCheckersApp_csirxSensorConfig(SafetyCheckersApp_CsirxInstObj* appInstObj)
 {
-    TaskP_Params taskParams;
+    int32_t retVal = FVID2_SOK;
+    int32_t status = BOARD_SOK;
+    uint32_t cnt = 0U, timeOut;
+    uint8_t i2cInst = 0U, i2cAddr = 0U, regAddr8, regVal;
+    I2C_Handle i2cHandle;
 
-    OS_init();
+    Board_fpdU960GetI2CAddr(&i2cInst, &i2cAddr, appInstObj->boardCsiInstID);
+    i2cHandle = appInstObj->i2cHandle;
 
-    /* Initialize the task params */
-    TaskP_Params_init(&taskParams);
-    /* Set the task priority higher than the default priority (1) */
-    taskParams.priority = 2;
-    taskParams.stack = gCaptAppTskStackMain;
-    taskParams.stacksize = sizeof(gCaptAppTskStackMain);
-
-    gCsirxSafetyCheckersAppTask = TaskP_create(&taskFxn, &taskParams);
-
-    OS_start();    /* does not return */
-
-    return(0);
-}
-
-static void taskFxn(void* a0, void* a1)
-{
-    int32_t retVal = CSL_PASS;
-    Board_initCfg boardCfg;
-
-    boardCfg = BOARD_INIT_PINMUX_CONFIG |
-               BOARD_INIT_UNLOCK_MMR |
-	       BOARD_INIT_UART_STDIO;
-
-    if (BOARD_SOK == Board_init(boardCfg))
+    if ((0U == i2cInst) && (0U == i2cAddr))
     {
-        Sciclient_init(NULL);
-
-
-        retVal += Sciclient_pmSetModuleState(TISCI_DEV_CSI_PSILSS0,
-                                   TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
-                                   TISCI_MSG_FLAG_AOP,
-                                   SCICLIENT_SERVICE_WAIT_FOREVER);
-        retVal += Sciclient_pmSetModuleState(TISCI_DEV_CSI_RX_IF0,
-                                   TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
-                                   TISCI_MSG_FLAG_AOP,
-                                   SCICLIENT_SERVICE_WAIT_FOREVER);
-        retVal += Sciclient_pmSetModuleState(TISCI_DEV_CSI_RX_IF1,
-                                   TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
-                                   TISCI_MSG_FLAG_AOP,
-                                   SCICLIENT_SERVICE_WAIT_FOREVER);
-        retVal += Sciclient_pmSetModuleState(TISCI_DEV_DPHY_RX0,
-                                   TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
-                                   TISCI_MSG_FLAG_AOP,
-                                   SCICLIENT_SERVICE_WAIT_FOREVER);
-        retVal += Sciclient_pmSetModuleState(TISCI_DEV_DPHY_RX1,
-                                   TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
-                                   TISCI_MSG_FLAG_AOP,
-                                   SCICLIENT_SERVICE_WAIT_FOREVER);
-        if (CSL_PASS == retVal)
-        {
-            CsirxSafetyCheckersApp_captureTest();
-        }
+        retVal = FVID2_EFAIL;
     }
+    else
+    {
+        /*UB960 Deserializer configuration*/
+        while(0xFFF != gSafetyCheckersAppCsirxUb960SensorCfg[cnt][0U])
+        {
+            regAddr8 = (uint8_t)(gSafetyCheckersAppCsirxUb960SensorCfg[cnt][0U] & 0xFFU);
+            regVal = (uint8_t)(gSafetyCheckersAppCsirxUb960SensorCfg[cnt][1U] & 0xFFU);
+            timeOut = (uint8_t)(gSafetyCheckersAppCsirxUb960SensorCfg[cnt][2U] & 0xFFU);
+            status = Board_i2c8BitRegWr(i2cHandle, i2cAddr, regAddr8, &regVal,
+					0x1U, 0x2000U);
+            SafetyCheckersApp_csirxWait(timeOut);
+            cnt++;
+        }
 
-    return;
-}
+        if (BOARD_SOK == status)
+        {
+            /* start straming from sensors */
+            Board_fpdU960GetI2CAddr(&i2cInst, &i2cAddr, appInstObj->boardCsiInstID);
 
-void CsirxSafetyCheckersApp_wait(uint32_t wait_in_ms)
-{
-    TaskP_sleep(wait_in_ms);
-}
+            if (CSIRX_INSTANCE_ID_1 == appInstObj->instId)
+            {
+                i2cAddr = 0x36U;
+            }
+            regAddr8 = 0x33;
+            regVal = 0x3;
+            status |= Board_i2c8BitRegWr(i2cHandle, i2cAddr, regAddr8, &regVal, 1U, 0x2U);
+        }
+    }   
+        return (retVal);
+} 
+

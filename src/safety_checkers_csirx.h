@@ -106,40 +106,6 @@ typedef struct
 } SafetyCheckers_CsirxRegData;
 
 /**
- * \brief Structure to hold VIM register configuration for CSIRX module
- *        module registers
- */
-typedef struct
-{
-    CSL_vimRegs *pRegs;
-    /**< Pointer to VIM registers */
-    uint32_t intrNum;
-    /**< Core interrupt number */
-    uint32_t pri;
-    /**< Priority of the interrupt*/
-    CSL_VimIntrMap intrMap;
-    /**< Enumerator to define if interrupt is IRQ/FIQ*/
-    CSL_VimIntrType intrType;
-    /**< Level/Pulse interrupt type*/
-    uint32_t vecAddr;
-    /**< Vector address*/
-} SafetyCheckers_CsirxVimCfg;
-
-/**
- * \brief Structure to hold QoS register settings of CSIRX module
- *        module registers
- */
-typedef struct
-{
-    uint8_t chanType; 
-    /**< Channel type. Refer \ref tisci_msg_rm_udmap_rx_ch_cfg_req::rx_chan_type */
-    uint8_t priority;
-    /**< 3-bit priority value (0=highest, 7=lowest) */
-    uint8_t busOrderId;
-    /**< 4-bit orderid value */
-} SafetyCheckers_CsirxQoSSettings;
-
-/**
  *  \brief Structure to store driver information.
  */
 typedef struct
@@ -224,34 +190,14 @@ typedef struct
 #define SAFETY_CHECKERS_CSIRX_NUM_REGTYPE_MAX                       (0x6U)
 /* @} */
 #define SAFETY_CHECKERS_CSIRX_MAX_FRAME_SIZE                        (((uint32_t)2.5*1024U*1024U*1024U)/2U)
+#define SAFETY_CHECKERS_CSIRX_EVENT_INIT_DONE                       (0x1U)
+#define SAFETY_CHECKERS_CSIRX_SENSOR_CFG_END_MARKER                 (0xFFFU)
 
 /* ========================================================================== */
 /*                  Internal/Private Function Declarations                    */
 /* ========================================================================== */
 
-/**
- *  \brief Function to get vim register configuration
- *
- *  \param intrNum  Core interrupt number
- *  \param vimCfg   Pointer to vim register configuration
- *
- *  \return SAFETY_CHECKERS_SOK if successful
- *          SAFETY_CHECKERS_FAIL if NULL params are passed
- *
- */
-static int32_t SafetyCheckers_csirxGetVimRegCfgFromIntrNum(uint32_t intrNum, SafetyCheckers_CsirxVimCfg *vimCfg);
-
-/**
- *  \brief Function to get vim register configuration
- *
- *  \param vimCfg  Pointer to vim register configuration
- *
- *  \return SAFETY_CHECKERS_SOK if successful
- *          SAFETY_CHECKERS_FAIL if NULL params are passed
- *          SAFETY_CHECKERS_REG_DATA_MISMATCH  if verification is failed
- *
- */
-static int32_t SafetyCheckers_csirxVerifyVimRegCfgFromIntrNum(SafetyCheckers_CsirxVimCfg *vimCfg);
+/* None */
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -365,31 +311,6 @@ int32_t  SafetyCheckers_csirxGetSensorCfg(void *i2cHandle,
 int32_t  SafetyCheckers_csirxVerifySensorCfg(void *handle,
                                              uint32_t slaveAddr,
                                              uint16_t (*regData)[3]);
-
-/**
- *  \brief Function to get CSIRX QoS settings
- *
- *  \param qosSettings  Pointer to QoS settings
- *  \param drvHandle    Fvid2 driver handle
- *
- *  \return SAFETY_CHECKERS_SOK if successful
- *          SAFETY_CHECKERS_FAIL if NULL params are passed
- *
- */
-int32_t SafetyCheckers_csirxGetQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSettings, void *drvHandle);
-
-/**
- *  \brief Function to verify CSIRX QoS settings
- *
- *  \param qosSettings  Pointer to QoS settings
- *  \param drvHandle    Fvid2 driver handle
- *
- *  \return SAFETY_CHECKERS_SOK if successful
- *          SAFETY_CHECKERS_FAIL if NULL params are passed
- *          SAFETY_CHECKERS_REG_DATA_MISMATCH  if verification is failed
- *
- */
-int32_t SafetyCheckers_csirxVerifyQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSettings, void *drvHandle);
 
 /* @} */
 /* ========================================================================== */

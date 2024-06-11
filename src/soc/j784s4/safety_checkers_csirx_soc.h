@@ -73,7 +73,7 @@ extern "C" {
 /* ========================================================================== */
 
 /** \brief Maximum number of CSIRX instances */
-#define SAFETY_CHECKERS_CSIRX_INSTANCES_MAX                           (0x2U)
+#define SAFETY_CHECKERS_CSIRX_INSTANCES_MAX                           (0x3U)
 
 /** \brief Stream control register addresses */
 #define SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_BASE_ADDRESS_0           (CSL_CSI_RX_IF0_VBUS2APB_WRAP_VBUSP_APB_CSI2RX_BASE)
@@ -93,7 +93,7 @@ extern "C" {
 /** \brief DPHY Lane config register addresses */
 #define SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_BASE_ADDRESS_0         (CSL_DPHY_RX0_MMR_SLV_K3_DPHY_WRAP_BASE)
 #define SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_BASE_ADDRESS(i)        (SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_BASE_ADDRESS_0 + (0x10000U * (uint32_t)i))
-#define SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_REGS_LENGTH            (0x2U)
+#define SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_REGS_LENGTH            (0x1U)
 
 
 /** \brief Virtual channel config register addresses */
@@ -109,7 +109,12 @@ extern "C" {
 /** \brief Vim Base address of MAIN R5 */
 #define SAFETY_CHECKERS_CSIRX_UDMA_CSI_VIM_CONFIG_BASE_ADDRESS        (CSL_MAIN_DOMAIN_VIM_BASE_ADDR0)
 
-
+/** \brief QoS settings register base address */
+#define SAFETY_CHECKERS_CSIRX_QOS_BASE_ADDRESS_0                      (CSL_NAVSS0_BCDMA0_CFG_RCHAN_BASE)
+/** \brief QoS configuration registers */  
+#define SAFETY_CHECKERS_CSIRX_QOS_RCFG                                ((uint32_t)0x0U)
+/** \brief QoS channel configuration register-set size */  
+#define SAFETY_CHECKERS_CSIRX_QOS_CH_REG_SIZE                         ((uint32_t)0x256U)
 
 /** \brief DPHY configuration related macros: Register offsets */
 #define SAFETY_CHECKERS_CSIRX_DPHYRX_WRAP_REGS_LANE                   ((uint32_t)0U)
@@ -154,6 +159,10 @@ extern "C" {
 #define SAFETY_CHECKERS_CSIRX_STERAM3_TIMER                           ((uint32_t)0x41CU)
 #define SAFETY_CHECKERS_CSIRX_STREAM3_FCC_CFG                         ((uint32_t)0x420U)
 
+/** \brief Mask for DPHY lane configuration registers */  
+#define SAFETY_CHECKERS_CSIRX_MASK_NONE                               ((uint32_t)0xFFFFFFFFU)
+#define SAFETY_CHECKERS_CSIRX_MASK_LANE_CONFIG                        ((uint32_t)0xEFFFFFFFU)
+
 /** @} */
 
 /* ========================================================================== */
@@ -163,29 +172,27 @@ extern "C" {
 /**
  *
  * \brief     This defines the array holding register offset values for each of
- * the stream control registers
+ *            the stream control registers
  *
  */
 static uint32_t gSafetyCheckers_StrmCtrlRegOffset [] =
 {
     SAFETY_CHECKERS_CSIRX_STREAM0_CTRL, SAFETY_CHECKERS_CSIRX_STREAM0_CFG,
-    SAFETY_CHECKERS_CSIRX_STREAM0_MONITOR_CTRL,
-    SAFETY_CHECKERS_CSIRX_STERAM0_TIMER,SAFETY_CHECKERS_CSIRX_STREAM0_FCC_CFG,
-    SAFETY_CHECKERS_CSIRX_STREAM1_CTRL,SAFETY_CHECKERS_CSIRX_STREAM1_CFG,
-    SAFETY_CHECKERS_CSIRX_STREAM1_MONITOR_CTRL,SAFETY_CHECKERS_CSIRX_STERAM1_TIMER,
-    SAFETY_CHECKERS_CSIRX_STREAM1_FCC_CFG,SAFETY_CHECKERS_CSIRX_STREAM2_CTRL,
-    SAFETY_CHECKERS_CSIRX_STREAM2_CFG,SAFETY_CHECKERS_CSIRX_STREAM2_MONITOR_CTRL,
-    SAFETY_CHECKERS_CSIRX_STERAM2_TIMER,SAFETY_CHECKERS_CSIRX_STREAM2_FCC_CFG,
-    SAFETY_CHECKERS_CSIRX_STREAM3_CTRL,SAFETY_CHECKERS_CSIRX_STREAM3_CFG,
-    SAFETY_CHECKERS_CSIRX_STREAM3_MONITOR_CTRL,SAFETY_CHECKERS_CSIRX_STERAM3_TIMER,
-    SAFETY_CHECKERS_CSIRX_STREAM3_FCC_CFG
+    SAFETY_CHECKERS_CSIRX_STREAM0_MONITOR_CTRL, SAFETY_CHECKERS_CSIRX_STERAM0_TIMER,
+    SAFETY_CHECKERS_CSIRX_STREAM0_FCC_CFG, SAFETY_CHECKERS_CSIRX_STREAM1_CTRL,
+    SAFETY_CHECKERS_CSIRX_STREAM1_CFG, SAFETY_CHECKERS_CSIRX_STREAM1_MONITOR_CTRL,
+    SAFETY_CHECKERS_CSIRX_STERAM1_TIMER, SAFETY_CHECKERS_CSIRX_STREAM1_FCC_CFG,
+    SAFETY_CHECKERS_CSIRX_STREAM2_CTRL, SAFETY_CHECKERS_CSIRX_STREAM2_CFG,
+    SAFETY_CHECKERS_CSIRX_STREAM2_MONITOR_CTRL, SAFETY_CHECKERS_CSIRX_STERAM2_TIMER,
+    SAFETY_CHECKERS_CSIRX_STREAM2_FCC_CFG, SAFETY_CHECKERS_CSIRX_STREAM3_CTRL,
+    SAFETY_CHECKERS_CSIRX_STREAM3_CFG, SAFETY_CHECKERS_CSIRX_STREAM3_MONITOR_CTRL,
+    SAFETY_CHECKERS_CSIRX_STERAM3_TIMER, SAFETY_CHECKERS_CSIRX_STREAM3_FCC_CFG
 };
-
 
 /**
  *
  * \brief     This defines the array holding register offset values for each of
- * the dphy configuration registers
+ *            the DPHY configuration registers
  *
  */
 static uint32_t gSafetyCheckers_DphyConfigRegOffset [] =
@@ -196,7 +203,7 @@ static uint32_t gSafetyCheckers_DphyConfigRegOffset [] =
 /**
  *
  * \brief     This defines the array holding register offset values for each of
- * the Dphy Pll configuration registers
+ *            the DPHY Pll configuration registers
  *
  */
 static uint32_t gSafetyCheckers_DphyPllRegOffset [] =
@@ -208,7 +215,7 @@ static uint32_t gSafetyCheckers_DphyPllRegOffset [] =
 /**
  *
  * \brief     This defines the array holding register offset values for each of
- * the Dphy Lane configuration registers
+ *            the DPHY Lane configuration registers
  *
  */
 static uint32_t gSafetyCheckers_DphyLaneConfigRegOffset [] =
@@ -216,11 +223,10 @@ static uint32_t gSafetyCheckers_DphyLaneConfigRegOffset [] =
     SAFETY_CHECKERS_CSIRX_DPHYRX_WRAP_REGS_LANE
 };
 
-
 /**
  *
  * \brief     This defines the array holding register offset values for each of
- * the Virtual channel configuration registers
+ *            the Virtual channel configuration registers
  *
  */
 static uint32_t gSafetyCheckers_VirtualChannelConfigRegOffset [] =
@@ -229,11 +235,10 @@ static uint32_t gSafetyCheckers_VirtualChannelConfigRegOffset [] =
     SAFETY_CHECKERS_CSIRX_STREAM2_DATA_CFG, SAFETY_CHECKERS_CSIRX_STREAM3_DATA_CFG
 };
 
-
 /**
  *
  * \brief     This defines the array holding register offset values for each of
- * the DMA configuration registers
+ *            the DMA configuration registers
  *
  */
 static uint32_t gSafetyCheckers_DataTypeFrameSizeRegOffset [] =
@@ -276,13 +281,114 @@ static uint32_t gSafetyCheckers_DataTypeFrameSizeRegOffset [] =
 /*                         Structure Declarations                             */
 /* ========================================================================== */
 
-/* None */
+/**
+ * \brief Structure to hold VIM register configuration for CSIRX module
+ *        module registers
+ */
+typedef struct
+{
+    CSL_vimRegs *pRegs;
+    /**< Pointer to VIM registers */
+    uint32_t intrNum;
+    /**< Core interrupt number */
+    uint32_t pri;
+    /**< Priority of the interrupt*/
+    CSL_VimIntrMap intrMap;
+    /**< Enumerator to define if interrupt is IRQ/FIQ*/
+    CSL_VimIntrType intrType;
+    /**< Level/Pulse interrupt type*/
+    uint32_t vecAddr;
+    /**< Vector address*/
+} SafetyCheckers_CsirxVimCfg;
+
+/**
+ * \brief Structure to hold QoS register settings of CSIRX module
+ *        module registers
+ */
+typedef struct
+{
+    uint8_t chanType; 
+    /**< Channel type. Refer \ref tisci_msg_rm_udmap_rx_ch_cfg_req::rx_chan_type */
+    uint8_t priority;
+    /**< 3-bit priority value (0=highest, 7=lowest) */
+    uint8_t busOrderId;
+    /**< 4-bit orderid value */
+} SafetyCheckers_CsirxQoSSettings;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-/* None */
+/**
+ *  \brief Function to get vim register configuration
+ *
+ *  \param intrNum  Core interrupt number
+ *  \param vimCfg   Pointer to vim register configuration
+ *
+ *  \return SAFETY_CHECKERS_SOK if successful
+ *          SAFETY_CHECKERS_FAIL if NULL params are passed
+ *
+ */
+int32_t SafetyCheckers_csirxGetVimRegCfgIntrNum(uint32_t intrNum, SafetyCheckers_CsirxVimCfg *vimCfg);
+
+/**
+ *  \brief Function to get vim register configuration
+ *
+ *  \param vimCfg  Pointer to vim register configuration
+ *
+ *  \return SAFETY_CHECKERS_SOK if successful
+ *          SAFETY_CHECKERS_FAIL if NULL params are passed
+ *          SAFETY_CHECKERS_REG_DATA_MISMATCH  if verification is failed
+ *
+ */
+int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVimCfg *vimCfg);
+
+/**
+ *  \brief Function to get CSIRX QoS settings
+ *
+ *  \param qosSettings  Pointer to QoS settings
+ *  \param drvHandle    Fvid2 driver handle
+ *
+ *  \return SAFETY_CHECKERS_SOK if successful
+ *          SAFETY_CHECKERS_FAIL if NULL params are passed
+ *
+ */
+int32_t SafetyCheckers_csirxGetQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSettings, void *drvHandle);
+
+/**
+ *  \brief Function to verify CSIRX QoS settings
+ *
+ *  \param qosSettings  Pointer to QoS settings
+ *  \param drvHandle    Fvid2 driver handle
+ *
+ *  \return SAFETY_CHECKERS_SOK if successful
+ *          SAFETY_CHECKERS_FAIL if NULL params are passed
+ *          SAFETY_CHECKERS_REG_DATA_MISMATCH  if verification is failed
+ *
+ */
+int32_t SafetyCheckers_csirxVerifyQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSettings, void *drvHandle);
+
+/**
+ * \brief  Function to read 8-bit register via I2C
+ *
+ * This function is used to read the 8-bit data from the i2c
+ * device registers
+ *
+ * \param   handle      Low level driver handle
+ * \param   slaveAddr   I2C slave address
+ * \param   regAddr     I2C register offset address
+ * \param   regData     I2C register data buffer
+ * \param   numOfBytes  Receive data width
+ * \param   i2cTimeout  I2C driver timeout value 
+ *
+ * \return  SAFETY_CHECKERS_SOK in case of success or appropriate error code.
+ */
+int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
+                                                uint32_t slaveAddr,
+                                                uint8_t regAddr,
+                                                uint8_t *regData,
+                                                uint8_t numOfBytes,
+                                                uint32_t i2cTimeout);
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
