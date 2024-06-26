@@ -34,14 +34,15 @@
 #
 ifeq ($(safety_checkers_component_make_include), )
 
-safety_checkers_SOCLIST               = j7200 j721e j721s2 j784s4
-safety_checkers_BOARDLIST             = j7200_evm j721e_evm j721s2_evm j784s4_evm
+safety_checkers_SOCLIST               = j7200 j721e j721s2 j784s4 j742s2
+safety_checkers_BOARDLIST             = j7200_evm j721e_evm j721s2_evm j784s4_evm j742s2_evm
 safety_checkers_csirx_SOCLIST         = j784s4
 safety_checkers_csirx_BOARDLIST       = j784s4_evm
 safety_checkers_j7200_CORELIST        = mcu1_0 mcu1_1 mcu2_0
 safety_checkers_j721e_CORELIST        = mcu1_0 mcu1_1 mcu2_0
 safety_checkers_j721s2_CORELIST       = mcu1_0 mcu1_1 mcu2_0
 safety_checkers_j784s4_CORELIST       = mcu1_0 mcu1_1 mcu2_0
+safety_checkers_j742s2_CORELIST       = mcu1_0 mcu1_1 mcu2_0
 safety_checkers_csirx_j784s4_CORELIST = mcu2_0
 safety_checkers_RTOS_LIST             = $(DEFAULT_RTOS_LIST)
 
@@ -123,7 +124,7 @@ export pm_checkers_app_baremetal_BOARDLIST
 pm_checkers_app_baremetal_$(SOC)_CORELIST = $(safety_checkers_$(SOC)_CORELIST)
 export pm_checkers_app_baremetal_$(SOC)_CORELIST
 safety_checkers_EXAMPLE_LIST += pm_checkers_app_baremetal
-ifeq ($(SOC),$(filter $(SOC), j721e j7200 j721s2 j784s4))
+ifeq ($(SOC),$(filter $(SOC), j721e j7200 j721s2 j784s4 j742s2))
 pm_checkers_app_baremetal_SBL_APPIMAGEGEN = yes
 export pm_checkers_app_baremetal_SBL_APPIMAGEGEN
 endif
@@ -194,7 +195,7 @@ export rm_checkers_app_baremetal_BOARDLIST
 rm_checkers_app_baremetal_$(SOC)_CORELIST = $(safety_checkers_$(SOC)_CORELIST)
 export rm_checkers_app_baremetal_$(SOC)_CORELIST
 safety_checkers_EXAMPLE_LIST += rm_checkers_app_baremetal
-ifeq ($(SOC),$(filter $(SOC), j721e j7200 j721s2 j784s4))
+ifeq ($(SOC),$(filter $(SOC), j721e j7200 j721s2 j784s4 j742s2))
 rm_checkers_app_baremetal_SBL_APPIMAGEGEN = yes
 export rm_checkers_app_baremetal_SBL_APPIMAGEGEN
 endif

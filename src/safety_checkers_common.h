@@ -49,7 +49,7 @@
 #include <kernel/dpl/SystemP.h>
 #include <kernel/dpl/DebugP.h>
 #define SAFETY_CHECKERS_log                                         DebugP_log
-#elif defined (SOC_J7200) || defined (SOC_J721E) || defined (SOC_J721S2) || defined (SOC_J784S4)
+#elif defined (SOC_J7200) || defined (SOC_J721E) || defined (SOC_J721S2) || defined (SOC_J784S4) || defined (SOC_J742S2)
 #include <ti/drv/uart/UART.h>
 #include <ti/drv/uart/UART_stdio.h>
 #define SAFETY_CHECKERS_log                                         UART_printf
@@ -104,7 +104,7 @@ extern "C" {
 #define SAFETY_CHECKERS_PM_WARM_RESET_MASK			                 (CSL_WKUP_CTRL_MMR_CFG0_RST_SRC_SW_MCU_WARMRST_MASK)
 /** \brief Safety checker default SciClient Timeout */
 #define SAFETY_CHECKERS_DEFAULT_TIMEOUT                              (SystemP_WAIT_FOREVER)
-#elif defined (SOC_J7200) || defined (SOC_J721E) || defined (SOC_J721S2) || defined (SOC_J784S4)
+#elif defined (SOC_J7200) || defined (SOC_J721E) || defined (SOC_J721S2) || defined (SOC_J784S4) || defined (SOC_J742S2)
 /** \brief Safety checkers valid device ID */
 #define SAFETY_CHECKERS_PM_DFT_VAL_DEVICE_ID                         (TISCI_DEV_USB0)
 /** \brief Safety checkers valid Clock ID */

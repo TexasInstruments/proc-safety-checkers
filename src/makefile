@@ -9,9 +9,14 @@ endif
 
 MODULE_NAME = safety_checkers
 
+SOC_DIR=$(SOC)
+ifeq ($(SOC), j742s2)
+  SOC_DIR=j784s4
+endif
+
 SRCDIR = .
-INCDIR = . soc/ soc/$(SOC)/
-INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC)/src/
+INCDIR = . soc/ soc/$(SOC_DIR)/
+INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC_DIR)/src/
 INCDIR += $(PDK_INSTALL_PATH)/ti/drv/sciclient
 INCDIR += $(PDK_INSTALL_PATH)/ti/drv/csirx/src $(PDK_INSTALL_PATH)/ti/drv/csirx/soc/V0
 
@@ -23,14 +28,14 @@ SRCS_COMMON += safety_checkers_pm.c safety_checkers_rm.c safety_checkers_tifs.c
 ifeq ($(SOC),j784s4)
 SRCS_COMMON += safety_checkers_csirx.c
 endif
-ifeq ($(SOC),$(filter $(SOC), j7200 j721e j721s2 j784s4))
-PACKAGE_SRCS_COMMON += makefile soc/safety_checkers_pm_soc.h soc/safety_checkers_rm_soc.h  soc/$(SOC)
+ifeq ($(SOC),$(filter $(SOC), j7200 j721e j721s2 j784s4 j742s2))
+PACKAGE_SRCS_COMMON += makefile soc/safety_checkers_pm_soc.h soc/safety_checkers_rm_soc.h  soc/$(SOC_DIR)
 PACKAGE_SRCS_COMMON += safety_checkers_pm.c safety_checkers_pm.h safety_checkers_rm.c safety_checkers_rm.h safety_checkers_tifs.c safety_checkers_tifs.h safety_checkers_common.h 
 PACKAGE_SRCS_COMMON += ../safety_checkers_component.mk
 endif
 
-ifeq ($(SOC),j784s4)
-PACKAGE_SRCS_COMMON += soc/safety_checkers_csirx_soc.h soc/$(SOC)/safety_checkers_csirx_soc.h safety_checkers_csirx.h safety_checkers_csirx.c
+ifeq ($(SOC),$(filter $(SOC), j784s4 j742s2))
+PACKAGE_SRCS_COMMON += soc/safety_checkers_csirx_soc.h soc/$(SOC_DIR)/safety_checkers_csirx_soc.h safety_checkers_csirx.h safety_checkers_csirx.c
 endif
 
 # Core/SoC/platform specific source files and CFLAGS

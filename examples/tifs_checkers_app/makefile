@@ -9,6 +9,11 @@ endif
 
 APP_NAME = tifs_checkers_app_$(BUILD_OS_TYPE)
 
+SOC_DIR=$(SOC)
+ifeq ($(SOC), j742s2)
+  SOC_DIR=j784s4
+endif
+
 SRCDIR = .
 
 INCDIR += . $(PDK_INSTALL_PATH)/ti/safety_checkers/src
@@ -39,7 +44,7 @@ COMP_LIST_COMMON += safety_checkers
 # Common source files and CFLAGS across all platforms and cores
 SRCS_COMMON += safety_checkers_tifs_app.c safety_checkers_tifs_app_main.c
 
-PACKAGE_SRCS_COMMON = makefile safety_checkers_tifs_app.c safety_checkers_tifs_app_main.c soc/$(SOC)/tifs_checkers_fwl_config.h
+PACKAGE_SRCS_COMMON = makefile safety_checkers_tifs_app.c safety_checkers_tifs_app_main.c soc/$(SOC_DIR)/tifs_checkers_fwl_config.h
 
 CFLAGS_LOCAL_COMMON += $(PDK_CFLAGS) $(CFLAGS_OS_DEFINES)
 
