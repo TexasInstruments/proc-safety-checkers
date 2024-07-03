@@ -58,7 +58,7 @@
  */
 #if defined(SOC_J721E) || defined(SOC_J7200)
 #define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_NAVSS0_UDMASS_UDMAP0_CFG_TCHAN_BASE)
-#elif defined(SOC_J721S2) || defined(SOC_J784S4)
+#elif defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 #define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_NAVSS0_BCDMA0_CFG_TCHAN_BASE)
 #elif defined(SOC_AM62AX) || defined(SOC_AM62PX) || defined(SOC_AM62X) || defined(SOC_J722S)
 #define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_DMASS0_PKTDMA_TCHAN_BASE)
@@ -157,7 +157,7 @@ static int32_t SafetyCheckersApp_rmregVerify()
      * DMASS0_PKTDMA_TCHAN_BASE register.
      *
      * SafetyCheckersApp_rmRegMismatch function is only supported
-     * for mcu1_0 cores for jacinto devices j721e,j7200,j721s2 and j784s4.
+     * for mcu1_0 cores for jacinto devices j721e,j7200,j721s2,j784s4 and j742s2 .
      */
 #if ((defined (SOC_AM62AX) || defined(SOC_AM62X)) || defined (BUILD_WKUP_R5) || defined (BUILD_MCU1_0))
 	if(status == SAFETY_CHECKERS_SOK)

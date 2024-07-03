@@ -9,10 +9,15 @@ endif
 
 APP_NAME = csirx_checkers_app_$(BUILD_OS_TYPE)
 
+SOC_DIR=$(SOC)
+ifeq ($(SOC), j742s2)
+  SOC_DIR=j784s4
+endif
+
 SRCDIR = .
 
-INCDIR += . $(PDK_INSTALL_PATH)/ti/safety_checkers/src $(PDK_INSTALL_PATH)/ti/safety_checkers/src/soc $(PDK_INSTALL_PATH)/ti/safety_checkers/src/soc/$(SOC) $(PDK_INSTALL_PATH)/ti/drv/i2c/
-INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC)/src/
+INCDIR += . $(PDK_INSTALL_PATH)/ti/safety_checkers/src $(PDK_INSTALL_PATH)/ti/safety_checkers/src/soc $(PDK_INSTALL_PATH)/ti/safety_checkers/src/soc/$(SOC_DIR) $(PDK_INSTALL_PATH)/ti/drv/i2c/
+INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC_DIR)/src/
 INCDIR += $(PDK_INSTALL_PATH)/ti/drv/csirx/src $(PDK_INSTALL_PATH)/ti/drv/csirx/soc/V0
 SRCDIR = . src src/soc
 # List all the external components/interfaces, whose interface header files

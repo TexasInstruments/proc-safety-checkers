@@ -48,7 +48,7 @@
 /* ========================================================================== */
 #include "safety_checkers_csirx.h"
 
-#if defined(SOC_J784S4)
+#if defined(SOC_J784S4) || defined(SOC_J742S2)
 #include  <ti/safety_checkers/src/soc/j784s4/safety_checkers_csirx_soc.h>
 #endif
 

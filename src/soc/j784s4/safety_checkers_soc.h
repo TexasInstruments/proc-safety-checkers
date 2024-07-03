@@ -34,7 +34,7 @@
 /**
  *  \file     safety_checkers_soc.h
  *
- *  \brief    This file contains J784S4 specific data structures for safety checkers
+ *  \brief    This file contains J784S4/J742S2 specific data structures for safety checkers
  *
  */
 

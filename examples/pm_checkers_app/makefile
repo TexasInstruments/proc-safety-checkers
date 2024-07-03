@@ -14,11 +14,16 @@ else
     APP_NAME = pm_checkers_app_$(BUILD_OS_TYPE)
 endif
 
+SOC_DIR=$(SOC)
+ifeq ($(SOC), j742s2)
+  SOC_DIR=j784s4
+endif
+
 SRCDIR = .
 INCDIR += . $(PDK_INSTALL_PATH)/ti/safety_checkers/src
 INCDIR += . $(PDK_INSTALL_PATH)/ti/safety_checkers/src/soc
-INCDIR += $(PDK_INSTALL_PATH)/ti/safety_checkers/src/soc/$(SOC)
-INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC)/src/
+INCDIR += $(PDK_INSTALL_PATH)/ti/safety_checkers/src/soc/$(SOC_DIR)
+INCDIR += $(PDK_INSTALL_PATH)/ti/csl/ $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC_DIR)/src/
 
 # List all the external components/interfaces, whose interface header files
 #  need to be included for this component
