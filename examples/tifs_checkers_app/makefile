@@ -20,7 +20,7 @@ INCDIR += . $(PDK_INSTALL_PATH)/ti/safety_checkers/src
 INCDIR += $(PDK_INSTALL_PATH)/ti/drv/sciclient/
 INCDIR += $(PDK_INSTALL_PATH)/ti/csl/
 INCDIR += $(PDK_INSTALL_PATH)/ti/csl/soc/$(SOC_DIR)/src/
-INCDIR += soc/$(SOC)/ ../../src/soc/ ../../src/soc/$(SOC_DIR)/
+INCDIR += soc/$(SOC_DIR)/ ../../src/soc/ ../../src/soc/$(SOC_DIR)/
 
 # List all the external components/interfaces, whose interface header files
 #  need to be included for this component
