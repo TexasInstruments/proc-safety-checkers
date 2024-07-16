@@ -78,10 +78,10 @@ extern "C" {
 #define SAFETY_CHECKERS_PM_PLL7_LENGTH                            (0x84U)
 #define SAFETY_CHECKERS_PM_PLL8_LENGTH                            (0x84U)
 #define SAFETY_CHECKERS_PM_PLL12_LENGTH                           (0x84U)
-#define SAFETY_CHECKERS_PM_PLL14_LENGTH                           (0x8CU)
+#define SAFETY_CHECKERS_PM_PLL14_LENGTH                           (0x88U)
 #define SAFETY_CHECKERS_PM_PLL16_LENGTH                           (0x88U)
 #define SAFETY_CHECKERS_PM_PLL17_LENGTH                           (0x88U)
-#define SAFETY_CHECKERS_PM_PLL19_LENGTH                           (0x88U)
+#define SAFETY_CHECKERS_PM_PLL19_LENGTH                           (0x84U)
 #define SAFETY_CHECKERS_PM_PLL25_LENGTH                           (0x88U)
 #define SAFETY_CHECKERS_PM_PLL26_LENGTH                           (0x84U)
 #define SAFETY_CHECKERS_PM_MCU_PLL0_LENGTH                        (0x88U)
@@ -108,7 +108,7 @@ extern "C" {
  *         in the array. The final result is the total size of register offsets of each PLLs
  *         stored in the totalLength variable.
  */
-#define SAFETY_CHECKERS_PM_PLL_REGDUMP_SIZE                       (237U)
+#define SAFETY_CHECKERS_PM_PLL_REGDUMP_SIZE                       (249U)
 
 /**
  * \brief  Total register dump size for RM.
@@ -258,7 +258,92 @@ extern "C" {
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* None */
+/**
+ *
+ * \brief     This defines the array holding register offset values for the each PLL's
+ *
+ */
+static uint32_t gSafetyCheckers_PmPllRegOffset0 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U, 0x8cU,
+ 0x90U, 0x94U, 0x98U, 0x9cU, 0xA0U, 0xA4U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset1 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U, 0x8cU,
+ 0x94U, 0x98U, 0x9cU, 0xA0U, 0xA4U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset2 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x84U, 0x88U, 0x8cU, 0x90U,
+ 0x98U, 0x9cU, 0xA0U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset3 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U, 0x8cU,
+ 0x90U, 0x94U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset4 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U, 0x8cU};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset5 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset6 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset7 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset8 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset12 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset14 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset16 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset17 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset19 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset25 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U};
+
+static uint32_t gSafetyCheckers_PmPllRegOffset26 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U};
+
+static uint32_t gSafetyCheckers_PmMcuPllRegOffset0 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U};
+
+static uint32_t gSafetyCheckers_PmMcuPllRegOffset1 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U, 0x8cU,
+ 0x90U, 0x94U};
+
+static uint32_t gSafetyCheckers_PmMcuPllRegOffset2 [] =
+{0x00U, 0x08U, 0x20U, 0x24U, 0x30U, 0x34U, 0x38U,
+ 0x40U, 0x44U, 0x60U, 0x80U, 0x84U, 0x88U, 0x8cU,
+ 0x90U, 0x94U};
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -272,25 +357,25 @@ extern "C" {
 static SafetyCheckers_PmPllData gSafetyCheckers_PmPllData[] =
 {
     {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(0),  gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL0_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(1),  gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL1_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(2),  gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL2_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(3),  gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL3_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(4),  gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL4_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(5),  gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL5_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(6),  gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL6_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(7),  gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL7_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(8),  gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL8_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(12), gSafetyCheckers_PmPllRegOffset1, SAFETY_CHECKERS_PM_PLL12_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(14), gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL14_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(16), gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL16_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(17), gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL17_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(19), gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL19_LENGTH},
-    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(25), gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_PLL25_LENGTH},
-	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(26), gSafetyCheckers_PmPllRegOffset1, SAFETY_CHECKERS_PM_PLL26_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(1),  gSafetyCheckers_PmPllRegOffset1, SAFETY_CHECKERS_PM_PLL1_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(2),  gSafetyCheckers_PmPllRegOffset2, SAFETY_CHECKERS_PM_PLL2_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(3),  gSafetyCheckers_PmPllRegOffset3, SAFETY_CHECKERS_PM_PLL3_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(4),  gSafetyCheckers_PmPllRegOffset4, SAFETY_CHECKERS_PM_PLL4_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(5),  gSafetyCheckers_PmPllRegOffset5, SAFETY_CHECKERS_PM_PLL5_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(6),  gSafetyCheckers_PmPllRegOffset6, SAFETY_CHECKERS_PM_PLL6_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(7),  gSafetyCheckers_PmPllRegOffset7, SAFETY_CHECKERS_PM_PLL7_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(8),  gSafetyCheckers_PmPllRegOffset8, SAFETY_CHECKERS_PM_PLL8_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(12), gSafetyCheckers_PmPllRegOffset12, SAFETY_CHECKERS_PM_PLL12_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(14), gSafetyCheckers_PmPllRegOffset14, SAFETY_CHECKERS_PM_PLL14_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(16), gSafetyCheckers_PmPllRegOffset16, SAFETY_CHECKERS_PM_PLL16_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(17), gSafetyCheckers_PmPllRegOffset17, SAFETY_CHECKERS_PM_PLL17_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(19), gSafetyCheckers_PmPllRegOffset19, SAFETY_CHECKERS_PM_PLL19_LENGTH},
+    {SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(25), gSafetyCheckers_PmPllRegOffset25, SAFETY_CHECKERS_PM_PLL25_LENGTH},
+	{SAFETY_CHECKERS_PM_PLL_BASE_ADDRESS(26), gSafetyCheckers_PmPllRegOffset26, SAFETY_CHECKERS_PM_PLL26_LENGTH},
 
-    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(0), gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_MCU_PLL0_LENGTH},
-    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(1), gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_MCU_PLL1_LENGTH},
-    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(2), gSafetyCheckers_PmPllRegOffset0, SAFETY_CHECKERS_PM_MCU_PLL2_LENGTH},
+    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(0), gSafetyCheckers_PmMcuPllRegOffset0, SAFETY_CHECKERS_PM_MCU_PLL0_LENGTH},
+    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(1), gSafetyCheckers_PmMcuPllRegOffset1, SAFETY_CHECKERS_PM_MCU_PLL1_LENGTH},
+    {SAFETY_CHECKERS_PM_MCU_PLL_BASE_ADDRESS(2), gSafetyCheckers_PmMcuPllRegOffset2, SAFETY_CHECKERS_PM_MCU_PLL2_LENGTH},
 };
 
 /** 
