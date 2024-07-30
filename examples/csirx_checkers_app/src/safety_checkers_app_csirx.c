@@ -41,10 +41,18 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
+#if defined (SOC_J722S)
+#include <string.h>
+#include <csirx.h>
+#include <kernel/dpl/TimerP.h>
+#include <board/board_control.h>
+#include "ti_drivers_config.h"
+#else
 #include <ti/drv/csirx/csirx.h>
 #include <ti/board/src/devices/board_devices.h>
-#include "ti/safety_checkers/src/safety_checkers_csirx.h"
-#include "ti/safety_checkers/src/safety_checkers_common.h"
+#endif
+#include "safety_checkers_csirx.h"
+#include "safety_checkers_common.h"
 #include "safety_checkers_app_csirx.h"
 
 /* ========================================================================== */
@@ -66,6 +74,7 @@
 /* App common object */
 SafetyCheckersApp_CsirxCommonObj gSafetyCheckersAppCsirxCommonObj;
 extern uint16_t gSafetyCheckersAppCsirxUb960SensorCfg[39][3];
+extern uint32_t gTimerBaseAddr[TIMER_NUM_INSTANCES];
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -86,7 +95,10 @@ int SafetyCheckersApp_csirxMain(void)
     memset(appInstObj, 0x0, sizeof (SafetyCheckersApp_CsirxInstObj));
     appInstObj->instId = SAFETY_CHECKERS_APP_CSIRX_INSTANCE_ID;
     SafetyCheckersApp_csirxInitParams(appInstObj);
+
+#if !defined(SOC_J722S)
     SafetyCheckersApp_csirxSetupTimer(appCommonObj);
+#endif
 
     /* App Init */
     retVal += SafetyCheckersApp_csirxInit(appCommonObj);
@@ -165,9 +177,24 @@ static int32_t SafetyCheckersApp_csirxTest(SafetyCheckersApp_CsirxCommonObj* app
     {
         SafetyCheckersApp_csirxlog("SAFETY_CHECKERS_CSIRX_APP: Verification of safety checkers failed\n");
     }
+#if defined (SOC_J722S)
+    /* start the tick timer */
+    TimerP_start(gTimerBaseAddr[CONFIG_TIMER0]);
+    SemaphoreP_pend(&appCommonObj->completionSem, SystemP_WAIT_FOREVER);
 
+    retVal += Fvid2_stop(appCommonObj->appInstObj.drvHandle, NULL);
+    if (FVID2_SOK != retVal)
+    {
+        GT_1trace(CsirxAppTrace, GT_ERR,
+                  APP_NAME ": Capture Stop Failed for instance %d!!!\r\n", appCommonObj->appInstObj.instId);
+    }
+
+#else
     TimerP_start(appCommonObj->timerHandle);
     SemaphoreP_pend(appCommonObj->completionSem, SemaphoreP_WAIT_FOREVER);
+#endif
+
+
     retVal += SafetyCheckersApp_csirxFreeFrames(&appCommonObj->appInstObj);
     SafetyCheckersApp_csirxlog("SAFETY_CHECKERS_CSIRX_APP: Number of frames recieved is %d\n", appCommonObj->appInstObj.numFramesRcvd);
 
@@ -176,7 +203,19 @@ static int32_t SafetyCheckersApp_csirxTest(SafetyCheckersApp_CsirxCommonObj* app
 
 void SafetyCheckersApp_csirxTimerIsr(void *arg)
 {
-    SafetyCheckersApp_CsirxCommonObj *appCommonObj=(SafetyCheckersApp_CsirxCommonObj*)arg;
+
+    SafetyCheckersApp_CsirxCommonObj
+	    *appCommonObj=(SafetyCheckersApp_CsirxCommonObj*)&gSafetyCheckersAppCsirxCommonObj;
+#if defined (SOC_J722S)
+    static volatile uint32_t timerIsrCount=0;
+    timerIsrCount++;
+    if (timerIsrCount == SAFETY_CHECKERS_APP_CSIRX_TEST_PERIOD_IN_SEC)
+    {
+        TimerP_stop(gTimerBaseAddr[CONFIG_TIMER0]);
+        /* Post semaphore to print the results */
+        SemaphoreP_post(&appCommonObj->completionSem);
+    }
+#else
     int32_t retVal = FVID2_SOK;
 
     /* Stop the streams immediately after the timeout is reached */
@@ -188,13 +227,18 @@ void SafetyCheckersApp_csirxTimerIsr(void *arg)
 
     /* Post semaphore to print the results */
     SemaphoreP_post(appCommonObj->completionSem);
+#endif
+
 }
 
 static int32_t SafetyCheckersApp_csirxVerifyCheckers(SafetyCheckersApp_CsirxInstObj *appInstObj)
 {
     SafetyCheckers_CsirxFdmChannel      *channel   = NULL;
     SafetyCheckers_CsirxVimCfg vimCfg;
-    uint8_t i2cInst = 0U, i2cAddr = 0U;
+#if !defined (SOC_J722S)
+    uint8_t i2cInst = 0U;
+#endif
+    uint8_t i2cAddr = 0U;
     SafetyCheckers_CsirxQoSSettings qosSettings;
     int32_t status = SAFETY_CHECKERS_SOK;
     uint32_t regCfg[SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_LENGTH];
@@ -549,7 +593,11 @@ static int32_t SafetyCheckersApp_csirxVerifyCheckers(SafetyCheckersApp_CsirxInst
         SafetyCheckersApp_csirxlog("SAFETY_CHECKERS_CSIRX_APP : [ERROR] Data type, frame size register configuration verification failed\r\n");
     }
     
+#if defined (SOC_J722S)
+    Board_fpdUb960GetI2CAddr(&i2cAddr, appInstObj->boardCsiInstID);
+#else
     Board_fpdU960GetI2CAddr(&i2cInst, &i2cAddr, appInstObj->boardCsiInstID);
+#endif
     status = SafetyCheckers_csirxGetSensorCfg(appInstObj->i2cHandle, i2cAddr,
                                               gSafetyCheckersAppCsirxUb960SensorCfg);
     if (SAFETY_CHECKERS_SOK != status)

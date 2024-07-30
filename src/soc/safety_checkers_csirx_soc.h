@@ -52,6 +52,10 @@
 #include  <ti/safety_checkers/src/soc/j784s4/safety_checkers_csirx_soc.h>
 #endif
 
+#if defined(SOC_J722S)
+#include  <safety_checkers/src/soc/j722s/safety_checkers_csirx_soc.h>
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

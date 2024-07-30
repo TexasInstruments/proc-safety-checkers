@@ -41,8 +41,12 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
+#if defined (SOC_J722S)
+#include <board/board_control.h>
+#else
 #include <ti/board/board.h>
 #include <ti/board/src/devices/board_devices.h>
+#endif
 #include "safety_checkers_app_csirx.h"
 #include "safety_checkers_app_csirx_sensor.h"
 
@@ -77,13 +81,22 @@ extern void SafetyCheckersApp_csirxWait(uint32_t wait_in_ms);
 int32_t SafetyCheckersApp_csirxSensorConfig(SafetyCheckersApp_CsirxInstObj* appInstObj)
 {
     int32_t retVal = FVID2_SOK;
-    int32_t status = BOARD_SOK;
+    int32_t status = FVID2_SOK;
     uint32_t cnt = 0U, timeOut;
     uint8_t i2cInst = 0U, i2cAddr = 0U, regAddr8, regVal;
+#if defined (SOC_J722S)
+    uint8_t i2cswitchreg;
+#endif
     I2C_Handle i2cHandle;
 
-    Board_fpdU960GetI2CAddr(&i2cInst, &i2cAddr, appInstObj->boardCsiInstID);
     i2cHandle = appInstObj->i2cHandle;
+#if defined (SOC_J722S)
+    i2cswitchreg = 0x03;
+    Board_i2c8BitRegWrSingle(i2cHandle, 0x70,&i2cswitchreg,0x20);
+    Board_fpdUb960GetI2CAddr(&i2cAddr, appInstObj->boardCsiInstID);
+#else
+    Board_fpdU960GetI2CAddr(&i2cInst, &i2cAddr, appInstObj->boardCsiInstID);
+#endif
 
     if ((0U == i2cInst) && (0U == i2cAddr))
     {
@@ -103,11 +116,14 @@ int32_t SafetyCheckersApp_csirxSensorConfig(SafetyCheckersApp_CsirxInstObj* appI
             cnt++;
         }
 
-        if (BOARD_SOK == status)
+        if (FVID2_SOK == status)
         {
             /* start straming from sensors */
-            Board_fpdU960GetI2CAddr(&i2cInst, &i2cAddr, appInstObj->boardCsiInstID);
-
+#if defined (SOC_J722S)
+    Board_fpdUb960GetI2CAddr(&i2cAddr, appInstObj->boardCsiInstID);
+#else
+    Board_fpdU960GetI2CAddr(&i2cInst, &i2cAddr, appInstObj->boardCsiInstID);
+#endif
             if (CSIRX_INSTANCE_ID_1 == appInstObj->instId)
             {
                 i2cAddr = 0x36U;

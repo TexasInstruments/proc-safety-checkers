@@ -157,25 +157,6 @@ typedef struct
 } SafetyCheckers_CsirxFdmStdString;
 
 /**
- *  \brief Struture to store all global objects.
- */
-typedef struct
-{
-    const char *versionString;
-    /**< FVID2 drivers version number as string. */
-    uint32_t versionNumber;
-    /**< FVID2 drivers version number as string. */
-    SafetyCheckers_CsirxFdmDriver fdmDriverObjects[FVID2_CFG_FDM_NUM_DRV_OBJS];
-    /**< FDM Driver objects. */
-    SafetyCheckers_CsirxFdmChannel fdmChannelObjects[FVID2_CFG_FDM_NUM_CH_OBJS];
-    /**< FDM Channel objects. */
-    SemaphoreP_Handle lockSem;
-    /**< Semaphore to protect function calls and other memory allocation. */
-    SemaphoreP_Handle printSem;
-    /**< Semaphore to protect print buffer. */
-} SafetyCheckers_CsirxFdmObject;
-
-/**
  *  \anchor SafetyCheckers_CsirxRegType
  *  \name Type of CSIRX module registers
  *

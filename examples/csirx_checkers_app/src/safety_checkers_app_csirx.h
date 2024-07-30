@@ -45,7 +45,11 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
+#if defined (SOC_J722S)
+#include <csirx.h>
+#else
 #include <ti/drv/csirx/csirx.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -71,8 +75,17 @@ extern "C" {
 								   SAFETY_CHECKERS_APP_CSIRX_FRAME_HEIGHT* \
 							           SAFETY_CHECKERS_APP_CSIRX_FRAME_BPP)
 /**< Frame Attribute: Size of the frame in bytes */
+
+#if defined (SOC_J722S)
+#define BOARD_CSI_I2C_MUX_INSTANCE                                ((uint32_t)0U)	
+/**< I2C MUX instance to enable CSIRX */
+#define BOARD_CSI_I2C_SWITCH_INSTANCE                             ((uint32_t)1U)
+/**< I2C switch instance to enable DPHY interface for CSIRX */
+#define SafetyCheckersApp_csirxlog                                DebugP_log
+#else
 #define SafetyCheckersApp_csirxlog                                UART_printf
 /**< API for application log */
+#endif
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -130,11 +143,18 @@ typedef struct
    /**< Csirx init time parameters */
     SafetyCheckersApp_CsirxInstObj appInstObj;
    /**< Capture application objects */
-    struct Udma_DrvObj udmaDrvObj;
+#if !defined (SOC_J722S)
+  struct Udma_DrvObj udmaDrvObj;
    /**< UDMA driver objects */
    TimerP_Handle timerHandle;
    /**< timer handle for app timer */
    SemaphoreP_Handle completionSem;
+   /**< Semaphore to notify app completion */
+#else
+    Udma_DrvObject udmaDrvObj;
+   /**< UDMA driver objects */
+   SemaphoreP_Object completionSem;
+#endif
    /**< Semaphore to notify app completion */
    bool i2cInstOpened;
    /* param to verify if the instance is opened or not */

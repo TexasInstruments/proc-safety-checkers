@@ -42,12 +42,20 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
+#if defined (SOC_J722S)
+#include <csirx.h>
+#include <drivers/i2c.h>
+#include <board/board_control.h>
+#else
 #include <ti/drv/csirx/csirx.h>
 #include <ti/drv/i2c/i2c.h>
 #include <ti/board/board.h>
 #include <ti/board/src/devices/board_devices.h>
 #include "ti/safety_checkers/src/safety_checkers_csirx.h"
 #include "ti/safety_checkers/src/safety_checkers_common.h"
+#endif
+#include "safety_checkers_csirx.h"
+#include "safety_checkers_common.h"
 #include "safety_checkers_app_csirx.h"
 
 #ifdef __cplusplus
@@ -91,6 +99,7 @@ __attribute__(( aligned(128), section(".data_buffer")));
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+#if !defined(SOC_J722S)
 void SafetyCheckersApp_csirxSetupTimer(SafetyCheckersApp_CsirxCommonObj *appCommonObj)
 {
     TimerP_Params timerParams;
@@ -108,20 +117,26 @@ void SafetyCheckersApp_csirxSetupTimer(SafetyCheckersApp_CsirxCommonObj *appComm
         SafetyCheckersApp_csirxlog("SAFETY_CHECKERS_CSIRX_APP: Timer Create error\r\n");
     }
 }
+#endif
 
 int32_t SafetyCheckersApp_csirxSetupApp(SafetyCheckersApp_CsirxCommonObj *appCommonObj)
 {
+#if defined (SOC_J722S)
+    SemaphoreP_constructBinary(&appCommonObj->completionSem,0U);
+#else
     SemaphoreP_Params semParams;
     /* Creating semaphore to indicate application completion of each Instance */
     SemaphoreP_Params_init(&semParams);
     semParams.mode = SemaphoreP_Mode_BINARY;
     appCommonObj->completionSem = SemaphoreP_create(0U, &semParams);
+#endif
     return FVID2_SOK;
 }
 
 int32_t SafetyCheckersApp_csirxSetupI2CInst(SafetyCheckersApp_CsirxInstObj* appInstObj)
-{    
+{   
     int32_t retVal = FVID2_SOK;
+#if !defined (SOC_J722S)	
     uint8_t i2cInst = 0U, i2cAddr = 0U;
     I2C_Params i2cParams;
 
@@ -145,7 +160,10 @@ int32_t SafetyCheckersApp_csirxSetupI2CInst(SafetyCheckersApp_CsirxInstObj* appI
             retVal = FVID2_EFAIL;
         }
     }
-
+#else
+    Board_enableCSII2c(BOARD_CSI_I2C_MUX_INSTANCE);
+    appInstObj->i2cHandle = I2C_getHandle(BOARD_CSI_I2C_SWITCH_INSTANCE);
+#endif
     return retVal;
 }
 
@@ -206,11 +224,14 @@ void SafetyCheckersApp_csirxInitParams(SafetyCheckersApp_CsirxInstObj* appInstOb
 int32_t SafetyCheckersApp_csirxInit(SafetyCheckersApp_CsirxCommonObj* appCommonObj)
 {
     int32_t retVal = FVID2_SOK;
-    uint32_t instId, loopCnt;
+    uint32_t instId;
+#if !defined (SOC_J722S)
+    uint32_t loopCnt;
+    I2C_HwAttrs i2cConfig;
+#endif
     Fvid2_InitPrms initPrms;
     Udma_InitPrms   udmaInitPrms;
     Udma_DrvHandle drvHandle;
-    I2C_HwAttrs i2cConfig;
     
     /* Set instance initialization parameters */
     /* This will be updated once UDMA init is done */
@@ -223,11 +244,16 @@ int32_t SafetyCheckersApp_csirxInit(SafetyCheckersApp_CsirxCommonObj* appCommonO
 
     /* Do UDMA init before CSIRX Init */
     /* UDMA driver init */
+#if defined (SOC_J722S)
+    instId = UDMA_INST_ID_BCDMA_1;
+#else
     instId = UDMA_INST_ID_BCDMA_0;
+#endif
     UdmaInitPrms_init(instId, &udmaInitPrms);
     Udma_init(drvHandle, &udmaInitPrms);
     retVal |= Csirx_init(&appCommonObj->initPrms);
 
+#if !defined (SOC_J722S)
     if (FVID2_SOK == retVal)
     {
         /* Initialize I2C Driver */
@@ -241,6 +267,7 @@ int32_t SafetyCheckersApp_csirxInit(SafetyCheckersApp_CsirxCommonObj* appCommonO
         /* Initializes the I2C */
         I2C_init();
     }
+#endif
 
     return (retVal);
 }
@@ -295,9 +322,13 @@ int32_t SafetyCheckersApp_csirxDeinit(SafetyCheckersApp_CsirxCommonObj *appCommo
     /* Close I2C channel */
     I2C_close(appCommonObj->appInstObj.i2cHandle);
     /* Delete semaphore */
+#if defined(SOC_J722S)
+    SemaphoreP_destruct(&appCommonObj->completionSem);
+#else
     SemaphoreP_delete(appCommonObj->completionSem);
     /* Delete Timer */
     TimerP_delete(appCommonObj->timerHandle);
+#endif
     return (retVal);
 }
 

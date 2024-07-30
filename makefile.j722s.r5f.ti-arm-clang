@@ -19,9 +19,12 @@ FILES_common := \
     safety_checkers_pm.c \
     safety_checkers_rm.c \
     safety_checkers_tifs.c \
+    safety_checkers_csirx.c \
+    safety_checkers_csirx_soc.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/safety_checkers/src \
+    ${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/j722s \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -30,7 +33,10 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/ \
     -I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/j722s/ \
     -I${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/ \
+    -I${MCU_PLUS_SDK_PATH}/source/drivers/csirx/ \
+    -I${MCU_PLUS_SDK_PATH}/source/drivers/ \
     -I${MCU_PLUS_SDK_PATH}/source/drivers/hw_include/ \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/nortos/dpl/r5/ \
 
 DEFINES_common := \
     -DSOC_J722S \

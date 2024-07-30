@@ -43,10 +43,13 @@
 /* ========================================================================== */
 
 #include <stdint.h>
+#if defined (SOC_J722S)
+#include <cslr.h>
+#include <drivers/csirx/v1/include/csirx_drvPriv.h>
+#else
 #include <ti/csl/cslr.h>
-#include <ti/drv/i2c/i2c.h>
-#include <ti/drv/i2c/soc/i2c_soc.h>
 #include <ti/drv/csirx/src/csirx_drvPriv.h>
+#endif
 #include <safety_checkers_csirx.h>
 #include <safety_checkers_common.h>
 
