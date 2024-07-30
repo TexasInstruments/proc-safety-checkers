@@ -26,7 +26,7 @@ INCLUDE_INTERNAL_INTERFACES = pdk csl
 
 SRCS_COMMON += safety_checkers_pm.c safety_checkers_rm.c safety_checkers_tifs.c 
 
-ifeq ($(SOC),j784s4)
+ifeq ($(SOC),$(filter $(SOC), j721e j721s2 j784s4))
 SRCS_COMMON += safety_checkers_csirx.c safety_checkers_csirx_soc.c
 endif
 ifeq ($(SOC),$(filter $(SOC), j7200 j721e j721s2 j784s4 j742s2))
@@ -35,7 +35,7 @@ PACKAGE_SRCS_COMMON += safety_checkers_pm.c safety_checkers_pm.h safety_checkers
 PACKAGE_SRCS_COMMON += ../safety_checkers_component.mk
 endif
 
-ifeq ($(SOC),$(filter $(SOC), j784s4 j742s2))
+ifeq ($(SOC),$(filter $(SOC), j721e j721s2 j784s4 j742s2))
 PACKAGE_SRCS_COMMON += soc/safety_checkers_csirx_soc.h soc/$(SOC_DIR)/safety_checkers_csirx_soc.c soc/$(SOC_DIR)/safety_checkers_csirx_soc.h safety_checkers_csirx.h safety_checkers_csirx.c
 endif
 

@@ -74,7 +74,9 @@
 /* App common object */
 SafetyCheckersApp_CsirxCommonObj gSafetyCheckersAppCsirxCommonObj;
 extern uint16_t gSafetyCheckersAppCsirxUb960SensorCfg[39][3];
+#if defined (SOC_J722S)
 extern uint32_t gTimerBaseAddr[TIMER_NUM_INSTANCES];
+#endif
 
 /* ========================================================================== */
 /*                          Function Definitions                              */

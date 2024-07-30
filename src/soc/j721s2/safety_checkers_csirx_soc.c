@@ -89,12 +89,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
                 gSafetyCheckers_StrmCtrlRegOffset,
                 SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_LENGTH
             },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_BASE_ADDRESS(2U),
-                gSafetyCheckers_StrmCtrlRegOffset,
-                SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_LENGTH
-            },
         }
     },
     {
@@ -109,12 +103,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
             {
                 1U,
                 SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_BASE_ADDRESS(1U),
-                gSafetyCheckers_DphyConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_LENGTH
-            },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_BASE_ADDRESS(2U),
                 gSafetyCheckers_DphyConfigRegOffset,
                 SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_LENGTH
             },
@@ -135,12 +123,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
                 gSafetyCheckers_DphyPllRegOffset,
                 SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_LENGTH
             },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_BASE_ADDRESS(2U),
-                gSafetyCheckers_DphyPllRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_LENGTH
-            },
         }
     },
     {
@@ -155,12 +137,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
             {
                 1U,
                 SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_BASE_ADDRESS(1U),
-                gSafetyCheckers_DphyLaneConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_REGS_LENGTH
-            },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_BASE_ADDRESS(2U),
                 gSafetyCheckers_DphyLaneConfigRegOffset,
                 SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_REGS_LENGTH
             },
@@ -181,12 +157,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
                 gSafetyCheckers_VirtualChannelConfigRegOffset,
                 SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_REGS_LENGTH
             },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_BASE_ADDRESS(2U),
-                gSafetyCheckers_VirtualChannelConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_REGS_LENGTH
-            },
         }
     },
     {
@@ -201,12 +171,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
             {
                 1U,
                 SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_BASE_ADDRESS(1U),
-                gSafetyCheckers_DataTypeFrameSizeRegOffset,
-                SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_REGS_LENGTH
-            },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_BASE_ADDRESS(2U),
                 gSafetyCheckers_DataTypeFrameSizeRegOffset,
                 SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_REGS_LENGTH
             },

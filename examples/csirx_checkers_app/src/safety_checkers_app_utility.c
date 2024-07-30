@@ -246,6 +246,8 @@ int32_t SafetyCheckersApp_csirxInit(SafetyCheckersApp_CsirxCommonObj* appCommonO
     /* UDMA driver init */
 #if defined (SOC_J722S)
     instId = UDMA_INST_ID_BCDMA_1;
+#elif defined (SOC_J721E)
+    instId = UDMA_INST_ID_MAIN_0;
 #else
     instId = UDMA_INST_ID_BCDMA_0;
 #endif

@@ -89,12 +89,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
                 gSafetyCheckers_StrmCtrlRegOffset,
                 SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_LENGTH
             },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_BASE_ADDRESS(2U),
-                gSafetyCheckers_StrmCtrlRegOffset,
-                SAFETY_CHECKERS_CSIRX_STRM_CTRL_REGS_LENGTH
-            },
         }
     },
     {
@@ -109,12 +103,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
             {
                 1U,
                 SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_BASE_ADDRESS(1U),
-                gSafetyCheckers_DphyConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_LENGTH
-            },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_BASE_ADDRESS(2U),
                 gSafetyCheckers_DphyConfigRegOffset,
                 SAFETY_CHECKERS_CSIRX_DPHY_CONFIG_REGS_LENGTH
             },
@@ -135,12 +123,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
                 gSafetyCheckers_DphyPllRegOffset,
                 SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_LENGTH
             },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_BASE_ADDRESS(2U),
-                gSafetyCheckers_DphyPllRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_PLL_REGS_LENGTH
-            },
         }
     },
     {
@@ -155,12 +137,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
             {
                 1U,
                 SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_BASE_ADDRESS(1U),
-                gSafetyCheckers_DphyLaneConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_REGS_LENGTH
-            },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_BASE_ADDRESS(2U),
                 gSafetyCheckers_DphyLaneConfigRegOffset,
                 SAFETY_CHECKERS_CSIRX_DPHY_LANE_CONFIG_REGS_LENGTH
             },
@@ -181,12 +157,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
                 gSafetyCheckers_VirtualChannelConfigRegOffset,
                 SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_REGS_LENGTH
             },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_BASE_ADDRESS(2U),
-                gSafetyCheckers_VirtualChannelConfigRegOffset,
-                SAFETY_CHECKERS_CSIRX_VIRTUAL_CHANNEL_CONFIG_REGS_LENGTH
-            },
         }
     },
     {
@@ -201,12 +171,6 @@ SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_CSIRX_N
             {
                 1U,
                 SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_BASE_ADDRESS(1U),
-                gSafetyCheckers_DataTypeFrameSizeRegOffset,
-                SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_REGS_LENGTH
-            },
-            {
-                2U,
-                SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_BASE_ADDRESS(2U),
                 gSafetyCheckers_DataTypeFrameSizeRegOffset,
                 SAFETY_CHECKERS_CSIRX_DATATYPE_FRAMESIZE_REGS_LENGTH
             },
@@ -246,11 +210,11 @@ int32_t SafetyCheckers_csirxGetQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSettin
             rCfgRegAddr = ((SAFETY_CHECKERS_CSIRX_QOS_BASE_ADDRESS_0 +
 			   (rxChNum*SAFETY_CHECKERS_CSIRX_QOS_CH_REG_SIZE)) + SAFETY_CHECKERS_CSIRX_QOS_RCFG); 
             qosSettings[count].chanType = (uint8_t)CSL_REG32_FEXT(rCfgRegAddr,
-                                                                  BCDMA_RXCCFG_CHAN_RCFG_CHAN_TYPE);
+                                                                  UDMAP_RXCCFG_CHAN_RCFG_CHAN_TYPE);
             qosSettings[count].priority = (uint8_t)CSL_REG32_FEXT(rCfgRegAddr,
-                                                                  BCDMA_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
+                                                                  UDMAP_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
             qosSettings[count].busOrderId = (uint8_t)CSL_REG32_FEXT(rCfgRegAddr,
-                                                                    BCDMA_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
+                                                                    UDMAP_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
         }
     }
 
@@ -285,13 +249,13 @@ int32_t SafetyCheckers_csirxVerifyQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSet
             rCfgRegAddr = ((SAFETY_CHECKERS_CSIRX_QOS_BASE_ADDRESS_0 +
 			   (rxChNum*SAFETY_CHECKERS_CSIRX_QOS_CH_REG_SIZE)) + SAFETY_CHECKERS_CSIRX_QOS_RCFG); 
             chanTypeVerif = (uint8_t)CSL_REG32_FEXT(rCfgRegAddr,
-                                                    BCDMA_RXCCFG_CHAN_RCFG_CHAN_TYPE);
+                                                    UDMAP_RXCCFG_CHAN_RCFG_CHAN_TYPE);
             mismatchCnt |= chanTypeVerif ^ qosSettings[count].chanType;
             priorityVerif = (uint8_t)CSL_REG32_FEXT(rCfgRegAddr,
-                                                    BCDMA_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
+                                                    UDMAP_RXCCFG_CHAN_RPRI_CTRL_PRIORITY);
             mismatchCnt |= priorityVerif ^ qosSettings[count].priority;
             busOrderIdVerif = (uint8_t)CSL_REG32_FEXT(rCfgRegAddr,
-                                                      BCDMA_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
+                                                      UDMAP_RXCCFG_CHAN_RPRI_CTRL_ORDERID);
             mismatchCnt |= busOrderIdVerif ^ qosSettings[count].busOrderId;
 
         }

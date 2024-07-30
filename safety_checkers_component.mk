@@ -36,14 +36,16 @@ ifeq ($(safety_checkers_component_make_include), )
 
 safety_checkers_SOCLIST               = j7200 j721e j721s2 j784s4 j742s2
 safety_checkers_BOARDLIST             = j7200_evm j721e_evm j721s2_evm j784s4_evm j742s2_evm
-safety_checkers_csirx_SOCLIST         = j784s4
-safety_checkers_csirx_BOARDLIST       = j784s4_evm
+safety_checkers_csirx_SOCLIST         = j784s4 j721e j721s2
+safety_checkers_csirx_BOARDLIST       = j784s4_evm j721e_evm j721s2_evm
 safety_checkers_j7200_CORELIST        = mcu1_0 mcu1_1 mcu2_0
 safety_checkers_j721e_CORELIST        = mcu1_0 mcu1_1 mcu2_0
 safety_checkers_j721s2_CORELIST       = mcu1_0 mcu1_1 mcu2_0
 safety_checkers_j784s4_CORELIST       = mcu1_0 mcu1_1 mcu2_0
 safety_checkers_j742s2_CORELIST       = mcu1_0 mcu1_1 mcu2_0
 safety_checkers_csirx_j784s4_CORELIST = mcu2_0
+safety_checkers_csirx_j721s2_CORELIST = mcu2_0
+safety_checkers_csirx_j721e_CORELIST  = mcu2_0
 safety_checkers_RTOS_LIST             = $(DEFAULT_RTOS_LIST)
 
 ############################

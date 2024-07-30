@@ -52,6 +52,14 @@
 #include  <ti/safety_checkers/src/soc/j784s4/safety_checkers_csirx_soc.h>
 #endif
 
+#if defined(SOC_J721E)
+#include  <ti/safety_checkers/src/soc/j721e/safety_checkers_csirx_soc.h>
+#endif
+
+#if defined(SOC_J721S2)
+#include  <ti/safety_checkers/src/soc/j721s2/safety_checkers_csirx_soc.h>
+#endif
+
 #if defined(SOC_J722S)
 #include  <safety_checkers/src/soc/j722s/safety_checkers_csirx_soc.h>
 #endif
