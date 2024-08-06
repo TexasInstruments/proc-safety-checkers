@@ -424,6 +424,7 @@ int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
 
     int32_t  ret = SAFETY_CHECKERS_SOK;
     I2C_Transaction transaction;
+    uint8_t regAddrLocal = regAddr;
 
     I2C_Handle i2cHandle = (I2C_Handle)handle;
 
@@ -431,7 +432,7 @@ int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
     I2C_transactionInit(&transaction);
 
     transaction.slaveAddress = slaveAddr;
-    transaction.writeBuf     = &regAddr;
+    transaction.writeBuf     = &regAddrLocal;
     transaction.writeCount   = 1;
     transaction.readBuf      = NULL;
     transaction.readCount    = 0;
