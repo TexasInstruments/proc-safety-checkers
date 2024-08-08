@@ -41,6 +41,7 @@
 #include <safety_checkers_common.h>
 #include <safety_checkers_tifs.h>
 #include <tifs_checkers_fwl_config.h>
+#include <tifs_checkers_isc_config.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -69,7 +70,11 @@ void SafetyCheckersApp_softwareDelay(void);
 /* ========================================================================== */
 
 SafetyCheckers_TifsFwlConfig *pFwlConfig = gSafetyCheckers_TifsFwlConfig;
+SafetyCheckers_TifsIscConfig *pIscConfig = gSafetyCheckers_TifsIscConfig;
+
 uint32_t gSafetyCheckersTifsCfgSize = TIFS_CHECKER_FWL_MAX_NUM;
+uint32_t gSafetyCheckersTifsIscCfgSize = sizeof(gSafetyCheckers_TifsIscConfig)/sizeof(gSafetyCheckers_TifsIscConfig[0]);
+
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -126,16 +131,52 @@ void SafetyCheckersApp_tifsTest(void *args)
             SAFETY_CHECKERS_log("No firewall register mismatch with Golden Reference\r\n");
         }
 
-        status = SafetyCheckers_tifsReqFwlClose();
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        status = SafetyCheckers_tifsGetIscCfg(pIscConfig, gSafetyCheckersTifsIscCfgSize);
         if (status == SAFETY_CHECKERS_SOK)
         {
-            SAFETY_CHECKERS_log("Firewall close successful\r\n");
+            SAFETY_CHECKERS_log("Get ISC configuration successful\r\n");
         }
         else
         {
-            SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+            SAFETY_CHECKERS_log("Get ISC configuration unsuccessful!!\r\n");
         }
+
+        /* Place to verify and save firewall configuration as Golden Reference */
+
+        while (i > 0U)
+        {
+            status = SafetyCheckers_tifsVerifyIscCfg(pIscConfig, gSafetyCheckersTifsIscCfgSize);
+
+            if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+            {
+                SAFETY_CHECKERS_log("ISC register mismatch with Golden Reference!!\r\n");
+            }
+
+            SafetyCheckersApp_softwareDelay();
+            i--;
+        }
+
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("No ISC register mismatch with Golden Reference\r\n");
+        }
+
     }
+
+    status = SafetyCheckers_tifsReqFwlClose();
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall close successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+    }
+
 }
 
 void SafetyCheckersApp_tifsTestFwlOpenClose(void *args)

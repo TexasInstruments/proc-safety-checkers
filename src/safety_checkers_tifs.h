@@ -93,6 +93,11 @@ extern "C" {
 #define SAFETY_CHECKERS_TIFS_END_ADDRH             0x1CU
 #define SAFETY_CHECKERS_TIFS_MAX_REGIONS           36U
 
+#define SAFETY_CHECKERS_TIFS_ISC_BASE              0x45800000U
+#define SAFETY_CHECKERS_TIFS_ISC_CONTROL0_REG      0x0U
+#define SAFETY_CHECKERS_TIFS_ISC_CONTROL1_REG      0x4U
+#define SAFETY_CHECKERS_TIFS_ISC_MAX_REGIONS       32U
+
 /** @} */
 
 /**
@@ -138,6 +143,36 @@ typedef struct
     SafetyCheckers_TifsFwlRegList fwlCfgPerRegion[SAFETY_CHECKERS_TIFS_MAX_REGIONS]; /* Firewall registers for a given region */
 } SafetyCheckers_TifsFwlConfig;
 
+/**
+ *
+ * \brief   Structure for ISC configuration registers for
+ *          a given ISC region
+ *
+ */
+typedef struct
+{
+    uint32_t controlReg0; /* Region Control Register 0 */
+    uint32_t controlReg1; /* Region Control Register 1 */
+    uint32_t startAddrLow; /* Region Start address Low */
+    uint32_t startAddrHigh; /* Region Start address High */
+    uint32_t endAddrLow; /* Region End address Low */
+    uint32_t endAddrHigh; /* Region End address High */
+} SafetyCheckers_TifsIscRegList;
+
+/**
+ *
+ * \brief   Structure for ISC configuration register info for
+ *          a given ISC id
+ *
+ */
+typedef struct
+{
+    uint32_t iscId; /* ISC id */
+    uint32_t numRegions; /* Number of regions stored in the ISC config for an id */
+    uint32_t maxNumRegions; /* Maximum number of regions present in an id */
+    SafetyCheckers_TifsIscRegList iscCfgPerRegion[SAFETY_CHECKERS_TIFS_ISC_MAX_REGIONS]; /* ISC registers for a given region */
+} SafetyCheckers_TifsIscConfig;
+
 /** @} */
 
 /**
@@ -174,6 +209,20 @@ int32_t SafetyCheckers_tifsReqFwlOpen(void);
 int32_t SafetyCheckers_tifsGetFwlCfg(SafetyCheckers_TifsFwlConfig *fwlConfig, uint32_t size);
 
 /**
+ * \brief   API uses the pointer to isc configuration fwlConfig as input and
+ *          updates iscConfig with the register dump of the isc registers specified.
+ *
+ * \param   iscConfig  [IN/OUT]    Pointer to static isc configuration to
+ *                                 be populated with register values
+ *
+ * \param   size       [IN]        Number of entries in the static isc configuration
+ *
+ * \return  status   SAFETY_CHECKERS_SOK : Success
+ *                   SAFETY_CHECKERS_FAIL: Failure
+ */
+int32_t SafetyCheckers_tifsGetIscCfg(SafetyCheckers_TifsIscConfig *iscConfig, uint32_t size);
+
+/**
  * \brief   API compares the fwlConfig (golden reference) with runtime firewall
  *          register values and return success or failure.
  *
@@ -186,6 +235,20 @@ int32_t SafetyCheckers_tifsGetFwlCfg(SafetyCheckers_TifsFwlConfig *fwlConfig, ui
  *                   SAFETY_CHECKERS_FAIL: Failure
  */
 int32_t SafetyCheckers_tifsVerifyFwlCfg(const SafetyCheckers_TifsFwlConfig *fwlConfig, uint32_t size);
+
+/**
+ * \brief   API compares the iscConfig (golden reference) with runtime isc
+ *          register values and return success or failure.
+ *
+ * \param   iscConfig  [IN/OUT]    Pointer to static isc configuration / Golden Reference to
+ *                                 be verified against
+ *
+ * \param   size       [IN]        Number of entries in the static isc configuration
+ *
+ * \return  status   SAFETY_CHECKERS_SOK : Success
+ *                   SAFETY_CHECKERS_FAIL: Failure
+ */
+int32_t SafetyCheckers_tifsVerifyIscCfg(const SafetyCheckers_TifsIscConfig *iscConfig, uint32_t size);
 
 /**
  * \brief   API to request TIFS to close firewall
