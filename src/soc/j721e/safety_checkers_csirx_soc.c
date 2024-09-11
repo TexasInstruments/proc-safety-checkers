@@ -407,8 +407,7 @@ int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
     {
         ret = SAFETY_CHECKERS_FAIL;
     }
-
-    if(SAFETY_CHECKERS_SOK == ret)
+    else
     {
         transaction.writeBuf     = NULL;
         transaction.writeCount   = 0;
@@ -420,6 +419,11 @@ int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
         {
             ret = SAFETY_CHECKERS_FAIL;
         }
+        else
+        {
+             ret = SAFETY_CHECKERS_SOK;
+        }
+	
     }
 
     return ret;

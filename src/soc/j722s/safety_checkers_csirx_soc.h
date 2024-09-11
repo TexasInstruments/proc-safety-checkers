@@ -113,7 +113,7 @@ extern "C" {
 /** \brief QoS configuration registers */  
 #define SAFETY_CHECKERS_CSIRX_QOS_RCFG                                ((uint32_t)0x0U)
 /** \brief QoS channel configuration register-set size */  
-#define SAFETY_CHECKERS_CSIRX_QOS_CH_REG_SIZE                         ((uint32_t)0x256U)
+#define SAFETY_CHECKERS_CSIRX_QOS_CH_REG_SIZE                         ((uint32_t)0x100U)
 
 /** \brief DPHY configuration related macros: Register offsets */
 #define SAFETY_CHECKERS_CSIRX_DPHYRX_WRAP_REGS_LANE                   ((uint32_t)0U)

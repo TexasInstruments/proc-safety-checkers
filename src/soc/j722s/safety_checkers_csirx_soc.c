@@ -356,6 +356,7 @@ int32_t SafetyCheckers_csirxGetVimRegCfgIntrNum(uint32_t intrNum,
     }
     else
     {
+        vimCfg->intrNum = intrNum;
         addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_TYPE(intrNum));
         bitPos = VIM_BIT_POS(intrNum);
         vimCfg->intrType = (*addr >> bitPos) & 0x1u;
@@ -445,6 +446,10 @@ int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
                                                                               
     ret = I2C_transfer(i2cHandle, &transaction); 
     *regData     = tx[1];
-                       
+    if (I2C_STS_SUCCESS == ret)
+    {
+        ret = SAFETY_CHECKERS_SOK;
+    }
+
     return ret;
 }
