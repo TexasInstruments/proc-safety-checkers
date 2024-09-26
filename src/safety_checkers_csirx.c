@@ -257,7 +257,7 @@ int32_t SafetyCheckers_csirxGetSensorCfg(void *i2cHandle,
                                          uint32_t slaveAddr,
                                          uint16_t (*regData)[3U])
 {
-    uint8_t regVal, regAddr8;
+    uint8_t regVal = 0U, regAddr8;
     uint16_t cnt = 0U;
     int32_t  status = SAFETY_CHECKERS_SOK;
 
@@ -283,7 +283,7 @@ int32_t SafetyCheckers_csirxVerifySensorCfg(void *i2cHandle,
                                             uint32_t slaveAddr,
                                             uint16_t (*regData)[3])
 {
-    uint8_t regVal, regAddr8;
+    uint8_t regVal = 0U, regAddr8;
     uint8_t regValVerif;
     uint32_t cnt = 0U;
     int32_t  status = SAFETY_CHECKERS_SOK;

@@ -284,9 +284,16 @@ int32_t SafetyCheckers_csirxGetVimRegCfgIntrNum(uint32_t intrNum,
     else
     {
         maxIntrs   = pRegs->INFO;
-        num_groups = maxIntrs / CSL_VIM_NUM_INTRS_PER_GROUP;
-        vimCfg->pRegs = (CSL_vimRegs*)(SAFETY_CHECKERS_CSIRX_UDMA_CSI_VIM_CONFIG_BASE_ADDRESS);
-        vimCfg->intrNum = intrNum;
+        if(0 < maxIntrs)
+        {
+            num_groups = maxIntrs / CSL_VIM_NUM_INTRS_PER_GROUP;
+            vimCfg->pRegs = (CSL_vimRegs*)(SAFETY_CHECKERS_CSIRX_UDMA_CSI_VIM_CONFIG_BASE_ADDRESS);
+            vimCfg->intrNum = intrNum;
+        }
+        else
+        {
+            status = SAFETY_CHECKERS_FAIL;
+        }
     }
 
     if(SAFETY_CHECKERS_SOK == status)
@@ -335,9 +342,16 @@ int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVimCfg *v
     else
     {
         maxIntrs   = pRegs->INFO;
-        num_groups = maxIntrs / CSL_VIM_NUM_INTRS_PER_GROUP;
-        intrNum    = vimCfg->intrNum;
-        groupNum   = intrNum / CSL_VIM_NUM_INTRS_PER_GROUP;
+        if(0 < maxIntrs)
+        {
+            num_groups = maxIntrs / CSL_VIM_NUM_INTRS_PER_GROUP;
+            intrNum    = vimCfg->intrNum;
+            groupNum   = intrNum / CSL_VIM_NUM_INTRS_PER_GROUP;
+        }
+        else
+        {
+            status = SAFETY_CHECKERS_FAIL;
+        }
     }
 
     if(SAFETY_CHECKERS_SOK == status)
