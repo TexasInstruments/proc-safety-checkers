@@ -75,6 +75,14 @@ const lnkfiles = {
 const syscfgfile = "../example.syscfg";
 const readmeDoxygenPageTag = "EXAMPLES_SAFETY_CHECKERS";
 
+const templates_freertos_mcu_r5f =
+[
+	{
+		input: ".project/templates/am62ax/common/linker_mcu-r5f.cmd.xdt",
+		output: "linker.cmd",
+	}
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "mcu-r5fss0-0", cgt: "ti-arm-clang", board: "am62ax-sk", os: "freertos"},
 ];
@@ -108,6 +116,7 @@ function getComponentBuildProperty(buildOption) {
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;
+            build_property.templates = templates_freertos_mcu_r5f;
         }
     }
     else if(buildOption.cpu.match(/r5f*/)) {
