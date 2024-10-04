@@ -25,11 +25,6 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
-        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciserver/lib",
-        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/lib",
-        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/sciclient_direct/lib",
-        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/self_reset/lib",
-        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/dm_stub/lib",
         "${MCU_PLUS_SDK_PATH}/source/safety_checkers/lib",
     ],
 };
@@ -49,11 +44,6 @@ const includes_freertos_r5f = {
 
 const libs_freertos_r5f = {
     common: [
-        "sciserver.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
-        "sciclient_direct.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
-        "rm_pm_hal.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
-        "self_reset.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
-        "dm_stub.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
         "freertos.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -83,6 +73,24 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 const readmeDoxygenPageTag = "EXAMPLES_SAFETY_CHECKERS"
+
+const templates_freertos_mcu_r5f =
+[
+	{
+		input: ".project/templates/am62ax/common/linker_mcu-r5f.cmd.xdt",
+		output: "linker.cmd",
+        options: {
+            heapSize: 0x10000,
+            stackSize: 0x8000,
+            irqStackSize: 0x1000,
+            svcStackSize: 0x0100,
+            fiqStackSize: 0x0100,
+            abortStackSize: 0x0100,
+            undefinedStackSize: 0x0100,
+            dmStubstacksize: 0x0400,
+        },
+	}
+];
 
 const buildOptionCombos = [
     { device: device, cpu: "mcu-r5fss0-0", cgt: "ti-arm-clang", board: "am62ax-sk", os: "freertos"},
@@ -121,6 +129,7 @@ function getComponentBuildProperty(buildOption) {
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;
+            build_property.templates = templates_freertos_mcu_r5f;
         }
     }
 
