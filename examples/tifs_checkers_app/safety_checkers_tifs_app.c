@@ -70,10 +70,15 @@ void SafetyCheckersApp_softwareDelay(void);
 /* ========================================================================== */
 
 SafetyCheckers_TifsFwlConfig *pFwlConfig = gSafetyCheckers_TifsFwlConfig;
-SafetyCheckers_TifsIscConfig *pIscConfig = gSafetyCheckers_TifsIscConfig;
+SafetyCheckers_TifsIscCbassConfig *pIscCbassConfig = gSafetyCheckers_TifsIscCbassConfig;
+SafetyCheckers_TifsIscCcConfig *pIscCcConfig = gSafetyCheckers_TifsIscCcConfig;
+SafetyCheckers_TifsIscRaConfig *pIscRaConfig = gSafetyCheckers_TifsIscRaConfig;
+
 
 uint32_t gSafetyCheckersTifsCfgSize = TIFS_CHECKER_FWL_MAX_NUM;
-uint32_t gSafetyCheckersTifsIscCfgSize = sizeof(gSafetyCheckers_TifsIscConfig)/sizeof(gSafetyCheckers_TifsIscConfig[0]);
+uint32_t gSafetyCheckersTifsIscCbassCfgSize = sizeof(gSafetyCheckers_TifsIscCbassConfig)/sizeof(gSafetyCheckers_TifsIscCbassConfig[0]);
+uint32_t gSafetyCheckers_TifsIscCcCfgSize = sizeof(gSafetyCheckers_TifsIscCcConfig)/sizeof(gSafetyCheckers_TifsIscCcConfig[0]);
+uint32_t gSafetyCheckers_TifsIscRaCfgSize = sizeof(gSafetyCheckers_TifsIscRaConfig)/sizeof(gSafetyCheckers_TifsIscRaConfig[0]);
 
 
 /* ========================================================================== */
@@ -135,25 +140,25 @@ void SafetyCheckersApp_tifsTest(void *args)
 
     if (status == SAFETY_CHECKERS_SOK)
     {
-        status = SafetyCheckers_tifsGetIscCfg(pIscConfig, gSafetyCheckersTifsIscCfgSize);
+        status = SafetyCheckers_tifsGetIscCbassCfg(pIscCbassConfig, gSafetyCheckersTifsIscCbassCfgSize);
         if (status == SAFETY_CHECKERS_SOK)
         {
-            SAFETY_CHECKERS_log("Get ISC configuration successful\r\n");
+            SAFETY_CHECKERS_log("Get ISC CBASS configuration successful\r\n");
         }
         else
         {
-            SAFETY_CHECKERS_log("Get ISC configuration unsuccessful!!\r\n");
+            SAFETY_CHECKERS_log("Get ISC CBASS configuration unsuccessful!!\r\n");
         }
 
         /* Place to verify and save firewall configuration as Golden Reference */
 
         while (i > 0U)
         {
-            status = SafetyCheckers_tifsVerifyIscCfg(pIscConfig, gSafetyCheckersTifsIscCfgSize);
+            status = SafetyCheckers_tifsVerifyIscCbassCfg(pIscCbassConfig, gSafetyCheckersTifsIscCbassCfgSize);
 
             if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
             {
-                SAFETY_CHECKERS_log("ISC register mismatch with Golden Reference!!\r\n");
+                SAFETY_CHECKERS_log("ISC CBASS register mismatch with Golden Reference!!\r\n");
             }
 
             SafetyCheckersApp_softwareDelay();
@@ -162,7 +167,75 @@ void SafetyCheckersApp_tifsTest(void *args)
 
         if (status == SAFETY_CHECKERS_SOK)
         {
-            SAFETY_CHECKERS_log("No ISC register mismatch with Golden Reference\r\n");
+            SAFETY_CHECKERS_log("No ISC CBASS register mismatch with Golden Reference\r\n");
+        }
+
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        status = SafetyCheckers_tifsGetIscCcCfg(pIscCcConfig, gSafetyCheckers_TifsIscCcCfgSize);
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("Get ISC Compute Cluster configuration successful\r\n");
+        }
+        else
+        {
+            SAFETY_CHECKERS_log("Get ISC Compute Cluster configuration unsuccessful!!\r\n");
+        }
+
+        /* Place to verify and save firewall configuration as Golden Reference */
+
+        while (i > 0U)
+        {
+            status = SafetyCheckers_tifsVerifyIscCcCfg(pIscCcConfig, gSafetyCheckers_TifsIscCcCfgSize);
+
+            if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+            {
+                SAFETY_CHECKERS_log("ISC Compute Cluster register mismatch with Golden Reference!!\r\n");
+            }
+
+            SafetyCheckersApp_softwareDelay();
+            i--;
+        }
+
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("No ISC Compute Cluster register mismatch with Golden Reference\r\n");
+        }
+
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        status = SafetyCheckers_tifsGetIscRaCfg(pIscRaConfig, gSafetyCheckers_TifsIscRaCfgSize);
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("Get ISC RA configuration successful\r\n");
+        }
+        else
+        {
+            SAFETY_CHECKERS_log("Get ISC RA configuration unsuccessful!!\r\n");
+        }
+
+        /* Place to verify and save firewall configuration as Golden Reference */
+
+        while (i > 0U)
+        {
+            status = SafetyCheckers_tifsVerifyIscRaCfg(pIscRaConfig, gSafetyCheckers_TifsIscRaCfgSize);
+
+            if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+            {
+                SAFETY_CHECKERS_log("ISC RA register mismatch with Golden Reference!!\r\n");
+            }
+
+            SafetyCheckersApp_softwareDelay();
+            i--;
+        }
+
+        if (status == SAFETY_CHECKERS_SOK)
+        {
+            SAFETY_CHECKERS_log("No ISC RA register mismatch with Golden Reference\r\n");
         }
 
     }

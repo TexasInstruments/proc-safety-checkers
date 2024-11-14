@@ -32,7 +32,7 @@
 
 /* 
  * Auto-generated cfg using the command 'python tifs_checkers_create_isc_config.py j722s' 
- * on 08/08/2024 11:47:28 
+ * on 18/11/2024 21:52:06 
  */
 
 #ifndef TIFS_CHECKERS_ISC_CONFIG_H_
@@ -65,7 +65,7 @@ extern "C" {
 /* ========================================================================== */
 
 /* Static ISC configuration to be populated with register values */ 
-SafetyCheckers_TifsIscConfig gSafetyCheckers_TifsIscConfig[] = {
+SafetyCheckers_TifsIscCbassConfig gSafetyCheckers_TifsIscCbassConfig[] = {
 {
 	32U,	/* iscId */
 	1U,	/* numRegions */
@@ -214,7 +214,61 @@ SafetyCheckers_TifsIscConfig gSafetyCheckers_TifsIscConfig[] = {
 	},
 },
 {
+	146U,	/* iscId */
+	8U,	/* numRegions */
+	8U,	/* maxNumRegions */
+	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+	},
+},
+{
+	147U,	/* iscId */
+	8U,	/* numRegions */
+	8U,	/* maxNumRegions */
+	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+	},
+},
+{
+	149U,	/* iscId */
+	1U,	/* numRegions */
+	1U,	/* maxNumRegions */
+	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+	},
+},
+{
+	159U,	/* iscId */
+	1U,	/* numRegions */
+	1U,	/* maxNumRegions */
+	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+	},
+},
+{
 	160U,	/* iscId */
+	1U,	/* numRegions */
+	1U,	/* maxNumRegions */
+	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+	},
+},
+{
+	161U,	/* iscId */
 	1U,	/* numRegions */
 	1U,	/* maxNumRegions */
 	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
@@ -259,7 +313,51 @@ SafetyCheckers_TifsIscConfig gSafetyCheckers_TifsIscConfig[] = {
 		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
 		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
 	},
+},
+{
+	192U,	/* iscId */
+	4U,	/* numRegions */
+	4U,	/* maxNumRegions */
+	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+	},
+},
+{
+	193U,	/* iscId */
+	4U,	/* numRegions */
+	4U,	/* maxNumRegions */
+	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+	},
+},
+{
+	208U,	/* iscId */
+	1U,	/* numRegions */
+	1U,	/* maxNumRegions */
+	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+	},
+},
+{
+	209U,	/* iscId */
+	1U,	/* numRegions */
+	1U,	/* maxNumRegions */
+	{ 	/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */
+		{0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U},
+	},
 }
+};
+
+SafetyCheckers_TifsIscCcConfig gSafetyCheckers_TifsIscCcConfig[] = {
+};
+
+SafetyCheckers_TifsIscRaConfig gSafetyCheckers_TifsIscRaConfig[] = {
 };
 
 #ifdef __cplusplus
