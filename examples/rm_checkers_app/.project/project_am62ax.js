@@ -35,10 +35,16 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am62ax/r5f",
         "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src",
-		"${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc",
+        "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc",
         "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/am62ax/",
         "${MCU_PLUS_SDK_PATH}/source/drivers/",
         "${MCU_PLUS_SDK_PATH}/source/drivers/hw_include/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/sciclient/include/tisci/am62ax/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/rm_pm_hal_src/include/tisci/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/rm_pm_hal_src/include/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/rm_pm_hal_src/include/tisci/pm/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/udma/hw_include/",
     ],
 };
 
@@ -60,8 +66,8 @@ const libs_freertos_dm_r5f = {
 		"drivers.am62ax.dm-r5f.ti-arm-clang.${ConfigName}.lib",
 		"board.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
 		"sciserver.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
-        "safety_checkers.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
-        "dm_stub.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
+        	"safety_checkers.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
+       		"dm_stub.am62ax.r5f.ti-arm-clang.${ConfigName}.lib",
 	],
 };
 

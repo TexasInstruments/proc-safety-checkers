@@ -41,6 +41,12 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/am62px/",
         "${MCU_PLUS_SDK_PATH}/source/drivers/",
         "${MCU_PLUS_SDK_PATH}/source/drivers/hw_include/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/sciclient/include/tisci/am62px/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/rm_pm_hal_src/include/tisci/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/rm_pm_hal_src/include/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/rm_pm_hal_src/include/tisci/pm/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/udma/hw_include/",
     ],
 };
 

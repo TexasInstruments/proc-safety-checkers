@@ -47,6 +47,17 @@
 #include <safety_checkers_soc.h>
 #include <safety_checkers_rm.h>
 
+#if defined(SOC_AM62AX) || defined(SOC_AM62PX)
+#include <tisci_devices.h>
+#include <lib/bitops.h>
+#include <tisci_pm_device.h>
+#include <tisci_protocol.h>
+#include <sciclient.h>
+#include <csl_pktdma.h>
+#include <string.h>
+#endif
+
+
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -60,8 +71,13 @@
 #define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_NAVSS0_UDMASS_UDMAP0_CFG_TCHAN_BASE)
 #elif defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 #define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_NAVSS0_BCDMA0_CFG_TCHAN_BASE)
-#elif defined(SOC_AM62AX) || defined(SOC_AM62PX) || defined(SOC_AM62X) || defined(SOC_J722S)
+#elif defined(SOC_AM62X) || defined(SOC_J722S)
 #define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_DMASS0_PKTDMA_TCHAN_BASE)
+#elif defined(SOC_AM62AX) || defined(SOC_AM62PX)
+#define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_DMASS0_PKTDMA_TCHAN_BASE)
+#define SRC_IDX_BASE_GPIO_BANK                                            (CSLR_WKUP_MCU_GPIOMUX_INTROUTER0_IN_MCU_GPIO0_GPIO_BANK_0)
+#define GPIO_MUX_INTROUTER_ID                                             (TISCI_DEV_WKUP_MCU_GPIOMUX_INTROUTER0)
+#define GPIOMUX_INTROUTER_OUTP                                            (6U)
 #endif
 
 /* ========================================================================== */
@@ -98,10 +114,22 @@ static int32_t SafetyCheckersApp_rmRegMismatch();
 
 void SafetyCheckersApp_rmRun(void *arg0)
 {
-	uint32_t status = SAFETY_CHECKERS_SOK;
-   	
-    status = SafetyCheckersApp_rmregVerify();
-	
+	int32_t status = SAFETY_CHECKERS_SOK;
+
+/* Due to AM62a's design, DMSS CSI is not turned on by default */
+#if defined(SOC_AM62AX)
+    status = Sciclient_pmSetModuleState(TISCI_DEV_DMASS1_INTAGGR_0,
+                                        TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
+                                        (TISCI_MSG_FLAG_AOP |
+                                        TISCI_MSG_FLAG_DEVICE_RESET_ISO),
+                                        0xFFFFFFFFU);
+#endif
+
+    if(status == SAFETY_CHECKERS_SOK)
+    {
+        status = SafetyCheckersApp_rmregVerify();
+    }
+
     if(status == SAFETY_CHECKERS_SOK)
 	{
 		status = SafetyCheckersApp_rmBuffCheck();
@@ -170,13 +198,49 @@ static int32_t SafetyCheckersApp_rmregVerify()
     return (status);
 }
 
+#if defined(SOC_AM62AX) || (defined(SOC_AM62PX) && !defined (BUILD_WKUP_R5))
+static void SafetyCheckersApp_gpioIrqSet(void)
+{
+    int32_t                             retVal;
+    struct tisci_msg_rm_irq_set_req     rmIrqReq;
+    struct tisci_msg_rm_irq_set_resp    rmIrqResp;
+
+    rmIrqReq.valid_params           = 0U;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_ID_VALID;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_HOST_IRQ_VALID;
+    rmIrqReq.global_event           = 0U;
+    rmIrqReq.src_id                 = GPIO_MUX_INTROUTER_ID;
+    rmIrqReq.src_index              = SRC_IDX_BASE_GPIO_BANK;
+    rmIrqReq.dst_id                 = GPIO_MUX_INTROUTER_ID;
+    rmIrqReq.dst_host_irq           = GPIOMUX_INTROUTER_OUTP;
+    rmIrqReq.ia_id                  = 0U;
+    rmIrqReq.vint                   = 0U;
+    rmIrqReq.vint_status_bit_index  = 0U;
+    rmIrqReq.secondary_host         = TISCI_MSG_VALUE_RM_UNUSED_SECONDARY_HOST;
+
+    retVal = Sciclient_rmIrqSetRaw(&rmIrqReq, &rmIrqResp, SystemP_WAIT_FOREVER);
+    if(0 != retVal)
+    {
+        SAFETY_CHECKERS_log("[Error] Sciclient event config failed!!!\r\n");
+    }
+
+    return;
+}
+#endif
+
 static int32_t SafetyCheckersApp_rmRegMismatch(void)
 {
 	int32_t     status = SAFETY_CHECKERS_SOK;
-	uint32_t    readVal;
 
-	readVal = CSL_REG32_RD(SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR);
-	CSL_REG32_WR(SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR,~readVal);
+/* Only WKUP R5 has firewall permissions to edit RM registers directly */
+#if !defined(SOC_AM62AX) || (defined(SOC_AM62PX) && defined(BUILD_WKUP_R5))
+    uint32_t    readVal;
+
+    readVal = CSL_REG32_RD(SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR);
+    CSL_REG32_WR(SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR,~readVal);
+#else
+    SafetyCheckersApp_gpioIrqSet();
+#endif
 
 	status = SafetyCheckers_rmVerifyRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
 

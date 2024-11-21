@@ -65,6 +65,12 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/safety_checkers/src/soc/am62px/ \
 	-I${MCU_PLUS_SDK_PATH}/source/drivers/ \
 	-I${MCU_PLUS_SDK_PATH}/source/drivers/hw_include/ \
+	-I${MCU_PLUS_SDK_PATH}/source/drivers/sciclient/include/tisci/am62px/ \
+	-I${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/rm_pm_hal_src/include/tisci/ \
+	-I${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/rm_pm_hal_src/include/ \
+	-I${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/rm_pm_hal/rm_pm_hal_src/include/tisci/pm/ \
+	-I${MCU_PLUS_SDK_PATH}/source/drivers/device_manager/ \
+	-I${MCU_PLUS_SDK_PATH}/source/drivers/udma/hw_include/ \
 	-Igenerated \
 
 DEFINES_common := \
