@@ -122,7 +122,7 @@ extern "C" {
  *         array. Within the loop, calculates the total talLength by multiplying the regNum and regArrayLen
  *         in the array. The final result is the total size of register array for RM module registers.
  */
-#define SAFETY_CHECKERS_RM_REGDUMP_SIZE                           (3470U)
+#define SAFETY_CHECKERS_RM_REGDUMP_SIZE                           (3471U)
 
 /** \brief RM IR module base addresses */
 #define SAFETY_CHECKERS_RM_BA0_IR						          (CSL_TIMESYNC_EVENT_INTROUTER0_INTR_ROUTER_CFG_BASE)
