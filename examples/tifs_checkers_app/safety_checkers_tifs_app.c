@@ -64,6 +64,7 @@ void SafetyCheckersApp_tifsNegativeTests(void *args);
 void SafetyCheckersApp_tifsRegisterMismatchTest(void *args);
 void SafetyCheckersApp_tifsInvalidInputTest(void *args);
 void SafetyCheckersApp_softwareDelay(void);
+void SafetyCheckersApp_tifsTestStatus(void);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -79,7 +80,8 @@ uint32_t gSafetyCheckersTifsCfgSize = TIFS_CHECKER_FWL_MAX_NUM;
 uint32_t gSafetyCheckersTifsIscCbassCfgSize = sizeof(gSafetyCheckers_TifsIscCbassConfig)/sizeof(gSafetyCheckers_TifsIscCbassConfig[0]);
 uint32_t gSafetyCheckers_TifsIscCcCfgSize = sizeof(gSafetyCheckers_TifsIscCcConfig)/sizeof(gSafetyCheckers_TifsIscCcConfig[0]);
 uint32_t gSafetyCheckers_TifsIscRaCfgSize = sizeof(gSafetyCheckers_TifsIscRaConfig)/sizeof(gSafetyCheckers_TifsIscRaConfig[0]);
-
+uint32_t gSafetyCheckers_TifsPassCountStatus =0;
+uint32_t gSafetyCheckers_TifsTotalTestCases = 3;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -249,7 +251,14 @@ void SafetyCheckersApp_tifsTest(void *args)
     {
         SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
     }
-
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        gSafetyCheckers_TifsPassCountStatus++;
+    }
+    else
+    {
+        gSafetyCheckers_TifsPassCountStatus = 0;
+    }
 }
 
 void SafetyCheckersApp_tifsTestFwlOpenClose(void *args)
@@ -277,6 +286,15 @@ void SafetyCheckersApp_tifsTestFwlOpenClose(void *args)
     else
     {
         SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        gSafetyCheckers_TifsPassCountStatus++;
+    }
+    else
+    {
+        gSafetyCheckers_TifsPassCountStatus = 0;
     }
 }
 
@@ -419,8 +437,26 @@ void SafetyCheckersApp_tifsInvalidInputTest(void *args)
             SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
         }
     }
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        gSafetyCheckers_TifsPassCountStatus++;
+    }
+    else
+    {
+        gSafetyCheckers_TifsPassCountStatus = 0;
+    }
 }
-
+void SafetyCheckersApp_tifsTestStatus(void)
+{
+    if (gSafetyCheckers_TifsPassCountStatus == gSafetyCheckers_TifsTotalTestCases)
+    {
+        SAFETY_CHECKERS_log("All tests are PASSED\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Some tests fail\r\n");
+    }
+}
 void SafetyCheckersApp_softwareDelay(void)
 {
     volatile uint32_t i = 0U;
