@@ -70,6 +70,7 @@
 void SafetyCheckersApp_tifsTest(void *args);
 void SafetyCheckersApp_tifsTestFwlOpenClose(void *args);
 void SafetyCheckersApp_tifsNegativeTests(void *args);
+void SafetyCheckersApp_tifsTestStatus(void *args);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -105,7 +106,7 @@ static void SafetyCheckersApp_tifsTestTask(void* a0, void* a1)
         SafetyCheckersApp_tifsTestFwlOpenClose(NULL);
         SafetyCheckersApp_tifsNegativeTests(NULL);
     }
-
+    SafetyCheckersApp_tifsTestStatus(NULL);
     #if defined LDRA_DYN_COVERAGE_EXIT
     UART_printf("\n LDRA ENTRY... \n");
     upload_execution_history();
