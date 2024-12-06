@@ -320,7 +320,7 @@ int32_t SafetyCheckers_csirxGetVimRegCfgIntrNum(uint32_t intrNum,
     else
     {
         maxIntrs   = pRegs->INFO;
-        if (0 < maxIntrs)
+        if (0U < maxIntrs)
         {
             num_groups = maxIntrs / CSL_VIM_NUM_INTRS_PER_GROUP;
             vimCfg->pRegs = (CSL_vimRegs*)(SAFETY_CHECKERS_CSIRX_UDMA_CSI_VIM_CONFIG_BASE_ADDRESS);
@@ -378,7 +378,7 @@ int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVimCfg *v
     else
     {
         maxIntrs   = pRegs->INFO;
-        if (0 < maxIntrs)
+        if (0U < maxIntrs)
         {
             num_groups = maxIntrs / CSL_VIM_NUM_INTRS_PER_GROUP;
             intrNum    = vimCfg->intrNum;
