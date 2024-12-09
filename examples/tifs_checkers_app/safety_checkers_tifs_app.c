@@ -450,7 +450,7 @@ void SafetyCheckersApp_tifsTestStatus(void)
 {
     if (gSafetyCheckers_TifsPassCountStatus == gSafetyCheckers_TifsTotalTestCases)
     {
-        SAFETY_CHECKERS_log("All tests are PASSED\r\n");
+        SAFETY_CHECKERS_log("All tests have PASSED\r\n");
     }
     else
     {
