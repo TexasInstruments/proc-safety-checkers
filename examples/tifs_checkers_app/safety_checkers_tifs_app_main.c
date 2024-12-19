@@ -106,12 +106,13 @@ static void SafetyCheckersApp_tifsTestTask(void* a0, void* a1)
         SafetyCheckersApp_tifsTestFwlOpenClose(NULL);
         SafetyCheckersApp_tifsNegativeTests(NULL);
     }
-    SafetyCheckersApp_tifsTestStatus(NULL);
+
     #if defined LDRA_DYN_COVERAGE_EXIT
     UART_printf("\n LDRA ENTRY... \n");
     upload_execution_history();
     UART_printf("\n LDRA EXIT... \n");
     #endif
+    SafetyCheckersApp_tifsTestStatus(NULL);
 }
 
 int32_t main(void)
