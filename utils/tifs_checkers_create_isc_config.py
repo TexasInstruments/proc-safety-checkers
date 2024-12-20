@@ -36,6 +36,13 @@ import re
 import sys
 from datetime import datetime
 
+# Maximum number of regions for CBASS ISC
+ISC_CBASS_MAX_REGIONS: int = 32
+# Maximum number of regions for CC ISC
+ISC_CC_MAX_REGIONS: int = 255
+# Maximum number of regions for RA ISC
+ISC_RA_MAX_REGIONS: int = 1024
+
 
 ####################### Function Definiton #######################
 
@@ -152,7 +159,7 @@ def print_isc_data(output_filename, isc_dict_cbass, isc_dict_cc, isc_dict_ra):
                 elif type(value) is list:
                     output_file.write("\t{ \t/* ISC registers for a given region : {controlReg0, controlReg1, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */\n")
                     n = int(isc_dict_cbass[keys]["num_regions"][:-1])
-                    for i in range(n):
+                    for i in range(ISC_CBASS_MAX_REGIONS):
                         output_file.write("\t\t{")
                         for ele in value:
                             output_file.write("0x0U, ")
@@ -183,7 +190,7 @@ def print_isc_data(output_filename, isc_dict_cbass, isc_dict_cc, isc_dict_ra):
                 elif type(value) is list:
                     output_file.write("\t{ \t/* ISC registers for a given region : {privId, lock} */\n")
                     n = int(isc_dict_cc[keys]["num_regions"][:-1])
-                    for i in range(n):
+                    for i in range(ISC_CC_MAX_REGIONS):
                         output_file.write("\t\t{")
                         for ele in value:
                             output_file.write("0x0U, ")
@@ -211,7 +218,7 @@ def print_isc_data(output_filename, isc_dict_cbass, isc_dict_cc, isc_dict_ra):
                 elif type(value) is list:
                     output_file.write("\t{ \t/* ISC registers for a given region : {controlReg1, controlReg2} */\n")
                     n = int(isc_dict_ra[keys]["num_regions"][:-1])
-                    for i in range(n):
+                    for i in range(ISC_RA_MAX_REGIONS):
                         output_file.write("\t\t{")
                         for ele in value:
                             output_file.write("0x0U, ")

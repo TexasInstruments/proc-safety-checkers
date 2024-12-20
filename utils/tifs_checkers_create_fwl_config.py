@@ -36,6 +36,8 @@ import re
 import sys
 from datetime import datetime
 
+# Maximum number of regions for FWL
+FWL_MAX_REGIONS: int = 36
 
 ####################### Function Definiton #######################
 
@@ -122,7 +124,7 @@ def print_fwl_data(output_filename, fwl_dict):
                 elif type(value) is list:
                     output_file.write("\t{ \t/* Firewall registers for a given region : {controlReg, privId0, privId1, privId2, startAddrLow, startAddrHigh, endAddrLow, endAddrHigh} */\n")
                     n = int(fwl_dict[keys]["num_regions"][:-1])
-                    for i in range(n):
+                    for i in range(FWL_MAX_REGIONS):
                         output_file.write("\t\t{")
                         for ele in value:
                             output_file.write("0x0U, ")
