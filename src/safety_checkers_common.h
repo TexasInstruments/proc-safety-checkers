@@ -71,6 +71,10 @@ extern "C" {
 #define SAFETY_CHECKERS_REG_DATA_MISMATCH                            (-2)
 /** \brief Safety checkers status Insufficient Buffer */
 #define SAFETY_CHECKERS_INSUFFICIENT_BUFF                            (-3)
+/** \brief Safety checkers FLAG OK */
+#define SAFETY_CHECKERS_FLAG_OK                                      (0xA5U)
+/** \brief Safety checkers FLAG ERROR */
+#define SAFETY_CHECKERS_FLAG_ERR                                     (0x5AU)
 
 /** \brief Safety checkers default ID */
 #define SAFETY_CHECKERS_PM_DEFAULT_ID                                (0x0U)
