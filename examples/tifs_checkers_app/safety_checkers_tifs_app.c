@@ -59,13 +59,13 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-void SafetyCheckersApp_tifsTestFwlOpenClose(void *args);
-void SafetyCheckersApp_tifsNegativeTests(void *args);
+void SafetyCheckersApp_tifsTestFwlOpenClose(void);
+void SafetyCheckersApp_tifsNegativeTests(void);
 void SafetyCheckersApp_tifsRegisterMismatchTest(void);
 void SafetyCheckersApp_tifsInvalidInputTest(void);
 void SafetyCheckersApp_softwareDelay(void);
 void SafetyCheckersApp_tifsTestStatus(void);
-void SafetyCheckersApp_tifsTest(void *args);
+void SafetyCheckersApp_tifsTest(void);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -88,7 +88,7 @@ uint32_t gSafetyCheckers_TifsTotalTestCases = 8U;
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void SafetyCheckersApp_tifsTest(void *args)
+void SafetyCheckersApp_tifsTest(void)
 {
     uint32_t i = SAFETY_LOOP_ITERATIONS;
     int32_t status_fwl_open = SAFETY_CHECKERS_FAIL;
@@ -315,7 +315,7 @@ void SafetyCheckersApp_tifsTest(void *args)
     }
 }
 
-void SafetyCheckersApp_tifsTestFwlOpenClose(void *args)
+void SafetyCheckersApp_tifsTestFwlOpenClose(void)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
 
@@ -352,7 +352,7 @@ void SafetyCheckersApp_tifsTestFwlOpenClose(void *args)
     }
 }
 
-void SafetyCheckersApp_tifsNegativeTests(void *args)
+void SafetyCheckersApp_tifsNegativeTests(void)
 {
     SAFETY_CHECKERS_log("\n---------- Register mismatch test ----------\r\n\n");
     SafetyCheckersApp_tifsRegisterMismatchTest();
