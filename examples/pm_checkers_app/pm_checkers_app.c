@@ -188,11 +188,6 @@ void SafetyCheckersApp_pmRun(void *arg0)
         {
             status = SafetyCheckersApp_pmPerfTest();
    	    }
-
-        if(SAFETY_CHECKERS_SOK == status)
-        {
-            SAFETY_CHECKERS_log("\nAll tests have PASSED.\r\n");
-        }
     }
 
 #if defined LDRA_DYN_COVERAGE_EXIT
@@ -200,6 +195,11 @@ void SafetyCheckersApp_pmRun(void *arg0)
     upload_execution_history();
     SAFETY_CHECKERS_log("\n LDRA EXIT... \r\n");
 #endif
+
+    if(SAFETY_CHECKERS_SOK == status)
+    {
+        SAFETY_CHECKERS_log("\nAll tests have PASSED.\r\n");
+    }
 
 	return;
 }

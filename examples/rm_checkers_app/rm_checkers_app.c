@@ -139,6 +139,12 @@ void SafetyCheckersApp_rmRun(void *arg0)
 	{
 		status = SafetyCheckersApp_rmPerfTest();
 	}
+	
+#if defined LDRA_DYN_COVERAGE_EXIT
+    SAFETY_CHECKERS_log("\n LDRA ENTRY... \r\n");
+    upload_execution_history();
+    SAFETY_CHECKERS_log("\n LDRA EXIT... \r\n");
+#endif
 
 	if(status == SAFETY_CHECKERS_SOK)
 	{
@@ -148,12 +154,6 @@ void SafetyCheckersApp_rmRun(void *arg0)
 	{
 		SAFETY_CHECKERS_log("\n One or more RM safety checkers apps have failed \r\n");
 	}
-	
-#if defined LDRA_DYN_COVERAGE_EXIT
-    SAFETY_CHECKERS_log("\n LDRA ENTRY... \r\n");
-    upload_execution_history();
-    SAFETY_CHECKERS_log("\n LDRA EXIT... \r\n");
-#endif
 
 	return;
 }
