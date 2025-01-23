@@ -99,6 +99,7 @@ int32_t SafetyCheckersApp_pmWarmResetRun(void *arg0)
     else
     {
         SAFETY_CHECKERS_log("\nWarm Reset example Passed\r\n");
+        SAFETY_CHECKERS_log("\nAll tests have passed\r\n");
     }
 
 #if defined LDRA_DYN_COVERAGE_EXIT

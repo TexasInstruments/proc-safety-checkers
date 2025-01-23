@@ -105,6 +105,8 @@ static void SafetyCheckersApp_rmCheckersTask(void* a0, void* a1)
     status = Board_init(boardCfg);
     if(status == SAFETY_CHECKERS_SOK)
     {
+        /* Wait 5 secs for sciserver execution to complete */
+        Osal_delay(5000);
         SafetyCheckersApp_rmRun(NULL);
     }
 }
