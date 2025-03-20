@@ -87,6 +87,9 @@ extern SafetyCheckers_CsirxRegData gSafetyCheckers_CsirxRegData[SAFETY_CHECKERS_
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+/**
+ * Design: SAFETY_CHECKERS-402
+ */
 int32_t SafetyCheckers_csirxGetRegCfg(uintptr_t *regCfg,
                                       uint32_t regType,
                                       uint32_t instance)
@@ -122,6 +125,9 @@ int32_t SafetyCheckers_csirxGetRegCfg(uintptr_t *regCfg,
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-401
+ */
 int32_t SafetyCheckers_csirxVerifyRegCfg(const uintptr_t *regCfg,
                                          uint32_t regType,
                                          uint32_t instance)
@@ -160,6 +166,9 @@ int32_t SafetyCheckers_csirxVerifyRegCfg(const uintptr_t *regCfg,
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-401
+ */
 int32_t SafetyCheckers_csirxVerifyCsiAvailBandwidth(void *drvHandle, uint32_t fps)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
@@ -191,6 +200,9 @@ int32_t SafetyCheckers_csirxVerifyCsiAvailBandwidth(void *drvHandle, uint32_t fp
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-402
+ */
 int32_t SafetyCheckers_csirxGetVimCfg(void *drvHandle, SafetyCheckers_CsirxVimCfg *vimCfg)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
@@ -224,6 +236,9 @@ int32_t SafetyCheckers_csirxGetVimCfg(void *drvHandle, SafetyCheckers_CsirxVimCf
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-401
+ */
 int32_t SafetyCheckers_csirxVerifyVimCfg(void *drvHandle, SafetyCheckers_CsirxVimCfg *vimCfg)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
@@ -253,6 +268,9 @@ int32_t SafetyCheckers_csirxVerifyVimCfg(void *drvHandle, SafetyCheckers_CsirxVi
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-402
+ */
 int32_t SafetyCheckers_csirxGetSensorCfg(void *i2cHandle,
                                          uint32_t slaveAddr,
                                          uint16_t (*regData)[3U])
@@ -279,6 +297,9 @@ int32_t SafetyCheckers_csirxGetSensorCfg(void *i2cHandle,
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-401
+ */
 int32_t SafetyCheckers_csirxVerifySensorCfg(void *i2cHandle,
                                             uint32_t slaveAddr,
                                             uint16_t (*regData)[3])
