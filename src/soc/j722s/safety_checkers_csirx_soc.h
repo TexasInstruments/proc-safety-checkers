@@ -313,6 +313,22 @@ typedef struct
     /**< 4-bit orderid value */
 } SafetyCheckers_CsirxQoSSettings;
 
+/**
+ *  struct CsirxI2cTrxnCfg
+ *  \brief Structure to store I2C transaction configuration
+ */
+typedef struct
+{
+    uint8_t regAddr;
+    /**< I2C register offset address */
+    uint8_t *regData;
+    /**< I2C register data buffer */
+    uint8_t numOfBytes;
+    /**< Receive data width */
+    uint32_t i2cTimeout;
+    /**< I2C driver timeout value */
+} SafetyCheckers_CsirxI2cTrxnCfg;
+
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
@@ -374,19 +390,13 @@ int32_t SafetyCheckers_csirxVerifyQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSet
  *
  * \param   handle      Low level driver handle
  * \param   slaveAddr   I2C slave address
- * \param   regAddr     I2C register offset address
- * \param   regData     I2C register data buffer
- * \param   numOfBytes  Receive data width
- * \param   i2cTimeout  I2C driver timeout value 
+ * \param   i2cTrxnCfg      I2C transaction configuration
  *
  * \return  SAFETY_CHECKERS_SOK in case of success or appropriate error code.
  */
 int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
-                                                uint32_t slaveAddr,
-                                                uint8_t regAddr,
-                                                uint8_t *regData,
-                                                uint8_t numOfBytes,
-                                                uint32_t i2cTimeout);
+                                         uint32_t slaveAddr,
+                                         SafetyCheckers_CsirxI2cTrxnCfg* i2cTrxnCfg);
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */

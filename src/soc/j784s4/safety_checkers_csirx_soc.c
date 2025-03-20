@@ -430,15 +430,12 @@ int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVimCfg *v
 
 int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
                                          uint32_t slaveAddr,
-                                         uint8_t regAddr,
-                                         uint8_t *regData,
-                                         uint8_t numOfBytes,
-                                         uint32_t i2cTimeout)
+                                         SafetyCheckers_CsirxI2cTrxnCfg* i2cTrxnCfg)
 {
 
     int32_t  ret = SAFETY_CHECKERS_SOK;
     I2C_Transaction transaction;
-    uint8_t regAddrLocal = regAddr;
+    uint8_t regAddrLocal = i2cTrxnCfg->regAddr;
 
     I2C_Handle i2cHandle = (I2C_Handle)handle;
 
@@ -450,7 +447,7 @@ int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
     transaction.writeCount   = 1;
     transaction.readBuf      = NULL;
     transaction.readCount    = 0;
-    transaction.timeout      = i2cTimeout;
+    transaction.timeout      = i2cTrxnCfg->i2cTimeout;
 
     ret = I2C_transfer(i2cHandle, &transaction);
     if(I2C_STS_SUCCESS != ret)
@@ -461,8 +458,8 @@ int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
     {
         transaction.writeBuf     = NULL;
         transaction.writeCount   = 0;
-        transaction.readBuf      = regData;
-        transaction.readCount    = numOfBytes;
+        transaction.readBuf      = i2cTrxnCfg->regData;
+        transaction.readCount    = i2cTrxnCfg->numOfBytes;
 
         ret = I2C_transfer(i2cHandle, &transaction);
         if(I2C_STS_SUCCESS != ret)

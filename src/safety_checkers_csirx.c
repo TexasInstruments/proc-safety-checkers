@@ -276,6 +276,7 @@ int32_t SafetyCheckers_csirxGetSensorCfg(void *i2cHandle,
                                          uint16_t (*regData)[3U])
 {
     uint8_t regVal = 0U, regAddr8;
+    SafetyCheckers_CsirxI2cTrxnCfg i2cTrxnCfg;
     uint16_t cnt = 0U;
     int32_t  status = SAFETY_CHECKERS_SOK;
 
@@ -288,7 +289,11 @@ int32_t SafetyCheckers_csirxGetSensorCfg(void *i2cHandle,
         while(SAFETY_CHECKERS_CSIRX_SENSOR_CFG_END_MARKER != regData[cnt][0U])
         {
             regAddr8 = (uint8_t)(regData[cnt][0U] & 0xFFU);
-            status = SafetyCheckers_csirxi2c8BitRegRd(i2cHandle, slaveAddr, regAddr8, &regVal, 0x1U, 0x1000U);
+            i2cTrxnCfg.regAddr = regAddr8;
+            i2cTrxnCfg.regData = &regVal;
+            i2cTrxnCfg.numOfBytes = 0x1U;
+            i2cTrxnCfg.i2cTimeout = 0x1000U;
+            status = SafetyCheckers_csirxi2c8BitRegRd(i2cHandle, slaveAddr, &i2cTrxnCfg);
             regData[cnt][1U] = (uint16_t)(regVal & 0xFFU);
             cnt++;
         }
@@ -305,6 +310,7 @@ int32_t SafetyCheckers_csirxVerifySensorCfg(void *i2cHandle,
                                             uint16_t (*regData)[3])
 {
     uint8_t regVal = 0U, regAddr8;
+    SafetyCheckers_CsirxI2cTrxnCfg i2cTrxnCfg;
     uint8_t regValVerif;
     uint32_t cnt = 0U;
     int32_t  status = SAFETY_CHECKERS_SOK;
@@ -320,8 +326,11 @@ int32_t SafetyCheckers_csirxVerifySensorCfg(void *i2cHandle,
         {
             regAddr8 = (uint8_t)(regData[cnt][0U] & 0xFFU);
             regValVerif = (uint8_t)(regData[cnt][1U] & 0xFFU);
-            status = SafetyCheckers_csirxi2c8BitRegRd(i2cHandle, slaveAddr, regAddr8, &regVal, 0x1,
-                                         0x1000U);
+            i2cTrxnCfg.regAddr = regAddr8;
+            i2cTrxnCfg.regData = &regVal;
+            i2cTrxnCfg.numOfBytes = 0x1U;
+            i2cTrxnCfg.i2cTimeout = 0x1000U;
+            status = SafetyCheckers_csirxi2c8BitRegRd(i2cHandle, slaveAddr, &i2cTrxnCfg);
             mismatchCnt |= regValVerif ^ regVal;
             if(mismatchCnt != 0U)
             {
