@@ -396,7 +396,7 @@ int32_t SafetyCheckers_csirxVerifyQoSCfg(SafetyCheckers_CsirxQoSSettings *qosSet
  */
 int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
                                          uint32_t slaveAddr,
-                                         SafetyCheckers_CsirxI2cTrxnCfg* i2cTrxnCfg);
+                                         const SafetyCheckers_CsirxI2cTrxnCfg* i2cTrxnCfg);
 
 /* ========================================================================== */
 /*                       Static Function Definitions                          */

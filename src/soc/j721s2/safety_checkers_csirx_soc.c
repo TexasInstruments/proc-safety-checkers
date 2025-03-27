@@ -394,7 +394,7 @@ int32_t SafetyCheckers_csirxVerifyVimRegCfgIntrNum(SafetyCheckers_CsirxVimCfg *v
 
 int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
                                          uint32_t slaveAddr,
-                                         SafetyCheckers_CsirxI2cTrxnCfg* i2cTrxnCfg)
+                                         const SafetyCheckers_CsirxI2cTrxnCfg* i2cTrxnCfg)
 {
 
     int32_t  ret = SAFETY_CHECKERS_SOK;
