@@ -424,29 +424,42 @@ int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
 {
 
     int32_t  ret = SAFETY_CHECKERS_SOK;
-    uint8_t tx[5];                                                            
+    I2C_Transaction transaction;
+    uint8_t regAddrLocal = i2cTrxnCfg->regAddr;
 
-    I2C_Transaction transaction;                                              
-                                                                              
     I2C_Handle i2cHandle = (I2C_Handle)handle;                                
                                                                               
     /* Initializes the I2C transaction structure with default values */       
     I2C_Transaction_init(&transaction);                                       
                                                                               
     transaction.slaveAddress = slaveAddr;                                     
-    transaction.writeBuf     = &tx[0];                                        
+    transaction.writeBuf     = &regAddrLocal;                                        
     transaction.writeCount   = 1;                                             
-    transaction.readBuf      = &tx[1];                                          
+    transaction.readBuf      = NULL;                                          
     transaction.readCount    = 1;
     transaction.timeout      = i2cTrxnCfg->i2cTimeout;                                             
                                                                               
-    tx[0] = i2cTrxnCfg->regAddr;                                                          
-                                                                              
-    ret = I2C_transfer(i2cHandle, &transaction); 
-    *i2cTrxnCfg->regData    = tx[1];
-    if (I2C_STS_SUCCESS == ret)
+    ret = I2C_transfer(i2cHandle, &transaction);
+    if(I2C_STS_SUCCESS != ret)
     {
-        ret = SAFETY_CHECKERS_SOK;
+        ret = SAFETY_CHECKERS_FAIL;
+    }
+    else
+    {
+        transaction.writeBuf     = NULL;
+        transaction.writeCount   = 0;
+        transaction.readBuf      = i2cTrxnCfg->regData;
+        transaction.readCount    = i2cTrxnCfg->numOfBytes;
+
+        ret = I2C_transfer(i2cHandle, &transaction);
+        if(I2C_STS_SUCCESS != ret)
+        {
+            ret = SAFETY_CHECKERS_FAIL;
+        }
+        else
+        {
+            ret = SAFETY_CHECKERS_SOK;
+        }
     }
 
     return ret;
