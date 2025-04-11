@@ -317,23 +317,24 @@ void SafetyCheckersApp_tifsTest(void)
 
 void SafetyCheckersApp_tifsTestFwlOpenClose(void)
 {
-    int32_t status = SAFETY_CHECKERS_SOK;
+    int32_t status_open = SAFETY_CHECKERS_FAIL;
+    int32_t status_close = SAFETY_CHECKERS_FAIL;
 
     SAFETY_CHECKERS_log("\n------ Test firewall request messages ------\r\n\n");
 
-    status = SafetyCheckers_tifsReqFwlOpen();
+    status_open = SafetyCheckers_tifsReqFwlOpen();
 
-    if (status == SAFETY_CHECKERS_SOK)
+    if (status_open == SAFETY_CHECKERS_SOK)
     {
         SAFETY_CHECKERS_log("Firewall open successful\r\n");
+        status_close = SafetyCheckers_tifsReqFwlClose();
     }
     else
     {
         SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
     }
 
-    status = SafetyCheckers_tifsReqFwlClose();
-    if (status == SAFETY_CHECKERS_SOK)
+    if (status_close == SAFETY_CHECKERS_SOK)
     {
         SAFETY_CHECKERS_log("Firewall close successful\r\n");
     }
@@ -342,7 +343,7 @@ void SafetyCheckersApp_tifsTestFwlOpenClose(void)
         SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
     }
 
-    if (status == SAFETY_CHECKERS_SOK)
+    if ((status_open == SAFETY_CHECKERS_SOK) && (status_close == SAFETY_CHECKERS_SOK))
     {
         gSafetyCheckers_TifsPassCountStatus++;
     }
