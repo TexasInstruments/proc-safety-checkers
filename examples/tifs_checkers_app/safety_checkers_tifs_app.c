@@ -47,7 +47,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* None */
+#define SAFETY_LOOP_ITERATIONS 10U
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -65,6 +65,7 @@ void SafetyCheckersApp_tifsRegisterMismatchTest(void *args);
 void SafetyCheckersApp_tifsInvalidInputTest(void *args);
 void SafetyCheckersApp_softwareDelay(void);
 void SafetyCheckersApp_tifsTestStatus(void);
+void SafetyCheckersApp_tifsTest(void *args);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -89,7 +90,8 @@ uint32_t gSafetyCheckers_TifsTotalTestCases = 3;
 
 void SafetyCheckersApp_tifsTest(void *args)
 {
-    uint32_t status = SAFETY_CHECKERS_SOK, i = 10U;
+    int32_t status = SAFETY_CHECKERS_SOK;
+    uint32_t i = SAFETY_LOOP_ITERATIONS;
 
     SAFETY_CHECKERS_log("\n--------- Test TIFS safety checker ---------\r\n\n");
 
@@ -120,7 +122,7 @@ void SafetyCheckersApp_tifsTest(void *args)
 
         /* Place to verify and save firewall configuration as Golden Reference */
 
-        while (i > 0)
+        while (i > 0U)
         {
             status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
 
@@ -154,6 +156,7 @@ void SafetyCheckersApp_tifsTest(void *args)
 
         /* Place to verify and save firewall configuration as Golden Reference */
 
+        i = SAFETY_LOOP_ITERATIONS;
         while (i > 0U)
         {
             status = SafetyCheckers_tifsVerifyIscCbassCfg(pIscCbassConfig, gSafetyCheckersTifsIscCbassCfgSize);
@@ -188,6 +191,7 @@ void SafetyCheckersApp_tifsTest(void *args)
 
         /* Place to verify and save firewall configuration as Golden Reference */
 
+        i = SAFETY_LOOP_ITERATIONS;
         while (i > 0U)
         {
             status = SafetyCheckers_tifsVerifyIscCcCfg(pIscCcConfig, gSafetyCheckers_TifsIscCcCfgSize);
@@ -222,7 +226,8 @@ void SafetyCheckersApp_tifsTest(void *args)
 
         /* Place to verify and save firewall configuration as Golden Reference */
 
-        while (i > 0U)
+        i = SAFETY_LOOP_ITERATIONS;
+		while (i > 0U)
         {
             status = SafetyCheckers_tifsVerifyIscRaCfg(pIscRaConfig, gSafetyCheckers_TifsIscRaCfgSize);
 
@@ -263,7 +268,7 @@ void SafetyCheckersApp_tifsTest(void *args)
 
 void SafetyCheckersApp_tifsTestFwlOpenClose(void *args)
 {
-    uint32_t status = SAFETY_CHECKERS_SOK;
+    int32_t status = SAFETY_CHECKERS_SOK;
 
     SAFETY_CHECKERS_log("\n------ Test firewall request messages ------\r\n\n");
 
@@ -308,7 +313,7 @@ void SafetyCheckersApp_tifsNegativeTests(void *args)
 
 void SafetyCheckersApp_tifsRegisterMismatchTest(void *args)
 {
-    uint32_t status = SAFETY_CHECKERS_SOK;
+    int32_t status = SAFETY_CHECKERS_SOK;
 
     status = SafetyCheckers_tifsReqFwlOpen();
 
@@ -340,15 +345,15 @@ void SafetyCheckersApp_tifsRegisterMismatchTest(void *args)
         /* Update firewall registers */
         const struct tisci_msg_fwl_set_firewall_region_req fwl_set_req =
             {
-                .fwl_id = 1,
-                .region = 0,
-                .n_permission_regs = 3,
-                .control = 0x30A,
-                .permissions[0] = 0xC3FFFF,
-                .permissions[1] = 0xC3FFFF,
-                .permissions[2] = 0xC3FFFF,
-                .start_address = 0x00000000,
-                .end_address = 0xFFFFFFFF,
+                .fwl_id = 1U,
+                .region = 0U,
+                .n_permission_regs = 3U,
+                .control = 0x30AU,
+                .permissions[0] = 0xC3FFFFU,
+                .permissions[1] = 0xC3FFFFU,
+                .permissions[2] = 0xC3FFFFU,
+                .start_address = 0x00000000U,
+                .end_address = 0xFFFFFFFFU,
             };
 
         struct tisci_msg_fwl_set_firewall_region_resp fwl_set_resp = {0};
@@ -382,7 +387,7 @@ void SafetyCheckersApp_tifsRegisterMismatchTest(void *args)
 
 void SafetyCheckersApp_tifsInvalidInputTest(void *args)
 {
-    uint32_t  status = SAFETY_CHECKERS_SOK;
+    int32_t  status = SAFETY_CHECKERS_SOK;
 
     status = SafetyCheckers_tifsReqFwlOpen();
 
@@ -460,5 +465,8 @@ void SafetyCheckersApp_tifsTestStatus(void)
 void SafetyCheckersApp_softwareDelay(void)
 {
     volatile uint32_t i = 0U;
-    for (i = 0; i < 0xFFFFF; i++);
+    for (i = 0U; i < 0xFFFFFU; i++)
+    {
+        ;
+    }
 }
