@@ -48,6 +48,7 @@
 /* ========================================================================== */
 
 #define SAFETY_LOOP_ITERATIONS 10U
+#define SCICLIENT_PASS 0U
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -82,7 +83,7 @@ uint32_t gSafetyCheckersTifsIscCbassCfgSize = sizeof(gSafetyCheckers_TifsIscCbas
 uint32_t gSafetyCheckers_TifsIscCcCfgSize = sizeof(gSafetyCheckers_TifsIscCcConfig)/sizeof(gSafetyCheckers_TifsIscCcConfig[0]);
 uint32_t gSafetyCheckers_TifsIscRaCfgSize = sizeof(gSafetyCheckers_TifsIscRaConfig)/sizeof(gSafetyCheckers_TifsIscRaConfig[0]);
 uint32_t gSafetyCheckers_TifsPassCountStatus = 0U;
-uint32_t gSafetyCheckers_TifsTotalTestCases = 8U;
+uint32_t gSafetyCheckers_TifsTotalTestCases = 9U;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -363,7 +364,8 @@ void SafetyCheckersApp_tifsNegativeTests(void)
 
 void SafetyCheckersApp_tifsRegisterMismatchTest(void)
 {
-    int32_t status = SAFETY_CHECKERS_SOK;
+    int32_t status = SAFETY_CHECKERS_FAIL;
+    int32_t status_sciclient = SAFETY_CHECKERS_FAIL;
 
     status = SafetyCheckers_tifsReqFwlOpen();
 
@@ -389,49 +391,71 @@ void SafetyCheckersApp_tifsRegisterMismatchTest(void)
         {
             SAFETY_CHECKERS_log("Get firewall configuration unsuccessful!!\r\n");
         }
+    }
 
-        /* Place to verify and save firewall configuration as Golden Reference */
+    /* Place to verify and save firewall configuration as Golden Reference */
 
-        /* Update firewall registers */
-        const struct tisci_msg_fwl_set_firewall_region_req fwl_set_req =
-            {
-                .fwl_id = 1U,
-                .region = 0U,
-                .n_permission_regs = 3U,
-                .control = 0x30AU,
-                .permissions[0] = 0xC3FFFFU,
-                .permissions[1] = 0xC3FFFFU,
-                .permissions[2] = 0xC3FFFFU,
-                .start_address = 0x00000000U,
-                .end_address = 0xFFFFFFFFU,
-            };
-
-        struct tisci_msg_fwl_set_firewall_region_resp fwl_set_resp = {0};
-
-        status = Sciclient_firewallSetRegion(&fwl_set_req, &fwl_set_resp, SAFETY_CHECKERS_DEFAULT_TIMEOUT);
-        status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
-
-        if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+    /* Update firewall registers */
+    const struct tisci_msg_fwl_set_firewall_region_req fwl_set_req =
         {
-            SAFETY_CHECKERS_log("Firewall register mismatch with Golden Reference!!\r\n");
-        }
+            .fwl_id = 1U,
+            .region = 0U,
+            .n_permission_regs = 3U,
+            .control = 0x30AU,
+            .permissions[0] = 0xC3FFFFU,
+            .permissions[1] = 0xC3FFFFU,
+            .permissions[2] = 0xC3FFFFU,
+            .start_address = 0x00000000U,
+            .end_address = 0xFFFFFFFFU,
+        };
 
-        SafetyCheckersApp_softwareDelay();
+    struct tisci_msg_fwl_set_firewall_region_resp fwl_set_resp = {0};
 
-        if (status == SAFETY_CHECKERS_SOK)
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        status_sciclient = Sciclient_firewallSetRegion(&fwl_set_req, &fwl_set_resp, SAFETY_CHECKERS_DEFAULT_TIMEOUT);
+        if (status_sciclient == SCICLIENT_PASS)
         {
-            SAFETY_CHECKERS_log("No firewall register mismatch with Golden Reference\r\n");
-        }
-
-        status = SafetyCheckers_tifsReqFwlClose();
-        if (status == SAFETY_CHECKERS_SOK)
-        {
-            SAFETY_CHECKERS_log("Firewall close successful\n");
+            SAFETY_CHECKERS_log("Firewall region set successful\r\n");
+            status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
         }
         else
         {
-            SAFETY_CHECKERS_log("Firewall close unsuccessful!!\n");
+            SAFETY_CHECKERS_log("Firewall region set unsuccessful!!\r\n");
+            status = SAFETY_CHECKERS_FAIL;
         }
+    }
+
+    if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+    {
+        SAFETY_CHECKERS_log("Firewall register mismatch with Golden Reference!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus++;
+    }
+
+    SafetyCheckersApp_softwareDelay();
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        /*unexpected as we changed the firewall settings to different from golden reference*/
+        SAFETY_CHECKERS_log("No firewall register mismatch with Golden Reference\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    if (status == SAFETY_CHECKERS_FAIL)
+    {
+        SAFETY_CHECKERS_log("Something went wrong!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    status = SafetyCheckers_tifsReqFwlClose();
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall close successful\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
     }
 }
 
