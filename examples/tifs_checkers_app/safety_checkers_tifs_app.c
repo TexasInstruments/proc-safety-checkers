@@ -484,15 +484,15 @@ void SafetyCheckersApp_tifsInvalidInputTest(void)
         if (status == SAFETY_CHECKERS_SOK)
         {
             SAFETY_CHECKERS_log("Get firewall configuration successful\r\n");
+            /* Place to verify and save firewall configuration as Golden Reference */
+            status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
+            gSafetyCheckers_TifsPassCountStatus = 0U;
         }
         else
         {
             SAFETY_CHECKERS_log("Get firewall configuration unsuccessful!!\r\n");
+            gSafetyCheckers_TifsPassCountStatus++;
         }
-
-        /* Place to verify and save firewall configuration as Golden Reference */
-
-        status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
 
         if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
         {
@@ -506,6 +506,11 @@ void SafetyCheckersApp_tifsInvalidInputTest(void)
             SAFETY_CHECKERS_log("No firewall register mismatch with Golden Reference\r\n");
         }
 
+        if (status == SAFETY_CHECKERS_FAIL)
+        {
+            SAFETY_CHECKERS_log("Something went wrong\r\n");
+        }
+
         status = SafetyCheckers_tifsReqFwlClose();
         if (status == SAFETY_CHECKERS_SOK)
         {
@@ -516,11 +521,7 @@ void SafetyCheckersApp_tifsInvalidInputTest(void)
             SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
         }
     }
-    if (status == SAFETY_CHECKERS_SOK)
-    {
-        gSafetyCheckers_TifsPassCountStatus++;
-    }
-    else
+    if (status != SAFETY_CHECKERS_SOK)
     {
         gSafetyCheckers_TifsPassCountStatus = 0;
     }
