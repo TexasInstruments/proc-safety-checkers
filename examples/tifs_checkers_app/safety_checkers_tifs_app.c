@@ -47,8 +47,14 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+/** \brief Safety checkers Number of iterations*/
 #define SAFETY_LOOP_ITERATIONS 10U
+/** \brief SCICLIENT PASS RETURN VALUE*/
 #define SCICLIENT_PASS 0U
+/** \brief Safety checkers FLAG OK */
+#define SAFETY_CHECKERS_FLAG_OK                                      (0xA5U)
+/** \brief Safety checkers FLAG ERROR */
+#define SAFETY_CHECKERS_FLAG_ERR                                     (0x5AU)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
