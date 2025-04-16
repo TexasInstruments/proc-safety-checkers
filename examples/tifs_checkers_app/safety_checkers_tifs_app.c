@@ -71,6 +71,12 @@ void SafetyCheckersApp_tifsNegativeTests(void);
 void SafetyCheckersApp_tifsRegisterMismatchTest(void);
 void SafetyCheckersApp_tifsInvalidInputTest1(void);
 void SafetyCheckersApp_tifsInvalidInputTest2(void);
+void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfg(void);
+void SafetyCheckersApp_tifsInvalidInputTestIscRaCfg(void);
+void SafetyCheckersApp_tifsInvalidInputTestIscCcCfg(void);
+void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfgVerify(void);
+void SafetyCheckersApp_tifsInvalidInputTestIscCcCfgVerify(void);
+void SafetyCheckersApp_tifsInvalidInputTestIscRaCfgVerify(void);
 void SafetyCheckersApp_softwareDelay(void);
 void SafetyCheckersApp_tifsTestStatus(void);
 void SafetyCheckersApp_tifsTest(void);
@@ -369,6 +375,28 @@ void SafetyCheckersApp_tifsNegativeTests(void)
     SafetyCheckersApp_tifsInvalidInputTest1();
     SAFETY_CHECKERS_log("\n------------ Invalid input test 2------------\r\n\n");
     SafetyCheckersApp_tifsInvalidInputTest2();
+    
+    if (gSafetyCheckersTifsIscCbassCfgSize > 0U)
+    {
+        SAFETY_CHECKERS_log("\n------------ Invalid input test ISC CBASS Cfg------------\r\n\n");
+        SafetyCheckersApp_tifsInvalidInputTestIscCbassCfg();
+        SafetyCheckersApp_tifsInvalidInputTestIscCbassCfgVerify();
+        gSafetyCheckers_TifsTotalTestCases+=2U;
+    }
+    if (gSafetyCheckers_TifsIscCcCfgSize > 0U)
+    {
+        SAFETY_CHECKERS_log("\n------------ Invalid input test ISC CC Cfg------------\r\n\n");
+        SafetyCheckersApp_tifsInvalidInputTestIscCcCfg();
+        SafetyCheckersApp_tifsInvalidInputTestIscCcCfgVerify();
+        gSafetyCheckers_TifsTotalTestCases+=2U;
+    }
+    if (gSafetyCheckers_TifsIscRaCfgSize > 0U)
+    {
+        SAFETY_CHECKERS_log("\n------------ Invalid input test ISC RA Cfg------------\r\n\n");
+        SafetyCheckersApp_tifsInvalidInputTestIscRaCfg();
+        SafetyCheckersApp_tifsInvalidInputTestIscRaCfgVerify();
+        gSafetyCheckers_TifsTotalTestCases+=2U;
+    }
 }
 
 void SafetyCheckersApp_tifsRegisterMismatchTest(void)
@@ -487,8 +515,9 @@ void SafetyCheckersApp_tifsInvalidInputTest1(void)
 
     if (status == SAFETY_CHECKERS_SOK)
     {
-        /* Update numRegions with invalid value*/
+        /* Store original value to restore later */
         recovery_value = pFwlConfig[5].numRegions;
+        /* Update numRegions with invalid value */
         pFwlConfig[5].numRegions= 100U;
 
         status = SafetyCheckers_tifsGetFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
@@ -536,6 +565,7 @@ void SafetyCheckersApp_tifsInvalidInputTest1(void)
     {
         gSafetyCheckers_TifsPassCountStatus = 0U;
     }
+    /* Restore original value for smooth execution of rest of the tests */
     pFwlConfig[5].numRegions = recovery_value;
 }
 
@@ -564,9 +594,10 @@ void SafetyCheckersApp_tifsInvalidInputTest2(void)
         {
             SAFETY_CHECKERS_log("Get firewall configuration successful\r\n");
             /* Place to verify and save firewall configuration as Golden Reference */
-            /* Update numRegions with invalid value*/
+            /* Store original value to restore later */
             recovery_value = pFwlConfig[5].numRegions;
-            pFwlConfig[5].numRegions= 100U;
+            /* Update numRegions with invalid value */
+            pFwlConfig[5].numRegions = pFwlConfig[5].maxNumRegions + 1;
             status = SafetyCheckers_tifsVerifyFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
         }
         else
@@ -607,10 +638,404 @@ void SafetyCheckersApp_tifsInvalidInputTest2(void)
     }
     if (status != SAFETY_CHECKERS_SOK)
     {
-        gSafetyCheckers_TifsPassCountStatus = 0;
+        gSafetyCheckers_TifsPassCountStatus = 0U;
     }
-    
+
+    /* Restore original value for smooth execution of rest of the tests */
     pFwlConfig[5].numRegions = recovery_value;
+}
+
+void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfg(void)
+{
+
+    int32_t  status = SAFETY_CHECKERS_SOK;
+    uint32_t recovery_value = 0U;
+
+    status = SafetyCheckers_tifsReqFwlOpen();
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        /* Store original value to restore later */
+        recovery_value = pIscCbassConfig[0].numRegions;
+        /* Altering pIscCbassConfig to check for erroneous condition*/
+        pIscCbassConfig[0].numRegions = pIscCbassConfig[0].maxNumRegions + 1;
+        status = SafetyCheckers_tifsGetIscCbassCfg(pIscCbassConfig, gSafetyCheckersTifsIscCbassCfgSize);
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Get ISC CBASS configuration successful\r\n");
+        /* Place to verify and save firewall configuration as Golden Reference */
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    else
+    {
+        /* This is expected */
+        SAFETY_CHECKERS_log("Get ISC CBASS configuration unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus++;
+    }
+    status = SafetyCheckers_tifsReqFwlClose();
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall close successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+    }
+
+    if (status != SAFETY_CHECKERS_SOK)
+    {
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    /* Restore original value for smooth execution of rest of the tests */
+    pIscCbassConfig[0].numRegions = recovery_value;
+}
+
+void SafetyCheckersApp_tifsInvalidInputTestIscRaCfg(void)
+{
+    int32_t status = SAFETY_CHECKERS_SOK;
+    uint32_t recovery_value = 0U;
+
+    status = SafetyCheckers_tifsReqFwlOpen();
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        /* Store original value to restore later */
+        recovery_value = pIscRaConfig[0].numRegions;
+        /* Altering pIscRaConfig to check for erroneous condition */
+        pIscRaConfig[0].numRegions = pIscRaConfig[0].maxNumRegions + 1;
+        status = SafetyCheckers_tifsGetIscRaCfg(pIscRaConfig, gSafetyCheckers_TifsIscRaCfgSize);
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Get ISC RA configuration successful\r\n");
+        /* Place to verify and save firewall configuration as Golden Reference */
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    else
+    {
+        /* This is expected */
+        SAFETY_CHECKERS_log("Get ISC RA configuration unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus++;
+    }
+
+    status = SafetyCheckers_tifsReqFwlClose();
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall close successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+    }
+
+    if (status != SAFETY_CHECKERS_SOK)
+    {
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    /* Restore original value for smooth execution of rest of the tests */
+    pIscRaConfig[0].numRegions = recovery_value;
+}
+
+void SafetyCheckersApp_tifsInvalidInputTestIscCcCfg(void)
+{
+    int32_t status = SAFETY_CHECKERS_SOK;
+    uint32_t recovery_value = 0U;
+
+    status = SafetyCheckers_tifsReqFwlOpen();
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        /* Store original value to restore later */
+        recovery_value = pIscCcConfig[0].numRegions;
+        /* Altering pIscCcConfig to check for erroneous condition */
+        pIscCcConfig[0].numRegions = pIscCcConfig[0].maxNumRegions + 1;
+        status = SafetyCheckers_tifsGetIscCcCfg(pIscCcConfig, gSafetyCheckers_TifsIscCcCfgSize);
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Get ISC Compute Cluster configuration successful\r\n");
+        /* Place to verify and save firewall configuration as Golden Reference */
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    else
+    {
+        /* This is expected */
+        SAFETY_CHECKERS_log("Get ISC Compute Cluster configuration unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus++;
+    }
+
+    status = SafetyCheckers_tifsReqFwlClose();
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall close successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+    }
+
+    if (status != SAFETY_CHECKERS_SOK)
+    {
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    /* Restore original value for smooth execution of rest of the tests */
+    pIscCcConfig[0].numRegions = recovery_value;
+}
+
+void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfgVerify(void)
+{
+
+    int32_t  status = SAFETY_CHECKERS_SOK;
+    uint32_t recovery_value = 0U;
+
+    status = SafetyCheckers_tifsReqFwlOpen();
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        status = SafetyCheckers_tifsGetIscCbassCfg(pIscCbassConfig, gSafetyCheckersTifsIscCbassCfgSize);
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Get ISC CBASS configuration successful\r\n");
+        /* Store original value to restore later */
+        recovery_value = pIscCbassConfig[0].numRegions;
+        /* Altering pIscCbassConfig to check for erroneous condition*/
+        pIscCbassConfig[0].numRegions = pIscCbassConfig[0].maxNumRegions + 1;
+        /* Place to verify and save firewall configuration as Golden Reference */
+        status = SafetyCheckers_tifsVerifyIscCbassCfg(pIscCbassConfig, gSafetyCheckersTifsIscCbassCfgSize);
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Get ISC CBASS configuration unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("No ISC CBASS register mismatch with Golden Reference\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    else if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+    {
+        SAFETY_CHECKERS_log("ISC CBASS register mismatch with Golden Reference!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Something went wrong\r\n");
+        gSafetyCheckers_TifsPassCountStatus++;
+        
+    }
+    status = SafetyCheckers_tifsReqFwlClose();
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall close successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+    }
+
+    if (status != SAFETY_CHECKERS_SOK)
+    {
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    /* Restore original value for smooth execution of rest of the tests */
+    pIscCbassConfig[0].numRegions = recovery_value;
+}
+
+void SafetyCheckersApp_tifsInvalidInputTestIscCcCfgVerify(void)
+{
+    int32_t status = SAFETY_CHECKERS_SOK;
+    uint32_t recovery_value = 0U;
+
+    status = SafetyCheckers_tifsReqFwlOpen();
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        status = SafetyCheckers_tifsGetIscCcCfg(pIscCcConfig, gSafetyCheckers_TifsIscCcCfgSize);
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Get ISC Compute Cluster configuration successful\r\n");
+        /* Store original value to restore later */
+        recovery_value = pIscCcConfig[0].numRegions;
+        /* Altering pIscCcConfig to check for erroneous condition */
+        pIscCcConfig[0].numRegions = pIscCcConfig[0].maxNumRegions + 1;
+        /* Place to verify and save firewall configuration as Golden Reference */
+        status = SafetyCheckers_tifsVerifyIscCcCfg(pIscCcConfig, gSafetyCheckers_TifsIscCcCfgSize);
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Get ISC Compute Cluster configuration unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("No ISC Compute Cluster register mismatch with Golden Reference\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    else if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+    {
+        SAFETY_CHECKERS_log("ISC Compute Cluster register mismatch with Golden Reference!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Something went wrong\r\n");
+        gSafetyCheckers_TifsPassCountStatus++;
+    }
+
+    status = SafetyCheckers_tifsReqFwlClose();
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall close successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+    }
+
+    if (status != SAFETY_CHECKERS_SOK)
+    {
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    /* Restore original value for smooth execution of rest of the tests */
+    pIscCcConfig[0].numRegions = recovery_value;
+}
+
+void SafetyCheckersApp_tifsInvalidInputTestIscRaCfgVerify(void)
+{
+    int32_t status = SAFETY_CHECKERS_SOK;
+    uint32_t recovery_value = 0U;
+
+    status = SafetyCheckers_tifsReqFwlOpen();
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall open successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall open unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        status = SafetyCheckers_tifsGetIscRaCfg(pIscRaConfig, gSafetyCheckers_TifsIscRaCfgSize);
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Get ISC RA configuration successful\r\n");
+        /* Store original value to restore later */
+        recovery_value = pIscRaConfig[0].numRegions;
+        /* Altering pIscRaConfig to check for erroneous condition */
+        pIscRaConfig[0].numRegions = pIscRaConfig[0].maxNumRegions + 1;
+        /* Place to verify and save firewall configuration as Golden Reference */
+        status = SafetyCheckers_tifsVerifyIscRaCfg(pIscRaConfig, gSafetyCheckers_TifsIscRaCfgSize);
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Get ISC RA configuration unsuccessful!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("No ISC RA register mismatch with Golden Reference\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    else if (status == SAFETY_CHECKERS_REG_DATA_MISMATCH)
+    {
+        SAFETY_CHECKERS_log("ISC RA register mismatch with Golden Reference!!\r\n");
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Something went wrong\r\n");
+        gSafetyCheckers_TifsPassCountStatus++;
+    }
+
+    status = SafetyCheckers_tifsReqFwlClose();
+    if (status == SAFETY_CHECKERS_SOK)
+    {
+        SAFETY_CHECKERS_log("Firewall close successful\r\n");
+    }
+    else
+    {
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
+    }
+
+    if (status != SAFETY_CHECKERS_SOK)
+    {
+        gSafetyCheckers_TifsPassCountStatus = 0U;
+    }
+
+    /* Restore original value for smooth execution of rest of the tests */
+    pIscRaConfig[0].numRegions = recovery_value;
 }
 
 void SafetyCheckersApp_tifsTestStatus(void)
