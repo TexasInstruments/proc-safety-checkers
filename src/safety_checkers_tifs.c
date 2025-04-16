@@ -255,49 +255,47 @@ int32_t SafetyCheckers_tifsVerifyFwlCfg(const SafetyCheckers_TifsFwlConfig *fwlC
     for (i = 0U; i<size; i++)
     {
         id = fwlConfig[i].fwlId;
-        if (fwlConfig[i].numRegions <= fwlConfig[i].maxNumRegions)
-        {
-            for (j = 0U; j<fwlConfig[i].numRegions; j++)
-            {
-                mismatch = 0U;
-
-                /* Read control register and check for mismatch */
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_CONTROL_REG);
-                mismatch |= fwlConfig[i].fwlCfgPerRegion[j].controlReg ^ regData;
-
-                /* Read permission registers and check for mismatch */
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_PRIV_ID0);
-                mismatch |= fwlConfig[i].fwlCfgPerRegion[j].privId0 ^ regData;
-
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_PRIV_ID1);
-                mismatch |= fwlConfig[i].fwlCfgPerRegion[j].privId1 ^ regData;
-
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_PRIV_ID2);
-                mismatch |= fwlConfig[i].fwlCfgPerRegion[j].privId2 ^ regData;
-
-                /* Read start address and check for mismatch */
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDRL);
-                mismatch |= fwlConfig[i].fwlCfgPerRegion[j].startAddrLow ^ regData;
-
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDRH);
-                mismatch |= fwlConfig[i].fwlCfgPerRegion[j].startAddrHigh ^ regData;
-
-                /* Read end address and check for mismatch */
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRL);
-                mismatch |= fwlConfig[i].fwlCfgPerRegion[j].endAddrLow ^ regData;
-
-                regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRH);
-                mismatch |= fwlConfig[i].fwlCfgPerRegion[j].endAddrHigh ^ regData;
-
-                if(mismatch != 0U)
-                {
-                    status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
-                }
-            }
-        }
-        else
+        if (fwlConfig[i].numRegions > fwlConfig[i].maxNumRegions)
         {
             status = SAFETY_CHECKERS_FAIL;
+            break;
+        }
+        for (j = 0U; j<fwlConfig[i].numRegions; j++)
+        {
+            mismatch = 0U;
+
+            /* Read control register and check for mismatch */
+            regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_CONTROL_REG);
+            mismatch |= fwlConfig[i].fwlCfgPerRegion[j].controlReg ^ regData;
+
+            /* Read permission registers and check for mismatch */
+            regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_PRIV_ID0);
+            mismatch |= fwlConfig[i].fwlCfgPerRegion[j].privId0 ^ regData;
+
+            regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_PRIV_ID1);
+            mismatch |= fwlConfig[i].fwlCfgPerRegion[j].privId1 ^ regData;
+
+            regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_PRIV_ID2);
+            mismatch |= fwlConfig[i].fwlCfgPerRegion[j].privId2 ^ regData;
+
+            /* Read start address and check for mismatch */
+            regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDRL);
+            mismatch |= fwlConfig[i].fwlCfgPerRegion[j].startAddrLow ^ regData;
+
+            regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_START_ADDRH);
+            mismatch |= fwlConfig[i].fwlCfgPerRegion[j].startAddrHigh ^ regData;
+
+            /* Read end address and check for mismatch */
+            regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRL);
+            mismatch |= fwlConfig[i].fwlCfgPerRegion[j].endAddrLow ^ regData;
+
+            regData = SafetyCheckers_tifsGetFwlRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRH);
+            mismatch |= fwlConfig[i].fwlCfgPerRegion[j].endAddrHigh ^ regData;
+
+            if(mismatch != 0U)
+            {
+                status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
+            }
         }
     }
     return status;
@@ -363,31 +361,28 @@ int32_t SafetyCheckers_tifsVerifyIscCcCfg(const SafetyCheckers_TifsIscCcConfig *
     for (i = 0U; i<size; i++)
     {
         id = iscConfig[i].iscIdOffset;
-        if (iscConfig[i].numRegions <= iscConfig[i].maxNumRegions)
-        {
-            for (j = 0U; j<iscConfig[i].numRegions; j++)
-                {
-                    mismatch = 0U;
-
-                    /* Read privId and lock register from isc registers */
-                    regData = SafetyCheckers_tifsGetIscCcRegValue(id, j, SAFETY_CHECKERS_TIFS_ISC_PRIVID_REG);
-                    mismatch |= iscConfig[i].iscCfgPerRegionCc[j].privId  ^ regData;
-
-                    regData = SafetyCheckers_tifsGetIscCcRegValue(id, j, SAFETY_CHECKERS_TIFS_ISC_PRIVID_LOCK_REG);
-                    mismatch |= iscConfig[i].iscCfgPerRegionCc[j].lock  ^ regData;
-
-                    if(mismatch != 0U)
-                    {
-                        status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
-                    }
-                }
-        }
-        else
+        if (iscConfig[i].numRegions > iscConfig[i].maxNumRegions)
         {
             status = SAFETY_CHECKERS_FAIL;
+            break;
         }
-    }
-        
+        for (j = 0U; j<iscConfig[i].numRegions; j++)
+        {
+            mismatch = 0U;
+
+            /* Read privId and lock register from isc registers */
+            regData = SafetyCheckers_tifsGetIscCcRegValue(id, j, SAFETY_CHECKERS_TIFS_ISC_PRIVID_REG);
+            mismatch |= iscConfig[i].iscCfgPerRegionCc[j].privId  ^ regData;
+
+            regData = SafetyCheckers_tifsGetIscCcRegValue(id, j, SAFETY_CHECKERS_TIFS_ISC_PRIVID_LOCK_REG);
+            mismatch |= iscConfig[i].iscCfgPerRegionCc[j].lock  ^ regData;
+
+            if(mismatch != 0U)
+            {
+                status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
+            }
+        }
+    }   
     return status;
 }
 
@@ -399,31 +394,28 @@ int32_t SafetyCheckers_tifsVerifyIscRaCfg(const SafetyCheckers_TifsIscRaConfig *
     for (i = 0U; i<size; i++)
     {
         id = iscConfig[i].iscId;
-        if (iscConfig[i].numRegions <= iscConfig[i].maxNumRegions)
-        {
-            for (j = 0U; j<iscConfig[i].maxNumRegions; j++)
-                {
-                    mismatch = 0U;
-
-                    /* Read privId and lock register from isc registers */
-                    regData = SafetyCheckers_tifsGetIscRaRegValue(id, j, SAFETY_CHECKERS_TIFS_ISC_CONTROL0_REG);
-                    mismatch |= iscConfig[i].iscCfgPerRegionRa[j].controlReg1  ^ regData;
-
-                    regData = SafetyCheckers_tifsGetIscRaRegValue(id, j, SAFETY_CHECKERS_TIFS_ISC_CONTROL1_REG);
-                    mismatch |= iscConfig[i].iscCfgPerRegionRa[j].controlReg2  ^ regData;
-
-                    if(mismatch != 0U)
-                    {
-                        status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
-                    }
-                }
-        }
-        else
+        if (iscConfig[i].numRegions > iscConfig[i].maxNumRegions)
         {
             status = SAFETY_CHECKERS_FAIL;
+            break;
+        }
+        for (j = 0U; j<iscConfig[i].maxNumRegions; j++)
+        {
+            mismatch = 0U;
+
+            /* Read privId and lock register from isc registers */
+            regData = SafetyCheckers_tifsGetIscRaRegValue(id, j, SAFETY_CHECKERS_TIFS_ISC_CONTROL0_REG);
+            mismatch |= iscConfig[i].iscCfgPerRegionRa[j].controlReg1  ^ regData;
+
+            regData = SafetyCheckers_tifsGetIscRaRegValue(id, j, SAFETY_CHECKERS_TIFS_ISC_CONTROL1_REG);
+            mismatch |= iscConfig[i].iscCfgPerRegionRa[j].controlReg2  ^ regData;
+
+            if(mismatch != 0U)
+            {
+                status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
+            }
         }
     }
-        
     return status;
 }
 
