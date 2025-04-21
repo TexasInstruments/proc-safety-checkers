@@ -160,6 +160,9 @@ int32_t SafetyCheckers_tifsGetFwlCfg(SafetyCheckers_TifsFwlConfig *fwlConfig, ui
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-368
+*/
 int32_t SafetyCheckers_tifsGetIscCbassCfg(SafetyCheckers_TifsIscCbassConfig *iscConfig, uint32_t size)
 {
     uint32_t i = 0U, j = 0U, id = 0U;
@@ -194,6 +197,9 @@ int32_t SafetyCheckers_tifsGetIscCbassCfg(SafetyCheckers_TifsIscCbassConfig *isc
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-368
+*/
 int32_t SafetyCheckers_tifsGetIscCcCfg(SafetyCheckers_TifsIscCcConfig *iscConfig, uint32_t size)
 {
     uint32_t i = 0U, j = 0U, id = 0U;
@@ -219,6 +225,9 @@ int32_t SafetyCheckers_tifsGetIscCcCfg(SafetyCheckers_TifsIscCcConfig *iscConfig
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-368
+*/
 int32_t SafetyCheckers_tifsGetIscRaCfg(SafetyCheckers_TifsIscRaConfig *iscConfig, uint32_t size)
 {
     uint32_t i = 0U, j = 0U, id = 0U;
@@ -301,6 +310,9 @@ int32_t SafetyCheckers_tifsVerifyFwlCfg(const SafetyCheckers_TifsFwlConfig *fwlC
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-310
+*/
 int32_t SafetyCheckers_tifsVerifyIscCbassCfg(const SafetyCheckers_TifsIscCbassConfig *iscConfig, uint32_t size)
 {
     uint32_t i = 0U, j = 0U, regData = 0U, id = 0U, mismatch = 0U;
@@ -353,6 +365,9 @@ int32_t SafetyCheckers_tifsVerifyIscCbassCfg(const SafetyCheckers_TifsIscCbassCo
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-310
+*/
 int32_t SafetyCheckers_tifsVerifyIscCcCfg(const SafetyCheckers_TifsIscCcConfig *iscConfig, uint32_t size)
 {
     uint32_t i = 0U, j = 0U, regData = 0U, id = 0U, mismatch = 0U;
@@ -386,6 +401,9 @@ int32_t SafetyCheckers_tifsVerifyIscCcCfg(const SafetyCheckers_TifsIscCcConfig *
     return status;
 }
 
+/**
+ * Design: SAFETY_CHECKERS-310
+*/
 int32_t SafetyCheckers_tifsVerifyIscRaCfg(const SafetyCheckers_TifsIscRaConfig *iscConfig, uint32_t size)
 {
     uint32_t i = 0U, j = 0U, regData = 0U, id = 0U, mismatch = 0U;
