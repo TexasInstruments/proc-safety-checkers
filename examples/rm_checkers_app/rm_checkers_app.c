@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2024 Texas Instruments Incorporated
- * 
+ *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
  *  are met:
@@ -53,7 +53,7 @@
 #include <tisci_pm_device.h>
 #include <tisci_protocol.h>
 #include <sciclient.h>
-#include <csl_pktdma.h>
+#include <drivers/udma.h>
 #include <string.h>
 #endif
 
@@ -139,7 +139,7 @@ void SafetyCheckersApp_rmRun(void *arg0)
 	{
 		status = SafetyCheckersApp_rmPerfTest();
 	}
-	
+
 #if defined LDRA_DYN_COVERAGE_EXIT
     SAFETY_CHECKERS_log("\n LDRA ENTRY... \r\n");
     upload_execution_history();
@@ -165,7 +165,7 @@ void SafetyCheckersApp_rmRun(void *arg0)
 static int32_t SafetyCheckersApp_rmregVerify()
 {
     int32_t      status = SAFETY_CHECKERS_SOK;
-	
+
     status = SafetyCheckers_rmGetRegCfg(rmRegisterData, SAFETY_CHECKERS_RM_REGDUMP_SIZE);
     if(status == SAFETY_CHECKERS_SOK)
     {
@@ -178,7 +178,7 @@ static int32_t SafetyCheckersApp_rmregVerify()
 		{
 			SAFETY_CHECKERS_log("\nRM register test fail!!\r\n\n");
 		}
-		
+
     /* SafetyCheckersApp_rmRegMismatch function is not supported
      * for mcu R5 and main R5 cores in am62p and j722s.
      * Because only WakeUp R5 has write permission to change
@@ -194,7 +194,7 @@ static int32_t SafetyCheckersApp_rmregVerify()
 	}
 #endif
     }
-	
+
     return (status);
 }
 
@@ -259,7 +259,7 @@ static int32_t SafetyCheckersApp_rmRegMismatch(void)
 }
 
 static int32_t SafetyCheckersApp_rmBuffCheck(void)
-{	
+{
 	int32_t      status = SAFETY_CHECKERS_FAIL;
     uintptr_t    rmRegisterData[SAFETY_CHECKERS_RM_INSUFFICIENT_SIZE];
 
