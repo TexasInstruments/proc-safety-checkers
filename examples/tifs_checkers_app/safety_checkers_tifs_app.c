@@ -72,14 +72,18 @@ void SafetyCheckersApp_tifsRegisterMismatchTest(void);
 void SafetyCheckersApp_tifsInvalidInputTest1(void);
 void SafetyCheckersApp_tifsInvalidInputTest2(void);
 void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfg(void);
-void SafetyCheckersApp_tifsInvalidInputTestIscRaCfg(void);
-void SafetyCheckersApp_tifsInvalidInputTestIscCcCfg(void);
 void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfgVerify(void);
-void SafetyCheckersApp_tifsInvalidInputTestIscCcCfgVerify(void);
-void SafetyCheckersApp_tifsInvalidInputTestIscRaCfgVerify(void);
 void SafetyCheckersApp_softwareDelay(void);
 void SafetyCheckersApp_tifsTestStatus(void);
 void SafetyCheckersApp_tifsTest(void);
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
+void SafetyCheckersApp_tifsInvalidInputTestIscCcCfg(void);
+void SafetyCheckersApp_tifsInvalidInputTestIscCcCfgVerify(void);
+#endif
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
+void SafetyCheckersApp_tifsInvalidInputTestIscRaCfg(void);
+void SafetyCheckersApp_tifsInvalidInputTestIscRaCfgVerify(void);
+#endif
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -87,16 +91,19 @@ void SafetyCheckersApp_tifsTest(void);
 
 SafetyCheckers_TifsFwlConfig *pFwlConfig = gSafetyCheckers_TifsFwlConfig;
 SafetyCheckers_TifsIscCbassConfig *pIscCbassConfig = gSafetyCheckers_TifsIscCbassConfig;
-SafetyCheckers_TifsIscCcConfig *pIscCcConfig = gSafetyCheckers_TifsIscCcConfig;
-SafetyCheckers_TifsIscRaConfig *pIscRaConfig = gSafetyCheckers_TifsIscRaConfig;
-
-
 uint32_t gSafetyCheckersTifsCfgSize = TIFS_CHECKER_FWL_MAX_NUM;
 uint32_t gSafetyCheckersTifsIscCbassCfgSize = sizeof(gSafetyCheckers_TifsIscCbassConfig)/sizeof(gSafetyCheckers_TifsIscCbassConfig[0]);
-uint32_t gSafetyCheckers_TifsIscCcCfgSize = sizeof(gSafetyCheckers_TifsIscCcConfig)/sizeof(gSafetyCheckers_TifsIscCcConfig[0]);
-uint32_t gSafetyCheckers_TifsIscRaCfgSize = sizeof(gSafetyCheckers_TifsIscRaConfig)/sizeof(gSafetyCheckers_TifsIscRaConfig[0]);
 uint32_t gSafetyCheckers_TifsPassCountStatus = 0U;
-uint32_t gSafetyCheckers_TifsTotalTestCases = 10U;
+uint32_t gSafetyCheckers_TifsTotalTestCases = 8U;
+
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
+SafetyCheckers_TifsIscCcConfig *pIscCcConfig = gSafetyCheckers_TifsIscCcConfig;
+uint32_t gSafetyCheckers_TifsIscCcCfgSize = sizeof(gSafetyCheckers_TifsIscCcConfig)/sizeof(gSafetyCheckers_TifsIscCcConfig[0]);
+#endif
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
+SafetyCheckers_TifsIscRaConfig *pIscRaConfig = gSafetyCheckers_TifsIscRaConfig;
+uint32_t gSafetyCheckers_TifsIscRaCfgSize = sizeof(gSafetyCheckers_TifsIscRaConfig)/sizeof(gSafetyCheckers_TifsIscRaConfig[0]);
+#endif
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -109,8 +116,12 @@ void SafetyCheckersApp_tifsTest(void)
     int32_t status_fwl_close = SAFETY_CHECKERS_FAIL;
     int32_t status_fwl_cfg = SAFETY_CHECKERS_FAIL;
     int32_t status_isc_cbass_cfg = SAFETY_CHECKERS_FAIL;
+    #if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
     int32_t status_isc_cc_cfg = SAFETY_CHECKERS_FAIL;
+    #endif
+    #if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
     int32_t status_isc_ra_cfg = SAFETY_CHECKERS_FAIL;
+    #endif
     uint32_t flag_agg = SAFETY_CHECKERS_FLAG_OK;
 
     SAFETY_CHECKERS_log("\n--------- Test TIFS safety checker ---------\r\n\n");
@@ -218,6 +229,8 @@ void SafetyCheckersApp_tifsTest(void)
         gSafetyCheckers_TifsPassCountStatus = 0U;
     }
 
+    #if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
+    gSafetyCheckers_TifsTotalTestCases++;
     flag_agg = SAFETY_CHECKERS_FLAG_OK;
     if (status_fwl_open == SAFETY_CHECKERS_SOK)
     {
@@ -264,7 +277,10 @@ void SafetyCheckersApp_tifsTest(void)
         gSafetyCheckers_TifsPassCountStatus = 0U;
         SAFETY_CHECKERS_log("Get ISC Compute Cluster configuration unsuccessful!!\r\n");
     }
+    #endif
 
+    #if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
+    gSafetyCheckers_TifsTotalTestCases++;
     flag_agg = SAFETY_CHECKERS_FLAG_OK;
     if (status_fwl_open == SAFETY_CHECKERS_SOK)
     {
@@ -311,6 +327,7 @@ void SafetyCheckersApp_tifsTest(void)
         gSafetyCheckers_TifsPassCountStatus = 0U;
         SAFETY_CHECKERS_log("Get ISC RA configuration unsuccessful!!\r\n");
     }
+    #endif
 
     if (status_fwl_open == SAFETY_CHECKERS_SOK)
     {
@@ -363,7 +380,7 @@ void SafetyCheckersApp_tifsTestFwlOpenClose(void)
     }
     else
     {
-        gSafetyCheckers_TifsPassCountStatus = 0;
+        gSafetyCheckers_TifsPassCountStatus = 0U;
     }
 }
 
@@ -381,22 +398,26 @@ void SafetyCheckersApp_tifsNegativeTests(void)
         SAFETY_CHECKERS_log("\n------------ Invalid input test ISC CBASS Cfg------------\r\n\n");
         SafetyCheckersApp_tifsInvalidInputTestIscCbassCfg();
         SafetyCheckersApp_tifsInvalidInputTestIscCbassCfgVerify();
-        gSafetyCheckers_TifsTotalTestCases+=2U;
+        gSafetyCheckers_TifsTotalTestCases += 2U;
     }
+    #if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
     if (gSafetyCheckers_TifsIscCcCfgSize > 0U)
     {
         SAFETY_CHECKERS_log("\n------------ Invalid input test ISC CC Cfg------------\r\n\n");
         SafetyCheckersApp_tifsInvalidInputTestIscCcCfg();
         SafetyCheckersApp_tifsInvalidInputTestIscCcCfgVerify();
-        gSafetyCheckers_TifsTotalTestCases+=2U;
+        gSafetyCheckers_TifsTotalTestCases += 2U;
     }
+    #endif
+    #if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
     if (gSafetyCheckers_TifsIscRaCfgSize > 0U)
     {
         SAFETY_CHECKERS_log("\n------------ Invalid input test ISC RA Cfg------------\r\n\n");
         SafetyCheckersApp_tifsInvalidInputTestIscRaCfg();
         SafetyCheckersApp_tifsInvalidInputTestIscRaCfgVerify();
-        gSafetyCheckers_TifsTotalTestCases+=2U;
+        gSafetyCheckers_TifsTotalTestCases += 2U;
     }
+    #endif
 }
 
 void SafetyCheckersApp_tifsRegisterMismatchTest(void)
@@ -518,7 +539,7 @@ void SafetyCheckersApp_tifsInvalidInputTest1(void)
         /* Store original value to restore later */
         recovery_value = pFwlConfig[5].numRegions;
         /* Update numRegions with invalid value */
-        pFwlConfig[5].numRegions= 100U;
+        pFwlConfig[5].numRegions = 100U;
 
         status = SafetyCheckers_tifsGetFwlCfg(pFwlConfig, gSafetyCheckersTifsCfgSize);
         if (status == SAFETY_CHECKERS_SOK)
@@ -703,6 +724,7 @@ void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfg(void)
     pIscCbassConfig[0].numRegions = recovery_value;
 }
 
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 void SafetyCheckersApp_tifsInvalidInputTestIscRaCfg(void)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
@@ -760,7 +782,9 @@ void SafetyCheckersApp_tifsInvalidInputTestIscRaCfg(void)
     /* Restore original value for smooth execution of rest of the tests */
     pIscRaConfig[0].numRegions = recovery_value;
 }
+#endif
 
+#if defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2) 
 void SafetyCheckersApp_tifsInvalidInputTestIscCcCfg(void)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
@@ -818,6 +842,7 @@ void SafetyCheckersApp_tifsInvalidInputTestIscCcCfg(void)
     /* Restore original value for smooth execution of rest of the tests */
     pIscCcConfig[0].numRegions = recovery_value;
 }
+#endif
 
 void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfgVerify(void)
 {
@@ -892,6 +917,7 @@ void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfgVerify(void)
     pIscCbassConfig[0].numRegions = recovery_value;
 }
 
+#if defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 void SafetyCheckersApp_tifsInvalidInputTestIscCcCfgVerify(void)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
@@ -964,7 +990,9 @@ void SafetyCheckersApp_tifsInvalidInputTestIscCcCfgVerify(void)
     /* Restore original value for smooth execution of rest of the tests */
     pIscCcConfig[0].numRegions = recovery_value;
 }
+#endif
 
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 void SafetyCheckersApp_tifsInvalidInputTestIscRaCfgVerify(void)
 {
     int32_t status = SAFETY_CHECKERS_SOK;
@@ -1037,6 +1065,7 @@ void SafetyCheckersApp_tifsInvalidInputTestIscRaCfgVerify(void)
     /* Restore original value for smooth execution of rest of the tests */
     pIscRaConfig[0].numRegions = recovery_value;
 }
+#endif 
 
 void SafetyCheckersApp_tifsTestStatus(void)
 {

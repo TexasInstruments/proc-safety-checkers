@@ -78,8 +78,12 @@
 
 static uint32_t SafetyCheckers_tifsGetFwlRegValue(uint32_t fwlId, uint32_t fwlRegion, uint32_t fwlReg);
 static uint32_t SafetyCheckers_tifsGetIscCbassRegValue(uint32_t iscId, uint32_t iscRegion, uint32_t iscReg);
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
 static uint32_t SafetyCheckers_tifsGetIscCcRegValue(uint32_t iscIdOffset, uint32_t iscRegion, uint32_t iscReg);
+#endif
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 static uint32_t SafetyCheckers_tifsGetIscRaRegValue(uint32_t iscId, uint32_t iscRegion, uint32_t iscReg);
+#endif
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -197,6 +201,7 @@ int32_t SafetyCheckers_tifsGetIscCbassCfg(SafetyCheckers_TifsIscCbassConfig *isc
     return status;
 }
 
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
 /**
  * Design: SAFETY_CHECKERS-368
 */
@@ -224,7 +229,9 @@ int32_t SafetyCheckers_tifsGetIscCcCfg(SafetyCheckers_TifsIscCcConfig *iscConfig
     }
     return status;
 }
+#endif
 
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 /**
  * Design: SAFETY_CHECKERS-368
 */
@@ -252,6 +259,7 @@ int32_t SafetyCheckers_tifsGetIscRaCfg(SafetyCheckers_TifsIscRaConfig *iscConfig
     }
     return status;
 }
+#endif
 
 /**
  * Design: SAFETY_CHECKERS-42
@@ -365,6 +373,7 @@ int32_t SafetyCheckers_tifsVerifyIscCbassCfg(const SafetyCheckers_TifsIscCbassCo
     return status;
 }
 
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
 /**
  * Design: SAFETY_CHECKERS-310
 */
@@ -400,7 +409,9 @@ int32_t SafetyCheckers_tifsVerifyIscCcCfg(const SafetyCheckers_TifsIscCcConfig *
     }
     return status;
 }
+#endif
 
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 /**
  * Design: SAFETY_CHECKERS-310
 */
@@ -436,6 +447,7 @@ int32_t SafetyCheckers_tifsVerifyIscRaCfg(const SafetyCheckers_TifsIscRaConfig *
     }
     return status;
 }
+#endif
 
 /**
  * Design: SAFETY_CHECKERS-43
@@ -496,6 +508,7 @@ static uint32_t SafetyCheckers_tifsGetIscCbassRegValue(uint32_t iscId, uint32_t 
     return iscRegValue;
 }
 
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
 static uint32_t SafetyCheckers_tifsGetIscCcRegValue(uint32_t iscIdOffset, uint32_t iscRegion, uint32_t iscReg)
 {
     uint32_t iscBlkBaseAddr = 0U, iscBlkOffset = 0U, iscRegionOffset = 0U, iscRegValue = 0U;
@@ -505,7 +518,9 @@ static uint32_t SafetyCheckers_tifsGetIscCcRegValue(uint32_t iscIdOffset, uint32
     iscRegValue = CSL_REG32_RD(iscRegionOffset + iscReg);
     return iscRegValue;
 }
+#endif
 
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 static uint32_t SafetyCheckers_tifsGetIscRaRegValue(uint32_t iscId, uint32_t iscRegion, uint32_t iscReg)
 {
     uint32_t iscBlkBaseAddr = 0U, iscBlkOffset = 0U, iscRegionOffset = 0U, iscRegValue = 0U;
@@ -515,3 +530,4 @@ static uint32_t SafetyCheckers_tifsGetIscRaRegValue(uint32_t iscId, uint32_t isc
     iscRegValue = CSL_REG32_RD(iscRegionOffset + iscReg);
     return iscRegValue;
 }
+#endif

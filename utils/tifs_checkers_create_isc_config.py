@@ -175,64 +175,66 @@ def print_isc_data(output_filename, isc_dict_cbass, isc_dict_cc, isc_dict_ra):
         output_file.truncate()
         output_file.write("\n};")
 
-        output_file.write("\n\nSafetyCheckers_TifsIscCcConfig gSafetyCheckers_TifsIscCcConfig[] = { \n")
+        if (len(isc_dict_cc) != 0):
+            output_file.write("\n\nSafetyCheckers_TifsIscCcConfig gSafetyCheckers_TifsIscCcConfig[] = { \n")
 
-        # Iterating over the keys in the dictionary and writing to file along with necessary comments
-        for keys in isc_dict_cc:
-            output_file.write("{\n")
-            for key,value in isc_dict_cc[keys].items():
-                if key == "isc_id":
-                    if value in isc_ccid:
-                        output_file.write("\t" + isc_cc_offset_id[isc_ccid.index(value)] + "," + "\t/* iscIdOffset */" + "\n")
-                    else:
-                        output_file.write("\t" + value + "," + "\t/* iscIdOffset */" + "\n")
-                elif key == "num_regions":
-                    output_file.write("\t" + value + "," + "\t/* numRegions */" + "\n")
-                elif key == "max_num_regions":
-                    output_file.write("\t" + value + "," + "\t/* maxNumRegions */" + "\n")
-                elif type(value) is list:
-                    output_file.write("\t{ \t/* ISC registers for a given region : {privId, lock} */\n")
-                    n = int(isc_dict_cc[keys]["num_regions"][:-1])
-                    for i in range(ISC_CC_MAX_REGIONS):
-                        output_file.write("\t\t{")
-                        for ele in value:
-                            output_file.write("0x0U, ")
-                        output_file.seek(output_file.tell()-2)
-                        output_file.truncate()
-                        output_file.write("},\n")
-                    output_file.write("\t},\n")
-            output_file.write("},\n")
-        output_file.seek(output_file.tell()-2)
-        output_file.truncate()
-        output_file.write("\n};")
+            # Iterating over the keys in the dictionary and writing to file along with necessary comments
+            for keys in isc_dict_cc:
+                output_file.write("{\n")
+                for key,value in isc_dict_cc[keys].items():
+                    if key == "isc_id":
+                        if value in isc_ccid:
+                            output_file.write("\t" + isc_cc_offset_id[isc_ccid.index(value)] + "," + "\t/* iscIdOffset */" + "\n")
+                        else:
+                            output_file.write("\t" + value + "," + "\t/* iscIdOffset */" + "\n")
+                    elif key == "num_regions":
+                        output_file.write("\t" + value + "," + "\t/* numRegions */" + "\n")
+                    elif key == "max_num_regions":
+                        output_file.write("\t" + value + "," + "\t/* maxNumRegions */" + "\n")
+                    elif type(value) is list:
+                        output_file.write("\t{ \t/* ISC registers for a given region : {privId, lock} */\n")
+                        n = int(isc_dict_cc[keys]["num_regions"][:-1])
+                        for i in range(ISC_CC_MAX_REGIONS):
+                            output_file.write("\t\t{")
+                            for ele in value:
+                                output_file.write("0x0U, ")
+                            output_file.seek(output_file.tell()-2)
+                            output_file.truncate()
+                            output_file.write("},\n")
+                        output_file.write("\t},\n")
+                output_file.write("},\n")
+            output_file.seek(output_file.tell()-2)
+            output_file.truncate()
+            output_file.write("\n};")
 
-        output_file.write("\n\nSafetyCheckers_TifsIscRaConfig gSafetyCheckers_TifsIscRaConfig[] = { \n")
+        if (len(isc_dict_ra) != 0):
+            output_file.write("\n\nSafetyCheckers_TifsIscRaConfig gSafetyCheckers_TifsIscRaConfig[] = { \n")
 
-        # Iterating over the keys in the dictionary and writing to file along with necessary comments
-        for keys in isc_dict_ra:
-            output_file.write("{\n")
-            for key,value in isc_dict_ra[keys].items():
-                if key == "isc_id":
-                    output_file.write("\t" + value + "," + "\t/* iscId */" + "\n")
-                elif key == "num_regions":
-                    output_file.write("\t" + value + "," + "\t/* numRegions */" + "\n")
-                elif key == "max_num_regions":
-                    output_file.write("\t" + value + "," + "\t/* maxNumRegions */" + "\n")
-                elif type(value) is list:
-                    output_file.write("\t{ \t/* ISC registers for a given region : {controlReg1, controlReg2} */\n")
-                    n = int(isc_dict_ra[keys]["num_regions"][:-1])
-                    for i in range(ISC_RA_MAX_REGIONS):
-                        output_file.write("\t\t{")
-                        for ele in value:
-                            output_file.write("0x0U, ")
-                        output_file.seek(output_file.tell()-2)
-                        output_file.truncate()
-                        output_file.write("},\n")
-                    output_file.write("\t},\n")
-            output_file.write("},\n")
-        output_file.seek(output_file.tell()-2)
-        output_file.truncate()
-        output_file.write("\n};")
+            # Iterating over the keys in the dictionary and writing to file along with necessary comments
+            for keys in isc_dict_ra:
+                output_file.write("{\n")
+                for key,value in isc_dict_ra[keys].items():
+                    if key == "isc_id":
+                        output_file.write("\t" + value + "," + "\t/* iscId */" + "\n")
+                    elif key == "num_regions":
+                        output_file.write("\t" + value + "," + "\t/* numRegions */" + "\n")
+                    elif key == "max_num_regions":
+                        output_file.write("\t" + value + "," + "\t/* maxNumRegions */" + "\n")
+                    elif type(value) is list:
+                        output_file.write("\t{ \t/* ISC registers for a given region : {controlReg1, controlReg2} */\n")
+                        n = int(isc_dict_ra[keys]["num_regions"][:-1])
+                        for i in range(ISC_RA_MAX_REGIONS):
+                            output_file.write("\t\t{")
+                            for ele in value:
+                                output_file.write("0x0U, ")
+                            output_file.seek(output_file.tell()-2)
+                            output_file.truncate()
+                            output_file.write("},\n")
+                        output_file.write("\t},\n")
+                output_file.write("},\n")
+            output_file.seek(output_file.tell()-2)
+            output_file.truncate()
+            output_file.write("\n};")
 
         output_file.write("\n\n#ifdef __cplusplus\n")
         output_file.write("}\n")

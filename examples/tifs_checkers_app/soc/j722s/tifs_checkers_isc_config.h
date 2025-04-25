@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2024 Texas Instruments Incorporated
- *
- *  Redistribution and use in source and binary forms, with or without
+ *  
+ *  Redistribution and use in source and binary forms, with or without 
  *  modification, are permitted provided that the following conditions
  *  are met:
  *
@@ -17,12 +17,12 @@
  *    its contributors may be used to endorse or promote products derived
  *    from this software without specific prior written permission.
  *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR 
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
  *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
  *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -30,9 +30,9 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * Auto-generated cfg using the command 'python tifs_checkers_create_isc_config.py j722s'
- * on 23/04/2025 20:03:24
+/* 
+ * Auto-generated cfg using the command 'python tifs_checkers_create_isc_config.py j722s' 
+ * on 24/04/2025 18:52:01 
  */
 
 #ifndef TIFS_CHECKERS_ISC_CONFIG_H_
@@ -64,7 +64,7 @@ extern "C" {
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* Static ISC configuration to be populated with register values */
+/* Static ISC configuration to be populated with register values */ 
 SafetyCheckers_TifsIscCbassConfig gSafetyCheckers_TifsIscCbassConfig[] = {
 {
 	32U,	/* iscId */
@@ -1106,12 +1106,6 @@ SafetyCheckers_TifsIscCbassConfig gSafetyCheckers_TifsIscCbassConfig[] = {
 	},
 	0x0U,	/* RCR */
 }
-};
-
-SafetyCheckers_TifsIscCcConfig gSafetyCheckers_TifsIscCcConfig[] = {
-};
-
-SafetyCheckers_TifsIscRaConfig gSafetyCheckers_TifsIscRaConfig[] = {
 };
 
 #ifdef __cplusplus

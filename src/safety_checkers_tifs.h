@@ -165,6 +165,7 @@ typedef struct
     uint32_t endAddrHigh; /* Region End address High */
 } SafetyCheckers_TifsIscCbassRegList;
 
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
 /**
  *
  * \brief   Structure for CC ISC configuration registers for
@@ -175,7 +176,9 @@ typedef struct {
 	uint32_t	privId; /* Region contains privid to set */
 	uint32_t	lock; /* Region contains lock privid setting */
 }SafetyCheckers_TifsIscCcRegList;
+#endif
 
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 /**
  *
  * \brief   Structure for CC ISC configuration registers for
@@ -186,6 +189,7 @@ typedef struct {
 	uint32_t	controlReg1; /* Control Region 1 */
 	uint32_t	controlReg2; /* Control Region 2 */
 }SafetyCheckers_TifsIscRaRegList;
+#endif
 
 /**
  *
@@ -202,6 +206,7 @@ typedef struct
     uint32_t rcr;
 } SafetyCheckers_TifsIscCbassConfig;
 
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
 /**
  *
  * \brief   Structure for CC ISC configuration register info for
@@ -215,7 +220,9 @@ typedef struct
     uint32_t maxNumRegions; /* Maximum number of regions present in an id */
     SafetyCheckers_TifsIscCcRegList iscCfgPerRegionCc[SAFETY_CHECKERS_TIFS_ISC_CCPRIV_MAX_REGION]; /* ISC registers for a given region */
 } SafetyCheckers_TifsIscCcConfig;
+#endif
 
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 /**
  *
  * \brief   Structure for RA ISC configuration register info for
@@ -229,6 +236,7 @@ typedef struct
     uint32_t maxNumRegions; /* Maximum number of regions present in an id */
     SafetyCheckers_TifsIscRaRegList iscCfgPerRegionRa[SAFETY_CHECKERS_TIFS_ISC_RA_MAX_ID]; /* ISC registers for a given region */
 } SafetyCheckers_TifsIscRaConfig;
+#endif
 
 /** @} */
 
@@ -279,6 +287,7 @@ int32_t SafetyCheckers_tifsGetFwlCfg(SafetyCheckers_TifsFwlConfig *fwlConfig, ui
  */
 int32_t SafetyCheckers_tifsGetIscCbassCfg(SafetyCheckers_TifsIscCbassConfig *iscConfig, uint32_t size);
 
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
 /**
  * \brief   API uses the pointer to cc isc configuration iscConfig as input and
  *          updates iscConfig with the register dump of the isc registers specified.
@@ -292,7 +301,9 @@ int32_t SafetyCheckers_tifsGetIscCbassCfg(SafetyCheckers_TifsIscCbassConfig *isc
  *                   SAFETY_CHECKERS_FAIL: Failure
  */
 int32_t SafetyCheckers_tifsGetIscCcCfg(SafetyCheckers_TifsIscCcConfig *iscConfig, uint32_t size);
+#endif
 
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 /**
  * \brief   API uses the pointer to ra isc configuration iscConfig as input and
  *          updates iscConfig with the register dump of the isc registers specified.
@@ -306,6 +317,7 @@ int32_t SafetyCheckers_tifsGetIscCcCfg(SafetyCheckers_TifsIscCcConfig *iscConfig
  *                   SAFETY_CHECKERS_FAIL: Failure
  */
 int32_t SafetyCheckers_tifsGetIscRaCfg(SafetyCheckers_TifsIscRaConfig *iscConfig, uint32_t size);
+#endif
 
 /**
  * \brief   API compares the fwlConfig (golden reference) with runtime firewall
@@ -335,6 +347,7 @@ int32_t SafetyCheckers_tifsVerifyFwlCfg(const SafetyCheckers_TifsFwlConfig *fwlC
  */
 int32_t SafetyCheckers_tifsVerifyIscCbassCfg(const SafetyCheckers_TifsIscCbassConfig *iscConfig, uint32_t size);
 
+#if defined(SOC_J784S4) || defined(SOC_J721S2 )|| defined(SOC_J742S2)
 /**
  * \brief   API compares the cc iscConfig (golden reference) with runtime isc
  *          register values and return success or failure.
@@ -348,7 +361,9 @@ int32_t SafetyCheckers_tifsVerifyIscCbassCfg(const SafetyCheckers_TifsIscCbassCo
  *                   SAFETY_CHECKERS_FAIL: Failure
  */
 int32_t SafetyCheckers_tifsVerifyIscCcCfg(const SafetyCheckers_TifsIscCcConfig *iscConfig, uint32_t size);
+#endif
 
+#if defined(SOC_J7200) || defined(SOC_J721E ) || defined(SOC_J721S2) || defined(SOC_J784S4) || defined(SOC_J742S2)
 /**
  * \brief   API compares the ra iscConfig (golden reference) with runtime isc
  *          register values and return success or failure.
@@ -362,6 +377,7 @@ int32_t SafetyCheckers_tifsVerifyIscCcCfg(const SafetyCheckers_TifsIscCcConfig *
  *                   SAFETY_CHECKERS_FAIL: Failure
  */
 int32_t SafetyCheckers_tifsVerifyIscRaCfg(const SafetyCheckers_TifsIscRaConfig *iscConfig, uint32_t size);
+#endif
 
 /**
  * \brief   API to request TIFS to close firewall
