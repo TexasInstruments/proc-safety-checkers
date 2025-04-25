@@ -187,7 +187,7 @@ int32_t SafetyCheckers_tifsGetIscCbassCfg(SafetyCheckers_TifsIscCbassConfig *isc
                 iscConfig[i].iscCfgPerRegionCbass[j].endAddrLow =  SafetyCheckers_tifsGetIscCbassRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRL);
                 iscConfig[i].iscCfgPerRegionCbass[j].endAddrHigh = SafetyCheckers_tifsGetIscCbassRegValue(id, j, SAFETY_CHECKERS_TIFS_END_ADDRH);
             }
-            iscConfig[i].iscCfgPerRegionCbass[j].rcr = SafetyCheckers_tifsGetIscCbassRegValue(id, j, 0U);
+            iscConfig[i].rcr = SafetyCheckers_tifsGetIscCbassRegValue(id, j, 0U);
         }
         else
         {
@@ -350,9 +350,9 @@ int32_t SafetyCheckers_tifsVerifyIscCbassCfg(const SafetyCheckers_TifsIscCbassCo
 
             }
             regData = SafetyCheckers_tifsGetIscCbassRegValue(id, j, 0U);
-            mismatch |= iscConfig[i].iscCfgPerRegionCbass[j].rcr ^ regData;
+            mismatch |= iscConfig[i].rcr ^ regData;
 
-            if(mismatch != 0U)
+            if (mismatch != 0U)
             {
                 status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
             }
@@ -397,7 +397,7 @@ int32_t SafetyCheckers_tifsVerifyIscCcCfg(const SafetyCheckers_TifsIscCcConfig *
                 status = SAFETY_CHECKERS_REG_DATA_MISMATCH;
             }
         }
-    }   
+    }
     return status;
 }
 

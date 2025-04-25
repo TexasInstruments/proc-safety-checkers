@@ -163,7 +163,6 @@ typedef struct
     uint32_t startAddrHigh; /* Region Start address High */
     uint32_t endAddrLow; /* Region End address Low */
     uint32_t endAddrHigh; /* Region End address High */
-    uint32_t rcr; /* Default Region Control Register */
 } SafetyCheckers_TifsIscCbassRegList;
 
 /**
@@ -200,6 +199,7 @@ typedef struct
     uint32_t numRegions; /* Number of regions stored in the ISC config for an id */
     uint32_t maxNumRegions; /* Maximum number of regions present in an id */
     SafetyCheckers_TifsIscCbassRegList iscCfgPerRegionCbass[SAFETY_CHECKERS_TIFS_ISC_CBASS_MAX_REGIONS]; /* ISC registers for a given region */
+    uint32_t rcr;
 } SafetyCheckers_TifsIscCbassConfig;
 
 /**
