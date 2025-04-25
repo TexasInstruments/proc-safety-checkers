@@ -150,7 +150,7 @@ void SafetyCheckersApp_tifsTest(void)
             gSafetyCheckers_TifsPassCountStatus++;
     	    SAFETY_CHECKERS_log("No firewall register mismatch with Golden Reference\r\n");
     	}
-    
+
     	else if (flag_agg == SAFETY_CHECKERS_FLAG_ERR)
     	{
             gSafetyCheckers_TifsPassCountStatus = 0U;
@@ -199,7 +199,7 @@ void SafetyCheckersApp_tifsTest(void)
             gSafetyCheckers_TifsPassCountStatus++;
             SAFETY_CHECKERS_log("No ISC CBASS register mismatch with Golden Reference\r\n");
     	}
-    
+
     	else if (flag_agg == SAFETY_CHECKERS_FLAG_ERR)
     	{
             gSafetyCheckers_TifsPassCountStatus = 0U;
@@ -247,7 +247,7 @@ void SafetyCheckersApp_tifsTest(void)
             gSafetyCheckers_TifsPassCountStatus++;
             SAFETY_CHECKERS_log("No ISC Compute Cluster register mismatch with Golden Reference\r\n");
     	}
-    
+
     	else if (flag_agg == SAFETY_CHECKERS_FLAG_ERR)
     	{
             gSafetyCheckers_TifsPassCountStatus = 0U;
@@ -294,7 +294,7 @@ void SafetyCheckersApp_tifsTest(void)
             gSafetyCheckers_TifsPassCountStatus++;
             SAFETY_CHECKERS_log("No ISC RA register mismatch with Golden Reference\r\n");
     	}
-    
+
     	else if (flag_agg == SAFETY_CHECKERS_FLAG_ERR)
     	{
             gSafetyCheckers_TifsPassCountStatus = 0U;
@@ -375,7 +375,7 @@ void SafetyCheckersApp_tifsNegativeTests(void)
     SafetyCheckersApp_tifsInvalidInputTest1();
     SAFETY_CHECKERS_log("\n------------ Invalid input test 2------------\r\n\n");
     SafetyCheckersApp_tifsInvalidInputTest2();
-    
+
     if (gSafetyCheckersTifsIscCbassCfgSize > 0U)
     {
         SAFETY_CHECKERS_log("\n------------ Invalid input test ISC CBASS Cfg------------\r\n\n");
@@ -487,11 +487,11 @@ void SafetyCheckersApp_tifsRegisterMismatchTest(void)
     status = SafetyCheckers_tifsReqFwlClose();
     if (status == SAFETY_CHECKERS_SOK)
     {
-        SAFETY_CHECKERS_log("Firewall close successful\n");
+        SAFETY_CHECKERS_log("Firewall close successful\r\n");
     }
     else
     {
-        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\n");
+        SAFETY_CHECKERS_log("Firewall close unsuccessful!!\r\n");
         gSafetyCheckers_TifsPassCountStatus = 0U;
     }
 }
@@ -871,7 +871,7 @@ void SafetyCheckersApp_tifsInvalidInputTestIscCbassCfgVerify(void)
     {
         SAFETY_CHECKERS_log("Something went wrong\r\n");
         gSafetyCheckers_TifsPassCountStatus++;
-        
+
     }
     status = SafetyCheckers_tifsReqFwlClose();
     if (status == SAFETY_CHECKERS_SOK)
@@ -1040,6 +1040,7 @@ void SafetyCheckersApp_tifsInvalidInputTestIscRaCfgVerify(void)
 
 void SafetyCheckersApp_tifsTestStatus(void)
 {
+
     if (gSafetyCheckers_TifsPassCountStatus == gSafetyCheckers_TifsTotalTestCases)
     {
         SAFETY_CHECKERS_log("All tests have PASSED\r\n");
