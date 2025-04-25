@@ -96,6 +96,7 @@ def extract_isc_data(input_filename, isc_dict_cbass, isc_dict_cc, isc_dict_ra):
                                 isc_dict_cbass[macro_name]["num_regions"] =  macro_value
                                 isc_dict_cbass[macro_name]["max_num_regions"] =  macro_value
                                 isc_dict_cbass[macro_name]["registers"] = ['0x0U'] * 6
+                                isc_dict_cbass[macro_name]["rcr"] = '0x0U'
                             elif (flag == 2):
                                 isc_dict_cc[macro_name]["num_regions"] =  macro_value
                                 isc_dict_cc[macro_name]["max_num_regions"] =  macro_value
@@ -167,6 +168,8 @@ def print_isc_data(output_filename, isc_dict_cbass, isc_dict_cc, isc_dict_ra):
                         output_file.truncate()
                         output_file.write("},\n")
                     output_file.write("\t},\n")
+                elif key == "rcr":
+                    output_file.write("\t" + value + "," + "\t/* RCR */" + "\n")
             output_file.write("},\n")
         output_file.seek(output_file.tell()-2)
         output_file.truncate()
@@ -329,7 +332,7 @@ def main(args):
 
         # Extract data from input CSL file
         extract_isc_data(input_filename, isc_dict_cbass, isc_dict_cc, isc_dict_ra)
-        
+
         # Write the firewall data into an output file
         print_isc_data(output_filename, isc_dict_cbass, isc_dict_cc, isc_dict_ra)
     else:
