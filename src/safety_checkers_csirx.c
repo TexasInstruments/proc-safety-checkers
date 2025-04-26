@@ -45,7 +45,13 @@
 #include <stdint.h>
 #if defined (SOC_J722S)
 #include <cslr.h>
+#include <drivers/hw_include/soc_config.h>
+#if defined(DRV_VERSION_CSIRX_V0)
+#include <drivers/csirx/v0/include/csirx_drvPriv.h>
+#endif      /* DRV_VERSION_CSIRX_V0 */
+#if defined(DRV_VERSION_CSIRX_V1)
 #include <drivers/csirx/v1/include/csirx_drvPriv.h>
+#endif      /* DRV_VERSION_CSIRX_V1 */
 #else
 #include <ti/csl/cslr.h>
 #include <ti/drv/csirx/src/csirx_drvPriv.h>
@@ -109,9 +115,9 @@ int32_t SafetyCheckers_csirxGetRegCfg(uintptr_t *regCfg,
         instData = &gSafetyCheckers_CsirxRegData[regType].instData[instance];
         for(regNum=0U; regNum<instData->length; regNum++)
         {
-            /* DPHY lane configuration register contains a dynamic register-field 
+            /* DPHY lane configuration register contains a dynamic register-field
              * which will change based on rx high speed clock active status. Hence omitting
-             * the field with the help of mask 
+             * the field with the help of mask
              */
             if (regType == SAFETY_CHECKERS_CSIRX_REG_TYPE_DPHY_LANE_CONFIG)
             {
