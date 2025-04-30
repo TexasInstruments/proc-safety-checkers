@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) Texas Instruments Incorporated 2024
+ *  Copyright (c) Texas Instruments Incorporated 2024-25
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,13 @@
 #include <cslr.h>
 #include "HwiP_armv7r_vim.h"
 #include <drivers/i2c.h>
+#include <drivers/hw_include/soc_config.h>
+#if defined(DRV_VERSION_CSIRX_V0)
+#include <drivers/csirx/v0/include/csirx_drvPriv.h>
+#endif      /* DRV_VERSION_CSIRX_V0 */
+#if defined(DRV_VERSION_CSIRX_V1)
 #include <drivers/csirx/v1/include/csirx_drvPriv.h>
+#endif      /* DRV_VERSION_CSIRX_V1 */
 #include <safety_checkers_csirx.h>
 #include <safety_checkers_common.h>
 
@@ -432,7 +438,11 @@ int32_t SafetyCheckers_csirxi2c8BitRegRd(void   *handle,
     /* Initializes the I2C transaction structure with default values */       
     I2C_Transaction_init(&transaction);                                       
                                                                               
-    transaction.slaveAddress = slaveAddr;                                     
+    #if defined(DRV_VERSION_CSIRX_V0)
+    transaction.targetAddress = slaveAddr;
+    #else
+    transaction.slaveAddress = slaveAddr;
+    #endif
     transaction.writeBuf     = &regAddrLocal;                                        
     transaction.writeCount   = 1;                                             
     transaction.readBuf      = NULL;                                          
