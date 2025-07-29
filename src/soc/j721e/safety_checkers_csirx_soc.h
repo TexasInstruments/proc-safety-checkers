@@ -113,6 +113,7 @@ extern "C" {
 #define SAFETY_CHECKERS_CSIRX_QOS_BASE_ADDRESS_0                      (CSL_NAVSS0_UDMASS_UDMAP0_CFG_RCHAN_BASE)
 /** \brief QoS configuration registers */  
 #define SAFETY_CHECKERS_CSIRX_QOS_RCFG                                ((uint32_t)0x0U)
+#define SAFETY_CHECKERS_CSIRX_QOS_RPRICTRL                            ((uint32_t)0x64U)
 /** \brief QoS channel configuration register-set size */  
 #define SAFETY_CHECKERS_CSIRX_QOS_CH_REG_SIZE                         ((uint32_t)0x100U)
 
