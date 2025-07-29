@@ -160,7 +160,7 @@ extern "C" {
 
 /** \brief Mask for DPHY lane configuration registers */  
 #define SAFETY_CHECKERS_CSIRX_MASK_NONE                               ((uint32_t)0xFFFFFFFFU)
-#define SAFETY_CHECKERS_CSIRX_MASK_LANE_CONFIG                        ((uint32_t)0xEFFFFFFFU)
+#define SAFETY_CHECKERS_CSIRX_MASK_LANE_CONFIG                        ((uint32_t)0x7FFFFFFFU)
 
 /** @} */
 
