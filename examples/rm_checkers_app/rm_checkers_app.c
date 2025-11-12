@@ -47,7 +47,7 @@
 #include <safety_checkers_soc.h>
 #include <safety_checkers_rm.h>
 
-#if defined(SOC_AM62AX) || defined(SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined(SOC_AM62PX) || defined(SOC_AM62DX)
 #include <tisci_devices.h>
 #include <lib/bitops.h>
 #include <tisci_pm_device.h>
@@ -73,7 +73,7 @@
 #define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_NAVSS0_BCDMA0_CFG_TCHAN_BASE)
 #elif defined(SOC_AM62X) || defined(SOC_J722S)
 #define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_DMASS0_PKTDMA_TCHAN_BASE)
-#elif defined(SOC_AM62AX) || defined(SOC_AM62PX)
+#elif defined(SOC_AM62AX) || defined(SOC_AM62PX) || defined(SOC_AM62DX)
 #define SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR 							  (CSL_DMASS0_PKTDMA_TCHAN_BASE)
 #define SRC_IDX_BASE_GPIO_BANK                                            (CSLR_WKUP_MCU_GPIOMUX_INTROUTER0_IN_MCU_GPIO0_GPIO_BANK_0)
 #define GPIO_MUX_INTROUTER_ID                                             (TISCI_DEV_WKUP_MCU_GPIOMUX_INTROUTER0)
@@ -117,7 +117,7 @@ void SafetyCheckersApp_rmRun(void *arg0)
 	int32_t status = SAFETY_CHECKERS_SOK;
 
 /* Due to AM62a's design, DMSS CSI is not turned on by default */
-#if defined(SOC_AM62AX)
+#if defined(SOC_AM62AX) || defined(SOC_AM62DX)
     status = Sciclient_pmSetModuleState(TISCI_DEV_DMASS1_INTAGGR_0,
                                         TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
                                         (TISCI_MSG_FLAG_AOP |
@@ -187,7 +187,7 @@ static int32_t SafetyCheckersApp_rmregVerify()
      * SafetyCheckersApp_rmRegMismatch function is only supported
      * for mcu1_0 cores for jacinto devices j721e,j7200,j721s2,j784s4 and j742s2 .
      */
-#if ((defined (SOC_AM62AX) || defined(SOC_AM62X)) || defined (BUILD_WKUP_R5) || defined (BUILD_MCU1_0))
+#if ((defined (SOC_AM62AX) || defined(SOC_AM62X) || defined(SOC_AM62DX)) || defined (BUILD_WKUP_R5) || defined (BUILD_MCU1_0))
 	if(status == SAFETY_CHECKERS_SOK)
 	{
 		status = SafetyCheckersApp_rmRegMismatch();
@@ -198,7 +198,7 @@ static int32_t SafetyCheckersApp_rmregVerify()
     return (status);
 }
 
-#if defined(SOC_AM62AX) || (defined(SOC_AM62PX) && !defined (BUILD_WKUP_R5))
+#if defined(SOC_AM62AX) || defined(SOC_AM62DX) || (defined(SOC_AM62PX) && !defined (BUILD_WKUP_R5))
 static void SafetyCheckersApp_gpioIrqSet(void)
 {
     int32_t                             retVal;
@@ -233,7 +233,7 @@ static int32_t SafetyCheckersApp_rmRegMismatch(void)
 	int32_t     status = SAFETY_CHECKERS_SOK;
 
 /* Only WKUP R5 has firewall permissions to edit RM registers directly */
-#if !defined(SOC_AM62AX) || (defined(SOC_AM62PX) && defined(BUILD_WKUP_R5))
+#if !(defined(SOC_AM62AX) || defined(SOC_AM62DX)) || (defined(SOC_AM62PX) && defined(BUILD_WKUP_R5))
     uint32_t    readVal;
 
     readVal = CSL_REG32_RD(SAFETY_CHECKERS_RM_REG_MOD_BASE_ADDR);
