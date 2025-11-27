@@ -50,6 +50,7 @@ TaskHandle_t gMainTask;
 void SafetyCheckersApp_tifsTest(void *args);
 void SafetyCheckersApp_tifsTestFwlOpenClose(void *args);
 void SafetyCheckersApp_tifsNegativeTests(void *args);
+void SafetyCheckersApp_tifsTestStatus(void *args);
 
 void freertos_main(void *args)
 {
@@ -72,6 +73,7 @@ void freertos_main(void *args)
     upload_execution_history();
     DebugP_log("\n LDRA EXIT... \n");
     #endif
+    SafetyCheckersApp_tifsTestStatus(NULL);
 
     /* Close board and flash drivers */
     Board_driversClose();
