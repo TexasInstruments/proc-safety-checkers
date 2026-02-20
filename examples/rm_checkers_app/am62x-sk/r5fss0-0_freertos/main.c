@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2026 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -59,6 +59,12 @@
 #define SAFETY_CHECKERS_APP_PRI_MAIN_THREAD  (configMAX_PRIORITIES-1)
 #define SAFETY_CHECKERS_APP_TSK_STACK_MAIN   (65536U/sizeof(configSTACK_DEPTH_TYPE))
 
+/* Stack size allocated for the sciserver task */
+#define SCISERVER_TASK_STACK_SIZE                   (2U*1024U)
+
+/* Stack memory alignment requirement for the sciserver task */
+#define SCISERVER_TASK_STACK_ALIGNMENT              (32)
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -79,6 +85,10 @@ StackType_t gSafetyCheckersAppTskStackMain[SAFETY_CHECKERS_APP_TSK_STACK_MAIN] _
 StaticTask_t gSafetyCheckersAppTskObjMain;
 TaskHandle_t gSafetyCheckersAppTskMain;
 
+/* Stack buffers for user high and low priority tasks */
+uint8_t __attribute__((aligned(SCISERVER_TASK_STACK_ALIGNMENT))) gUserHiTaskStack[SCISERVER_TASK_STACK_SIZE];
+uint8_t __attribute__((aligned(SCISERVER_TASK_STACK_ALIGNMENT))) gUserLoTaskStack[SCISERVER_TASK_STACK_SIZE];
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -87,13 +97,19 @@ void SafetyCheckersApp_rmCheckersTask(void *args)
 {
     int32_t status = SystemP_SUCCESS;
 
+    /* Configure sciserver task parameters */
+    Sciserver_TirtosCfgPrms_t sciserverCfg = {0};
+    sciserverCfg.hiTaskStack    =   gUserHiTaskStack;
+    sciserverCfg.loTaskStack    =   gUserLoTaskStack;
+    sciserverCfg.taskStackSize  =   SCISERVER_TASK_STACK_SIZE;
+
     /* Open drivers */
     Drivers_open();
     /* Open flash and board drivers */
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
 
-    sciServer_init();
+    sciServer_init(&sciserverCfg);
 
     SafetyCheckersApp_rmRun(NULL);
 
