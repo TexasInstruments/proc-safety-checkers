@@ -88,6 +88,8 @@ CFLAGS_common := \
 	-g \
 	-Wno-gnu-variable-sized-type-not-at-end \
 	-Wno-unused-function \
+	-Wno-unused-but-set-variable \
+	-Wno-unused-variable \
 
 CFLAGS_cpp_common := \
 	-Wno-c99-designator \
@@ -262,7 +264,7 @@ syscfg: ../example.syscfg
 	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --device AM62Px --context wkup-r5fss0-0 --part Default --package AMH --output generated/ ../example.syscfg
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM62Px --context wkup-r5fss0-0 --part Default --package AMH --output generated/  ../example.syscfg
+	$(SYSCFG_GUI_SCRIPT) --product $(SYSCFG_SDKPRODUCT) --device AM62Px --context wkup-r5fss0-0 --part Default --package AMH --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)

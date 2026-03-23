@@ -59,6 +59,13 @@ const lnkfiles = {
     ]
 };
 
+const cflags = {
+    common: [
+        "-Wno-unused-but-set-variable",
+        "-Wno-unused-variable",
+    ],
+};
+
 const syscfgfile = "../example.syscfg";
 const readmeDoxygenPageTag = "EXAMPLES_SAFETY_CHECKERS"
 
@@ -106,6 +113,7 @@ function getComponentBuildProperty(buildOption) {
             build_property.templates = templates_freertos_mcu_r5f;
         }
     }
+    build_property.cflags = cflags;
     return build_property;
 }
 
