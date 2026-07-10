@@ -1,6 +1,3 @@
---retain="*(.bootCode)";
---retain="*(.startupCode)";
---retain="*(.startupData)";
 --retain="*(.irqStack)";
 --retain="*(.fiqStack)";
 --retain="*(.abortStack)";
@@ -46,9 +43,6 @@ SECTIONS
 {
     /* This has the R5F entry point and vector table, this MUST be at 0x0 */
     .vectors: align = 8 > DDR
-    .bootCode           : align = 8, load = R5F_TCMB, run = R5F_TCMA
-    .startupCode: align = 8 ,load = R5F_TCMB, run = R5F_TCMA
-    .startupData        : align = 8, load = R5F_TCMB, run = R5F_TCMA, type = NOINIT
 
     /* This has the R5F boot code until MPU is enabled,  this MUST be at a address < 0x80000000
      * i.e this cannot be placed in DDR
@@ -117,6 +111,9 @@ SECTIONS
     /* Trace buffer used during low power mode */
     .lpm_trace_buf : (NOLOAD) {} > R5F_TCMA_TRACE_BUFF
 
+    /* DM RM/PM HAL trace buffer at fixed DDR location */
+    .dm_rmpm_trace_buf : (NOLOAD) {} > DDR_DM_RMPM_TRACE
+
     /* USB or any other LLD buffer for benchmarking */
     .benchmark_buffer (NOLOAD) {} ALIGN (8) > DDR
 
@@ -164,6 +161,8 @@ MEMORY
 
     /* DDR for DM LPM data [ size 640.00 KB ] */
     DDR_LPM_DATA    (RWIX)      : ORIGIN = 0x9DC00000 LENGTH = 0x000A0000
-    /* DDR for DM R5F code/data [ size 10 MB + 384 KB ] */
-    DDR            (RWIX)      : ORIGIN = 0x9DCA0000 LENGTH = 0x00A60000
+    /* DDR for DM RM/PM HAL trace buffer [ size 20 KB ] */
+    DDR_DM_RMPM_TRACE (RWIX)    : ORIGIN = 0x9DCA0000 LENGTH = 0x00005000
+    /* DDR for DM R5F code/data [ size 10 MiB + 364 KB ] */
+    DDR            (RWIX)      : ORIGIN = 0x9DCA5000 LENGTH = 0x00A5B000
 }
