@@ -107,6 +107,19 @@ function getComponentProperty() {
     return property;
 }
 
+const robot_template = {
+    input: ".project/templates/am62x/astra/tests.robot.xdt",
+    output: "../tests.robot",
+    options: {
+        componentName: "DM",
+        appName: "SafetyCheckersApp_pm",
+        testCaseName: "PM Safety Checker application",
+        testCaseIds: "SITSW-4513",
+        expectedString: "All tests have PASSED.",
+        expectTimeout: 30,
+    },
+};
+
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
@@ -125,6 +138,8 @@ function getComponentBuildProperty(buildOption) {
             build_property.templates = templates_freertos_r5f;
         }
     }
+
+    build_property.templates = [...(build_property.templates || []), robot_template];
     return build_property;
 }
 

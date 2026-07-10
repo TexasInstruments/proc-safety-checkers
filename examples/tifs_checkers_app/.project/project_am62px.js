@@ -89,6 +89,22 @@ function getComponentProperty() {
     return property;
 }
 
+const robot_template = {
+    input: ".project/templates/am62px/astra/tests.robot.xdt",
+    output: "../tests.robot",
+    options: {
+        componentName: "TIFS",
+        appName: "SafetyCheckersApp_tifs",
+        testCaseName: "TIFS Safety Checker application",
+        testCaseIds: "SITSW-4274",
+        expectedString: "All tests have PASSED",
+        withCfg: true,
+        cfgPath: "test/security/tifs_safety_checker/{board}/default_sbl_uart_${DEVICE_TYPE}.cfg",
+        expectTimeout: 120,
+        timeout: 720,
+    },
+};
+
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
@@ -107,6 +123,8 @@ function getComponentBuildProperty(buildOption) {
             build_property.templates = templates_freertos_mcu_r5f;
         }
     }
+
+    build_property.templates = [...(build_property.templates || []), robot_template];
     return build_property;
 }
 

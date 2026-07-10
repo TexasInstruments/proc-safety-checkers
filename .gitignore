@@ -10,3 +10,4 @@ obj/
 *.appimage.hs
 *.appimage.hs_fs
 generated/
+*.robot

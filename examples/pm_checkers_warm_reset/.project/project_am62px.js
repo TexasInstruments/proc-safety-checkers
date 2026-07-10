@@ -83,6 +83,24 @@ function getComponentProperty() {
     return property;
 }
 
+const robot_template = {
+    input: ".project/templates/am62px/astra/tests_sbl.robot.xdt",
+    output: "../tests.robot",
+    options: {
+        componentName: "DM",
+        appName: "SafetyCheckersApp_pmWarmReset",
+        testCaseName: "PM Warm reset Safety Checker application",
+        testCaseIds: "SITSW-4515",
+        bootMode: "OSPI_NOR_BOOT_MODE",
+        expectations: [
+            { port: "USB3", string: "All tests have passed" }
+        ],
+        cfgPath: "source/safety_checkers/examples/pm_checkers_warm_reset/{board}/pm_checkers_warm_reset_sbl_ospi_linux_${DEVICE_TYPE}.cfg",
+        expectTimeout: 120,
+        timeout: 720,
+    },
+};
+
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
@@ -101,6 +119,8 @@ function getComponentBuildProperty(buildOption) {
             build_property.templates = templates_freertos_mcu_r5f;
         }
     }
+
+    build_property.templates = [...(build_property.templates || []), robot_template];
     return build_property;
 }
 
